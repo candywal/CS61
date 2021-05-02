@@ -1,0 +1,17 @@
+- Lecture 1 - Scheme
+    - First Day Hand Out
+        - ![](https://remnote-user-data.s3.amazonaws.com/R1mHuwecg_IsX6qQjXjI3Be8yi8tm_EjaaD492_o0bSHH0Erkgk1Rxaghom-GeyE4eaA0HcL1u2dCPStSN4bybdcDknXf4j6FCrVXo6twCq_luGrPUimjduiRZXub1Vx.png)
+        - ![](https://remnote-user-data.s3.amazonaws.com/s4Nu-5E9F4JceKqU9MgQQmIIshxBZRnIf7PE4AGxq9WxGmGKgSb1bVzHYn2NDFIZuB64qtJb8HsxcR_GPw8CjJglTKka1YjcmMVVzRlCWV2lQX2L6A6zK2rskHG_UDaI.png)
+        - ![](https://remnote-user-data.s3.amazonaws.com/PvP2QL6FVxfKos_51qWuJSCw6n-hm86lfZqx-ah3PtzsmB4c3_PI5m-HULmxY5giZ_uHPKbJvxnrD6ixtNtavcnGrOd1U3Pf5S0Sa2lGNlVUbgsCMAgXE_U3AranGppv.png)
+    - Homework
+        - ![](https://remnote-user-data.s3.amazonaws.com/DJhB1cZrYhWz2hmc0ciKaXXeouIYcRUp7ADz-yVBfiImCUUxGYhssVhEenz1WgKGpMW9FMGJSYf4NNYbLdl9-hRNapb6xYDnuhCGbFUQiEUJJ0d-oU-SKOjz8j0E2fP_.png)
+        - ![](https://remnote-user-data.s3.amazonaws.com/_6SwMfPvW5fazDYSwbiKLTGWvp6VINSfLhIY1D_I3AuYIjekZyURMAInhAQtVtP7UMHfSiF-iibcuPCsUaZ0qP1giT7l2DwRyT8eak-AxlxbSrv5BD2A3VBScgBbYdpp.png)
+    - 
+    - Lecture notes
+        - What is the difference between defining a function and defining a variable?:: It becomes a function if the name of the thing that you are defining is in brackets 
+        - the {{ __formal parameter__ }} is the {{name of the argument (x)}};
+        - the {{actual argument expression}} is {{the expression used in the invocation (+2 3)}}
+        - the a{{ctual argument value}} is the {{value of the argument in the invocation (5)}}.
+        - The argument’s name comes from {{the function’s definition}}; the argument’s value {{comes from the invocation.}}
+    - 
+    - 

@@ -1,0 +1,28 @@
+;; -*-Mode: Scheme;-*-
+;;
+;; Copyright (C) 1995, 1996 Josh MacDonald <jmacd@CS.Berkeley.EDU>
+;;
+;; Permission to use, copy, and/or distribute this software and its
+;; documentation for any purpose and without fee is hereby granted, provided
+;; that both the above copyright notice and this permission notice appear in
+;; all copies and derived works.  Fees for distribution or use of this
+;; software or derived works may only be charged with express written
+;; permission of the copyright holder.
+;; This software is provided ``as is'' without express or implied warranty.
+;;
+;; $Id: view-debug.stk,v 1.1 2003/12/19 22:57:30 willchu Exp $
+;; $ProjectHeader: stk ucb2.29 Thu, 11 Sep 2003 14:07:59 -0700 hilfingr $
+;;
+
+(unless (provided? "view-debug")
+
+(define (show-coords)
+  (bind (canvas-of *view-root*) "<Motion>"
+	(lambda (x y)
+	  (update-object-label
+	   *view-root*
+	   (+ (list x y)
+	      (first-two (get-visible-canvas-region *view-root*)))))))
+
+(provide "view-debug")
+)

@@ -1,0 +1,178 @@
+@code{(require 'srfi-1)}
+@ftindex srfi-1
+
+@noindent
+Implements the @dfn{SRFI-1} @dfn{list-processing library} as described
+@cindex SRFI-1
+@cindex list-processing library
+at @url{http://srfi.schemers.org/srfi-1/srfi-1.html}
+
+@subheading Constructors
+
+
+@defun xcons d a
+@code{(define (xcons d a) (cons a d))}.
+@end defun
+
+@defun list-tabulate len proc
+Returns a list of length @var{len}.  Element @var{i} is @code{(@var{proc}
+@var{i})} for 0 <= @var{i} < @var{len}.
+@end defun
+
+@defun cons* obj1 obj2
+
+@end defun
+
+@defun iota count start step
+
+
+@defunx iota count start
+
+@defunx iota count
+Returns a list of @var{count} numbers: (@var{start}, @var{start}+@var{step}, @dots{},  @var{start}+(@var{count}-1)*@var{step}).
+@end defun
+
+@defun circular-list obj1 obj2 @dots{}
+
+Returns a circular list of @var{obj1}, @var{obj2}, @dots{}.
+@end defun
+@subheading Predicates
+
+
+@defun proper-list? obj
+
+@end defun
+
+@defun circular-list? x
+
+@end defun
+
+@defun dotted-list? obj
+
+@end defun
+
+@defun null-list? obj
+
+@end defun
+
+@defun not-pair? obj
+
+@end defun
+
+@defun list= =pred list @dots{}
+
+@end defun
+@subheading Selectors
+
+
+@defun first pair
+@defunx fifth obj
+@defunx sixth obj
+@defunx seventh obj
+@defunx eighth obj
+@defunx ninth obj
+@defunx tenth obj
+
+@end defun
+
+@defun car+cdr pair
+
+@end defun
+
+@defun take lst k
+@defunx drop lst k
+
+@end defun
+
+@defun take-right lst k
+
+@end defun
+
+@defun split-at lst k
+
+@end defun
+
+@defun last lst
+
+(car (last-pair lst))
+@end defun
+@subheading Miscellaneous
+
+
+@defun length+ obj
+
+@end defun
+
+@defun concatenate lists
+@defunx concatenate! lists
+
+@end defun
+
+@defun reverse! lst
+
+@end defun
+
+@defun append-reverse rev-head tail
+@defunx append-reverse! rev-head tail
+
+@end defun
+
+@defun zip list1 list2 @dots{}
+
+@end defun
+
+@defun unzip1 lst
+@defunx unzip2 lst
+@defunx unzip3 lst
+@defunx unzip4 lst
+@defunx unzip5 lst
+
+@end defun
+
+@defun count pred list1 list2 @dots{}
+
+@end defun
+@subheading Fold and Unfold
+
+@subheading Filtering and Partitioning
+
+@subheading Searching
+
+
+@defun find pred list
+
+@end defun
+
+@defun find-tail pred list
+
+@end defun
+
+@defun member obj list pred
+
+
+@defunx member obj list
+
+@code{member} returns the first sublist of @var{list} whose car is @var{obj}, where the sublists
+of @var{list} are the non-empty lists returned by @t{(list-tail @var{list} @var{k})}
+for @var{k} less than the length of @var{list}.  If @var{obj} does not occur in @var{list},
+then @t{#f} (not the empty list) is returned.  The procedure @var{pred} is
+used for testing equality.  If @var{pred} is not provided, @samp{equal?} is
+used.
+@end defun
+@subheading Deleting
+
+@subheading Association lists
+
+
+@defun assoc obj alist pred
+
+
+@defunx assoc obj alist
+
+@var{alist} (for ``association list'') must be a list of pairs.  These
+procedures find the first pair in @var{alist} whose car field is @var{obj}, and
+returns that pair.  If no pair in @var{alist} has @var{obj} as its car, then @t{#f}
+(not the empty list) is returned.  The procedure @var{pred} is used for
+testing equality.  If @var{pred} is not provided, @samp{equal?} is used.
+@end defun
+@subheading Set operations

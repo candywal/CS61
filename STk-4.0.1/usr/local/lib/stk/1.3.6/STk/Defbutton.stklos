@@ -1,0 +1,84 @@
+;;;;
+;;;; D e f b u t t o n . s t k 	  --  Default button composite widget
+;;;;
+;;;; Copyright © 1993-1999 Erick Gallesio - I3S-CNRS/ESSI <eg@unice.fr>
+;;;; 
+;;;; Permission to use, copy, modify, distribute,and license this
+;;;; software and its documentation for any purpose is hereby granted,
+;;;; provided that existing copyright notices are retained in all
+;;;; copies and that this notice is included verbatim in any
+;;;; distributions.  No written agreement, license, or royalty fee is
+;;;; required for any of the authorized uses.
+;;;; This software is provided ``AS IS'' without express or implied
+;;;; warranty.
+;;;;
+;;;;           Author: Erick Gallesio [eg@kaolin.unice.fr]
+;;;;    Creation date: 22-Mar-1994 13:05
+;;;; Last file update:  3-Sep-1999 20:12 (eg)
+
+(require "Basics")
+
+(select-module STklos+Tk)
+
+;=============================================================================
+;
+; 			< D e f a u l t - b u t t o n >
+;
+;=============================================================================
+;;;;
+;;;; Resources
+;;;;
+(option 'add "*DefaultButton.Border.BorderWidth"        1        "widgetDefault")
+(option 'add "*DefaultButton.Border.Relief"             "sunken" "widgetDefault")
+
+;;;;
+;;;; Class definition
+;;;;
+(define-class <Default-button> (<Tk-composite-widget> <Button>)
+  ((class 	   :init-keyword :class
+		   :init-form    "DefaultButton")
+   
+   (button 	   :accessor     button-of)
+   (internal-frame :accessor	 internal-frame-of)
+   
+   ;; Fictive slots 
+   (background     :accessor     background
+		   :init-keyword :background
+		   :allocation   :propagated
+		   :propagate-to (frame button internal-frame))
+   (border-width   :accessor     border-width 
+		   :allocation   :propagated
+		   :init-keyword :border-width
+		   :propagate-to (frame))
+   (relief	   :accessor     relief
+		   :init-keyword :relief
+		   :allocation   :propagated
+		   :propagate-to (frame))))
+
+(define-method initialize-composite-widget ((self <Default-button>) initargs frame)
+  (let* ((if (make <Frame>  :parent frame :class "Border"))
+	 (b  (make <Button> :parent if)))
+    (next-method)
+
+    (pack (Id b)  :padx 5 :pady 5 :expand #t)
+    (pack if      :padx 5 :pady 5 :expand #t)
+
+    (set! (highlight-thickness frame) 1)
+    (focus b)
+    (bind b "<Return>" (lambda () (invoke b)))
+
+    (slot-set! self 'Id    	    (Id b))
+    (slot-set! self 'button	    b)
+    (slot-set! self 'internal-frame if)))
+
+
+(provide "Defbutton")
+
+#|
+    Example:
+	(define db (make <Default-button> :text "Type Return anywhere"
+			 :command (lambda () (display "Default\n"))))
+        (define b  (make <Button> :text "Another button"
+			 :command (lambda () (display "Other\n"))))
+        (pack db b :side 'left :padx 20 :pady 20)
+|#

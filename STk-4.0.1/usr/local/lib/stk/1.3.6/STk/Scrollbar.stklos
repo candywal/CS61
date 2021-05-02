@@ -1,0 +1,171 @@
+;;;;
+;;;; S c r o l l b a r . s t k 	  --  Scrollbar class definition
+;;;;
+;;;; Copyright © 1993-1999 Erick Gallesio - I3S-CNRS/ESSI <eg@unice.fr>
+;;;; 
+;;;; Permission to use, copy, modify, distribute,and license this
+;;;; software and its documentation for any purpose is hereby granted,
+;;;; provided that existing copyright notices are retained in all
+;;;; copies and that this notice is included verbatim in any
+;;;; distributions.  No written agreement, license, or royalty fee is
+;;;; required for any of the authorized uses.
+;;;; This software is provided ``AS IS'' without express or implied
+;;;; warranty.
+;;;;
+;;;;           Author: Erick Gallesio [eg@kaolin.unice.fr]
+;;;;    Creation date:  5-Mar-1994 17:19
+;;;; Last file update:  3-Sep-1999 20:11 (eg)
+
+(require "Basics")
+(select-module STklos+Tk)
+(export activate scrollbar-delta scrollbar-fraction 
+	scrollbar-identify scrollbar-get scrollbar-set! 
+	STk:h-scroll-side STk:h-scroll-side-set!
+	STk:v-scroll-side STk:v-scroll-side-set!)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;
+;;;; <Scrollbar> class
+;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define-class <Scrollbar> (<Tk-simple-widget>)
+  ((active-background    :accessor     active-background
+			 :init-keyword :active-background
+			 :tk-name      activebackground
+			 :allocation   :tk-virtual)
+   (active-relief        :accessor     active-relief
+			 :init-keyword :active-relief
+			 :tk-name      activerelief
+			 :allocation   :tk-virtual)
+   (command 	         :accessor     command
+			 :init-keyword :command
+			 :allocation   :tk-virtual)  
+   (element-border-width :accessor     element-border-width
+			 :init-keyword :element-border-width
+			 :tk-name      elementborderwidth
+			 :allocation   :tk-virtual)
+   (jump 	         :accessor     jump
+			 :init-keyword :jump
+			 :allocation   :tk-virtual)
+   (orientation          :accessor     orientation
+			 :init-keyword :orientation
+			 :tk-name      orient
+			 :allocation   :tk-virtual)
+   (repeat-delay         :accessor     repeat-delay
+			 :init-keyword :repeat-delay
+			 :tk-name       repeatdelay
+			 :allocation   :tk-virtual)
+   (repeat-interval      :accessor     repeat-interval
+			 :init-keyword :repeat-interval
+			 :tk-name      repeatinterval
+			 :allocation   :tk-virtual)
+   (trough-color         :accessor     trough-color
+			 :init-keyword :trough-color
+			 :tk-name      troughcolor
+			 :allocation   :tk-virtual)
+   (width 	         :accessor     width
+			 :init-keyword :width
+			 :allocation   :tk-virtual)
+   ;; Fictive slot 
+   (value	         :accessor     value
+			 :init-keyword :value
+			 :allocation   :virtual
+			 :slot-ref     (lambda (o)  
+					 ((slot-ref o 'Id) 'get))
+			 :slot-set!    (lambda (o v) 
+					 (apply (slot-ref o 'Id) 'set v)))))
+
+(define-method tk-constructor ((self <Scrollbar>))
+  Tk:scrollbar)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;
+;;;; Scrollbar Methods
+;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define-method initialize ((self <Scrollbar>) args)
+  (next-method)
+  (let ((val (get-keyword :value args #f)))
+    ;; If a value is specified at init-time init, set it.
+    (when val 
+	  (set! (value self) val))))
+
+;;;
+;;; Activate
+;;;
+(define-method  activate ((self <Scrollbar>))
+  ((slot-ref self 'Id) 'activate))
+
+(define-method  activate ((self <Scrollbar>) element)
+  ((slot-ref self 'Id) 'activate element))
+
+;;;
+;;; Scrollbar-delta
+;;;
+(define-method scrollbar-delta ((self <Scrollbar>) delta-x delta-y)
+  ((slot-ref self 'Id) 'delta delta-x delta-y))
+
+;;;
+;;; Scrollbar-fraction
+;;;
+(define-method scrollbar-fraction ((self <Scrollbar>) x y)
+  ((slot-ref self 'Id) 'fraction x y))
+
+;;;
+;;; Scrollbar-identify
+;;;
+(define-method scrollbar-identify ((self <Scrollbar>) x y)
+  ((slot-ref self 'Id) 'identify x y))
+
+;;;
+;;; Scrollbar-get
+;;;
+(define-method scrollbar-get ((self <Scrollbar>))
+  ((slot-ref self 'Id) 'get))
+
+;;;
+;;; Scrollbar-set!
+;;;
+(define-method scrollbar-set! ((self <Scrollbar>) x y z w) ; old syntax
+  ((slot-ref self 'Id) 'set x y z w))
+
+(define-method scrollbar-set! ((self <Scrollbar>) x y) ; new syntax
+  ((slot-ref self 'Id) 'set x y))
+
+;=============================================================================
+;
+; Function used by composite widgets with scrollbars
+;
+;=============================================================================
+(define (STk:h-scroll-side hs)
+  (let ((info (grid 'info hs)))
+    (if (null? info)
+	#f
+	(case (get-keyword :row info)
+	  ((0) "top")
+	  ((2) "bottom")))))
+
+(define (STk:h-scroll-side-set! hs v)
+  (cond 
+   ((equal? v "bottom")  (grid hs :row 2 :column 1))
+   ((equal? v "top")     (grid hs :row 0 :column 1))
+   ((not v)	         (grid 'remove hs))))
+
+(define (STk:v-scroll-side vs)
+  (let ((info (grid 'info vs)))
+    (if (null? info)
+	#f
+	(case (get-keyword :column info)
+	  ((0) "left")
+	  ((2) "right")))))
+
+(define (STk:v-scroll-side-set! vs v)
+  (cond
+   ((equal? v "left")  (grid vs :row 1 :column 0))
+   ((equal? v "right") (grid vs :row 1 :column 2))
+   ((not v)	       (grid 'remove vs))))
+
+(provide "Scrollbar")

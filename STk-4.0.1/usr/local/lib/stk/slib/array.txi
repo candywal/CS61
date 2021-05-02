@@ -1,0 +1,241 @@
+@code{(require 'array)}
+@ftindex array
+
+
+@defun array? obj
+
+Returns @code{#t} if the @var{obj} is an array, and @code{#f} if not.
+@end defun
+@noindent
+@emph{Note:} Arrays are not disjoint from other Scheme types.  Strings
+and vectors also satisfy @code{array?}.  A disjoint array predicate can
+be written:
+
+@example
+(define (strict-array? obj)
+  (and (array? obj) (not (string? obj)) (not (vector? obj))))
+@end example
+
+
+@defun array=? array1 array2
+
+Returns @code{#t} if @var{array1} and @var{array2} have the same rank and shape and the
+corresponding elements of @var{array1} and @var{array2} are @code{equal?}.
+
+@example
+(array=? (create-array '#(foo) 3 3) (create-array '#(foo) '(0 2) '(0 2)))
+  @result{} #t
+@end example
+@end defun
+
+@defun create-array prototype bound1 bound2 @dots{}
+
+
+Creates and returns an array of type @var{prototype} with dimensions @var{bound1}, @var{bound2},
+@dots{} and filled with elements from @var{prototype}.  @var{prototype} must be an array,
+vector, or string.  The implementation-dependent type of the returned
+array will be the same as the type of @var{prototype}; except if that would be a
+vector or string with non-zero origin, in which case some variety of
+array will be returned.
+
+If the @var{prototype} has no elements, then the initial contents of the returned
+array are unspecified.  Otherwise, the returned array will be filled
+with the element at the origin of @var{prototype}.
+@end defun
+@noindent
+These functions return a uniform array prototype enclosing the
+optional argument (which must be of the correct type).  If the
+uniform-array type is supported by the implementation, then it is
+returned; promoting to the next larger precision type; promoting
+finally to vector.
+
+
+@defun ac64 z
+
+
+@defunx ac64
+Returns a high-precision complex uniform-array prototype.
+@end defun
+
+@defun ac32 z
+
+
+@defunx ac32
+Returns a complex uniform-array prototype.
+@end defun
+
+@defun ar64 x
+
+
+@defunx ar64
+Returns a high-precision real uniform-array prototype.
+@end defun
+
+@defun ar32 x
+
+
+@defunx ar32
+Returns a real uniform-array prototype.
+@end defun
+
+@defun as64 n
+
+
+@defunx as64
+Returns an exact signed integer uniform-array prototype with at least
+64 bits of precision.
+@end defun
+
+@defun as32 n
+
+
+@defunx as32
+Returns an exact signed integer uniform-array prototype with at least
+32 bits of precision.
+@end defun
+
+@defun as16 n
+
+
+@defunx as16
+Returns an exact signed integer uniform-array prototype with at least
+16 bits of precision.
+@end defun
+
+@defun as8 n
+
+
+@defunx as8
+Returns an exact signed integer uniform-array prototype with at least
+8 bits of precision.
+@end defun
+
+@defun au64 k
+
+
+@defunx au64
+Returns an exact non-negative integer uniform-array prototype with at
+least 64 bits of precision.
+@end defun
+
+@defun au32 k
+
+
+@defunx au32
+Returns an exact non-negative integer uniform-array prototype with at
+least 32 bits of precision.
+@end defun
+
+@defun au16 k
+
+
+@defunx au16
+Returns an exact non-negative integer uniform-array prototype with at
+least 16 bits of precision.
+@end defun
+
+@defun au8 k
+
+
+@defunx au8
+Returns an exact non-negative integer uniform-array prototype with at
+least 8 bits of precision.
+@end defun
+
+@defun at1 bool
+
+
+@defunx at1
+Returns a boolean uniform-array prototype.
+@end defun
+
+@defun make-array initial-value bound1 bound2 @dots{}
+
+
+Creates and returns an array with dimensions @var{bound1},
+@var{bound2}, @dots{} and filled with @var{initial-value}.
+
+@code{make-array} is a legacy function -- now defined in terms of
+@code{create-array}.
+
+@example
+(define (make-array initial-value . dimensions)
+  (apply create-array (vector initial-value) dimensions))
+@end example
+@end defun
+@noindent
+When constructing an array, @var{bound} is either an inclusive range of
+indices expressed as a two element list, or an upper bound expressed as
+a single integer.  So
+
+@example
+(create-array '#(foo) 3 3) @equiv{} (make-array '#(foo) '(0 2) '(0 2))
+@end example
+
+
+@defun make-shared-array array mapper bound1 bound2 @dots{}
+
+@code{make-shared-array} can be used to create shared subarrays of other
+arrays.  The @var{mapper} is a function that translates coordinates in
+the new array into coordinates in the old array.  A @var{mapper} must be
+linear, and its range must stay within the bounds of the old array, but
+it can be otherwise arbitrary.  A simple example:
+
+@example
+(define fred (create-array '#(#f) 8 8))
+(define freds-diagonal
+  (make-shared-array fred (lambda (i) (list i i)) 8))
+(array-set! freds-diagonal 'foo 3)
+(array-ref fred 3 3)
+   @result{} FOO
+(define freds-center
+  (make-shared-array fred (lambda (i j) (list (+ 3 i) (+ 3 j)))
+                     2 2))
+(array-ref freds-center 0 0)
+   @result{} FOO
+@end example
+@end defun
+
+@defun array-rank obj
+
+Returns the number of dimensions of @var{obj}.  If @var{obj} is not an array, 0 is
+returned.
+@end defun
+
+@defun array-shape array
+
+Returns a list of inclusive bounds.
+
+@example
+(array-shape (create-array '#() 3 5))
+   @result{} ((0 2) (0 4))
+@end example
+@end defun
+
+@defun array-dimensions array
+
+@code{array-dimensions} is similar to @code{array-shape} but replaces
+elements with a 0 minimum with one greater than the maximum.
+
+@example
+(array-dimensions (create-array '#() 3 5))
+   @result{} (3 5)
+@end example
+@end defun
+
+@defun array-in-bounds? array index1 index2 @dots{}
+
+Returns @code{#t} if its arguments would be acceptable to
+@code{array-ref}.
+@end defun
+
+@defun array-ref array index1 index2 @dots{}
+
+Returns the (@var{index1}, @var{index2}, @dots{}) element of @var{array}.
+@end defun
+
+@defun array-set! array obj index1 index2 @dots{}
+
+Stores @var{obj} in the (@var{index1}, @var{index2}, @dots{}) element of @var{array}.  The value returned
+by @code{array-set!} is unspecified.
+@end defun

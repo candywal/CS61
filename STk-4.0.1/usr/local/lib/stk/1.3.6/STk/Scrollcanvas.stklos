@@ -1,0 +1,111 @@
+;;;;
+;;;; S c r o l l c a n v a s . s t k 	  --  Scroll Canvas composite widget
+;;;;
+;;;; Copyright © 1993-1999 Erick Gallesio - I3S-CNRS/ESSI <eg@unice.fr>
+;;;; 
+;;;; Permission to use, copy, modify, distribute,and license this
+;;;; software and its documentation for any purpose is hereby granted,
+;;;; provided that existing copyright notices are retained in all
+;;;; copies and that this notice is included verbatim in any
+;;;; distributions.  No written agreement, license, or royalty fee is
+;;;; required for any of the authorized uses.
+;;;; This software is provided ``AS IS'' without express or implied
+;;;; warranty.
+;;;;
+;;;;           Author: Erick Gallesio [eg@kaolin.unice.fr]
+;;;;    Creation date: 25-Mar-1995 11:03
+;;;; Last file update:  3-Sep-1999 20:14 (eg)
+
+(require "Basics")
+
+(select-module STklos+Tk)
+
+;=============================================================================
+;
+; 			< S c r o l l - c a n v a s >
+;
+;=============================================================================
+
+;;;;
+;;;; Resources
+;;;;
+
+
+;;;;
+;;;; Class definition
+;;;;
+
+(define-class <Scroll-canvas> (<Tk-composite-widget> <Canvas>)
+  ((class	  :init-keyword :class
+		  :init-form    "ScrollCanvas")
+(canvas 	  :accessor     canvas-of)
+   (h-scrollbar	  :accessor     h-scrollbar-of)
+   (v-scrollbar	  :accessor     v-scrollbar-of)
+   (h-scroll-side :accessor     h-scroll-side
+		  :allocation   :virtual
+		  :init-keyword :h-scroll-side
+		  :slot-ref     (lambda (o) 
+				  (STk:h-scroll-side (slot-ref o 'h-scrollbar)))
+		  :slot-set!    (lambda (o v)
+				  (STk:h-scroll-side-set! 
+				      (slot-ref o 'h-scrollbar) v)))
+   (v-scroll-side :accessor     v-scroll-side
+		  :allocation   :virtual
+		  :init-keyword :v-scroll-side
+		  :slot-ref     (lambda (o)
+				  (STk:v-scroll-side (slot-ref o 'v-scrollbar)))
+		  :slot-set!    (lambda (o v)
+				  (STk:v-scroll-side-set! 
+				      (slot-ref o 'v-scrollbar) v)))
+   ;; Non allocated slots
+   (background   :accessor     background
+		 :init-keyword :background
+		 :allocation   :propagated
+		 :propagate-to (frame canvas h-scrollbar v-scrollbar))
+   (border-width :accessor     border-width 
+		 :allocation   :propagated
+		 :init-keyword :border-width
+		 :propagate-to (frame))
+   (relief	 :accessor     relief
+		 :init-keyword :relief
+		 :allocation   :propagated
+		 :propagate-to (frame))))
+
+;;;;
+;;;;  <Scroll-canvas> methods
+;;;;
+
+(define-method initialize-composite-widget ((self <Scroll-canvas>) initargs parent)
+  (let* ((hs (make <Scrollbar> :parent parent :orientation "horizontal"))
+	 (vs (make <Scrollbar> :parent parent :orientation "vertical"))
+	 (c  (make <Canvas>    :parent parent)))
+    ;; Set internal true slots 
+    (slot-set! self 'Id	          (slot-ref c 'Id))
+    (slot-set! self 'canvas       c)
+    (slot-set! self 'h-scrollbar  hs)
+    (slot-set! self 'v-scrollbar  vs)
+
+    ;; Place internal widgets
+    (grid hs :row 0 :column 1 :sticky "we")
+    (grid c  :row 1 :column 1 :sticky "nswe")
+    (grid vs :row 1 :column 2 :sticky "ns")
+    (grid 'rowconf    parent 1 :weight 1)
+    (grid 'columnconf parent 1 :weight 1)
+
+    ;; Attach command to scrollbar and canvas
+    (slot-set! c 'x-scroll-command (lambda l (apply (slot-ref hs 'Id) 'set l)))
+    (slot-set! c 'y-scroll-command (lambda l (apply (slot-ref vs 'Id) 'set l)))
+
+    (slot-set! hs 'command (lambda args (apply (slot-ref c 'Id) 'xview args)))
+    (slot-set! vs 'command (lambda args (apply (slot-ref c 'Id) 'yview args)))
+))
+
+(provide "Scrollcanvas")
+
+#|
+   Example:
+
+	(define c (make <Scroll-Canvas> :scroll-region '(-1000 -1000 1000 1000)))
+        (define r (make <Oval> :coords '(0 0 300 300) :fill "blue" :parent c))
+	(pack c :expand #t :fill "both")
+|#

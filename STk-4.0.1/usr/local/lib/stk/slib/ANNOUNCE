@@ -1,0 +1,184 @@
+This message announces the availability of Scheme Library release slib2d5.
+
+I have been improving some algorithms in SLIB.  The CRC module has
+been rewritten and verified against (3) implementations written in
+perl and C.  The bit and byte order for PNM raw image-file procedures
+have been corrected.
+
+The original sequence comparison procedure in "differ.scm" tried to
+construct the edit sequence; but the cited algorithm does not provide
+information beyond the edit-sequence length when symbols occur in
+multiple locations.  I created an algorithm to derive the
+edit-sequence which is O(NP) in both storage and time.  Even though
+its bounds are asymptotically O(NP), it is too slow for practical use
+comparing 100000 word sequences.
+
+The "System Interface"
+http://swissnet.ai.mit.edu/~jaffer/slib_6.html#SEC210 section has been
+reorganized and augmented:
+
++ The DIRECTORY package provides procedures for directory creation
+  and mapping over files in a directory.
+
++ The TRANSACT package provides functions for file-locking and
+  file-replacement transactions.
+
++ The CVS package has been much expanded.
+
+
+New in slib2d5:
+
+  * DrScheme.init: Ported for VERSIONs >= "200".
+
+  * Template.scm, vscm.init, umbscheme.init, t3.init, STk.init,
+  scsh.init, scheme2c.init, s48-0_57.init, RScheme.init,
+  macscheme.init, gambit.init, elk.init, chez.init, bigloo.init
+  (slib:warn): Put spaces between arguments.
+  (browse-url): Added.
+
+  * slib.texi (Database Macros): Section added.
+  (Portable Image Files): Added cindexes.
+
+  * dbcom.scm (define-*commands*): Added; supports define-command.
+
+  * pnm.scm (pnm:read-bit-vector!): Fixed for odd width pbms.
+  (pnm:image-file->array): Takes optional comment string arguments.
+  (pnm:read-bit-vector!): Read pbm-raw correctly.
+  (pnm:image-file->array): Correctly handle array type when max-pixval
+  > 256.
+
+  * Makefile (docfiles, efiles): nclients.* renamed transact.*.
+  (slib$(VERSION).info): Ignore makeinfo-4.1 bailing on colons in
+  names.
+
+  * transact.scm: Renamed from nclients.scm.
+  (emacs:backup-name): Added.
+  (transact-file-replacement): Now does backup files.
+
+  * guile.init (define-module, eval): Condition on version.
+
+  * slib.texi (Transactions): Replaces net-clients section.
+  (Space-Filling Curves): Section added.
+  (Bit-Twiddling): Added logical:rotate.
+
+  * uri.scm (path->uri, absolute-path?, null-directory?)
+  (glob-pattern?, parse-ftp-address): Moved from nclients.scm.
+
+  * dirs.scm (current-directory, make-directory): Moved from
+  nclients.scm.
+
+  * nclients.scm (user-email-address): Split into pieces.
+  (transact-file-replacement): Replaces call-with-replacement-file.
+  (file-lock-owner): Also check emacs-lock.
+  (word-lock:certificate): Name3 missing also triggered length error.
+
+  * logical.scm (logical:rotate): Added.
+  (logical:ones): Added so correct with limited-precision integers.
+
+  * db2html.scm (crc:hash-obj): Added.
+  (db->html-files): Fixed for #f argument DIR.
+
+  * crc.scm: Replaces makcrc.scm.
+
+  * slib.texi (Cyclic Checksum): Rewritten.
+
+  * solid.scm (scene:viewpoint): Corrected translation/rotation order.
+
+  * DrScheme.init: Corrected mis-attribution
+
+  * dbcom.scm (make-command-server): Handle lacking domain-checkers.
+
+  * differ.scm (diff:divide-and-conquer): Limit p-lim of sub-diffs to
+  those computed at mid-a, mid-b.
+  (diff:divide-and-conquer): Rewrote edit-sequence and longest common
+  subsequence generation.
+  (fp->lcs): Use argument array type for returned array.
+
+  * array.scm (create-array): Fixed scales calculation.
+
+  * modular.scm (modular:normalize): Test (provided? 'bignum) once.
+
+  * slib.texi (Parsing HTML): Added.
+  (net-clients): Updated.
+  (Vicinity): Clarified make-vicinity.
+  (Vicinity): Added pathname->vicinity.
+  (Command Example): Corrected.
+
+  * html4each.scm: HTML scan calls procedures for word, tag,
+  whitespac, and newline.
+
+  * chez.init (*features*): random is not.
+
+  * nclients.scm (file=?, file-lock-owner, file-lock!, file-unlock!,
+  system->line): Added.
+  (call-with-replacement-file): Added emacs-aware procedure to
+  read-modify-write file.
+
+  * cvs.scm (cvs-repository): Added.
+  (cvs-set-root!, cvs-vet): Rewritten to handle absolute paths in
+  CVS/Repository files.
+  (cvs:vet): Added CVS structure checker.
+  (cvs-directories, cvs-root, cvs-set-root!): Added.
+
+  * differ.scm (diff:edits): Return array of signed integers.
+  Broke functions into schlepable chunks; reorganized functions.
+  (diff:make-differ): Abstracted operations.
+  (fp->edits): Was forgetting some first deletes.
+  (fp->edits): Fixed off-by-one; last delete was lost.
+  (diff:edit-length): Array fp was uninitialized.
+
+  * require.scm (pathname->vicinity): Removed "Go up one level if
+  PATHNAME ends in a vicinity suffix" behavior.
+  (pathname->vicinity): Added.
+  (software-type): Removed vestigal conversion from msdos -> ms-dos.
+
+  * htmlform.scm (html:head): Use second argument (backlink)
+  verbatim if it contains <H1>.
+
+  * mitscheme.init (sort!): Accepts only vectors; set it to SORT.
+
+  * http-cgi.scm (make-query-alist-command-server): Don't assume
+  query-alist is non-false.
+
+2002-11-26  Ivan Shmakov  <ivan@theory.dcn-asu.ru>
+
+  * scheme48.init (slib:warn): Match S48-ERROR format.
+
+  * dbsyn.scm (within-database, define-table, define-command):
+  Added new package.
+
+2002-04-18  Chris Hanson <cph@zurich.ai.mit.edu>
+
+  * mitscheme.init: Updated for versions 7.5 .. 7.7.
+  (char-code-limit, defmacro, *features*): Corrected.
+
+
+SLIB is a portable Scheme library providing compatibiliy and utility
+functions for all standard Scheme implementations.
+
+SLIB includes initialization files for Bigloo, Chez, DrScheme, ELK,
+GAMBIT, MacScheme, MITScheme, PocketScheme, RScheme Scheme->C,
+Scheme48, SCM, SCSH, T3.1, UMB-Scheme, and VSCM.
+
+Documentation includes a manifest, installation instructions, and
+coding guidelines for the library.  Documentation of each library
+package is supplied.  SLIB Documentation is online at:
+
+             http://swissnet.ai.mit.edu/~jaffer/SLIB.html
+
+SLIB is available from:
+ http://swissnet.ai.mit.edu/ftpdir/scm/slib2d5.zip
+ http://swissnet.ai.mit.edu/ftpdir/scm/slib-2d5-1.noarch.rpm
+ swissnet.ai.mit.edu:/pub/scm/slib2d5.zip
+ swissnet.ai.mit.edu:/pub/scm/slib-2d5-1.noarch.rpm
+
+SLIB-PSD is a portable debugger for Scheme (requires emacs editor):
+ http://swissnet.ai.mit.edu/ftpdir/scm/slib-psd1-3.tar.gz
+ swissnet.ai.mit.edu:/pub/scm/slib-psd1-3.tar.gz
+
+SCHELOG is an embedding of Prolog in Scheme+SLIB:
+ http://www.cs.rice.edu/CS/PLT/packages/schelog/
+
+Programs for printing and viewing TexInfo documentation (which SLIB
+has) come with GNU Emacs or can be obtained via ftp from:
+ ftp.gnu.org:pub/gnu/texinfo/texinfo-4.0.tar.gz

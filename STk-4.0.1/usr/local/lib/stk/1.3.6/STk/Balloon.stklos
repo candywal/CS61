@@ -1,0 +1,66 @@
+;;;;
+;;;; B a l l o o n . s t k l o s  	  --  Help-Balloon class definition
+;;;;
+;;;; Copyright © 1996-1999 Erick Gallesio - I3S-CNRS/ESSI <eg@unice.fr>
+;;;; 
+;;;; Permission to use, copy, modify, distribute,and license this
+;;;; software and its documentation for any purpose is hereby granted,
+;;;; provided that existing copyright notices are retained in all
+;;;; copies and that this notice is included verbatim in any
+;;;; distributions.  No written agreement, license, or royalty fee is
+;;;; required for any of the authorized uses.
+;;;; This software is provided ``AS IS'' without express or implied
+;;;; warranty.
+;;;;
+;;;;           Author: Erick Gallesio [eg@unice.fr]
+;;;;    Creation date: 23-Oct-1996 17:02
+;;;; Last file update:  3-Sep-1999 20:12 (eg)
+;;;;
+
+(require "balloon")
+(require "Basics")
+(select-module STklos+Tk)
+
+(export add-balloon)
+
+;=============================================================================
+;
+;				 <Help-Balloon>
+;
+;=============================================================================
+
+;;;;
+;;;; Class definition
+;;;;
+(define-class <Help-Balloon> (<Label>)
+  ((label :accessor 	label-of)
+   (delay :initform 	1000 ; ms
+	  :init-keyword :delay 
+	  :accessor	 delay)))
+
+;;
+;; Initialize-composite-widget
+;;
+(define-method initialize-composite-widget ((self <Help-balloon>) initargs parent)
+  (next-method)
+  (slot-set! self 'Id (slot-ref (find-balloon-help) 'Id)))
+
+;;
+;; Add-balloon
+;;
+(define-method add-balloon ((self <Help-Balloon>) who txt)
+  (add-balloon-help (Id who) txt (delay self) (background self)))
+
+
+(provide "Balloon")
+
+#|
+  Example:
+	(define b  (make <Help-Balloon> :background "PaleGreen"))
+	(define b1 (make <Button> :text "B1"))
+	(define b2 (make <Button> :text "B2"))
+	(pack b1 b2 :side "left")
+	 
+	(add-balloon b b1 "This is button b1")
+	(add-balloon b b2 "This one is\n called b2")
+|#

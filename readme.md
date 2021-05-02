@@ -1,1 +1,1 @@
-This repo is record of me working through SICP + Birna Harvey's vido lectures. 
+This repo is record of me working through SICP + Brian Harvey's video lectures

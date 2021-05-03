@@ -1,0 +1,79 @@
+;;;;
+;;;; w w w - f i l e . s t k		--  WWW for STk (FILE: protocol)
+;;;;
+;;;; Copyright © 1996-1999 Erick Gallesio - I3S-CNRS/ESSI <eg@unice.fr>
+;;;; 
+;;;; Permission to use, copy, modify, distribute,and license this
+;;;; software and its documentation for any purpose is hereby granted,
+;;;; provided that existing copyright notices are retained in all
+;;;; copies and that this notice is included verbatim in any
+;;;; distributions.  No written agreement, license, or royalty fee is
+;;;; required for any of the authorized uses.
+;;;; This software is provided ``AS IS'' without express or implied
+;;;; warranty.
+;;;;
+;;;; This version uses some of the enhancements done by Harvey J. Stein:
+;;;;         Copyright (c) 1995 Harvey J. Stein (hjstein@math.huji.ac.il)
+;;;;
+;;;;           Author: Erick Gallesio [eg@unice.fr]
+;;;;    Creation date:  4-Oct-1996 22:14
+;;;; Last file update:  3-Sep-1999 19:57 (eg)
+
+
+;; Add the "FILE:" protocol
+
+(with-module WWW
+
+  (define (generate-html-dir dir out)
+    ;; This function generate a listing of the files in "dir" (HTML format)
+    (let* ((cwd   (getcwd))
+	   (all   (lambda (dir) (chdir dir) (glob ".*" "*")))
+	   (files (sort (all dir) string<?))
+	   (link  (lambda (img ref txt)
+		    (format out "<A HREF=file:~A>" ref)
+		    (format out "<IMG ALIGN=middle SRC=@~A@.gif>~A</A>\n" 
+			    img txt))))
+
+      (chdir cwd)
+      
+      ;; Print Header
+      (format out "<pre>\n\n</pre><H2> Directory listing of ~A</H2><HR><PRE>\n" dir)
+      (link "parentdir"
+	    (canonical-path (string-append dir "/..")) 
+	    "Up to higher level directory")
+      
+      ;; Print each file	    
+      (for-each (lambda (name)
+		  (unless (or (string=? name ".") (string=? name ".."))
+		    (link (if (file-is-directory? (string-append dir "/" name) )
+			   "dir" 
+			   "file")
+			  (canonical-path (string-append dir "/" name))
+			  name)))
+		files)))
+
+
+  (define (get-file: url)
+    ;; This function must return a port and the function to close it
+    (let ((file (url:filename url)))
+      (if (or (not file) (string=? file ""))	
+	  (set! file "/"))
+      (if (file-is-directory? file)
+	  ;; File is a directory. Generate a HTML directory
+	  (let ((p (open-output-string)))
+	    (generate-html-dir file p)
+	    (let ((f (open-input-string (get-output-string p))))
+	      (cons f 
+		    (lambda () (close-port f)))))
+	  ;; Normal file
+	  (let((f (open-file file "r")))
+	    (cons f 
+		  (if f 
+		      (lambda () (close-input-port f))
+		      (lambda () #f)))))))
+
+  ;; Add the protocol
+  (WWW:add-protocol 'file get-file:)
+)
+
+(provide "www-file")

@@ -1,0 +1,22 @@
+Source: stk
+Section: alien
+Priority: extra
+Maintainer: root <root@LAPTOP-CF8JNUTO>
+
+Package: stk
+Architecture: x86_64
+Depends: ${shlibs:Depends}
+Description: Scheme Interpreter with access to the Tk toolkit
+ STk is a R4RS Scheme interpreter which can access the Tk graphical
+ package.  Concretely it can be seen as John Ousterhout's Tk
+ package where the Tcl language has been replaced by Scheme.
+ .
+ STk also provides an efficient object oriented system called STklos.
+ STklos is an extensive OO system with multiple inheritance, generic
+ functions, multi-methods and a Meta-Object Protocol).
+ .
+ This package integrates the 8.0.3 version of the Tk toolkit.
+ This package has been modified by UC Berkeley's EECS Department
+ for Computer Science classes.
+ .
+ (Converted from a rpm package by alien version 8.95.)

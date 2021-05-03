@@ -1,0 +1,34 @@
+This package was debianized by the alien program by converting
+a binary .rpm package on Mon, 03 May 2021 14:39:15 +0530
+
+Copyright: none
+
+Information from the binary package:
+Name        : STk
+Version     : 4.0.1
+Release     : ucb1.3.6
+Architecture: i386
+Install Date: (not installed)
+Group       : Development/Languages
+Size        : 6715429
+License     : none
+Signature   : (none)
+Source RPM  : STk-4.0.1-ucb1.3.6.src.rpm
+Build Date  : Tue Jan 29 06:53:28 2008
+Build Host  : localhost.localdomain
+Relocations : (not relocatable)
+Packager    : Instructional Support Group <inst@EECS.Berkeley.EDU>
+Summary     : Scheme Interpreter with access to the Tk toolkit
+Description :
+STk is a R4RS Scheme interpreter which can access the Tk graphical
+package.  Concretely it can be seen as John Ousterhout's Tk
+package where the Tcl language has been replaced by Scheme.
+
+STk also provides an efficient object oriented system called STklos.
+STklos is an extensive OO system with multiple inheritance, generic
+functions, multi-methods and a Meta-Object Protocol).
+
+This package integrates the 8.0.3 version of the Tk toolkit.
+This package has been modified by UC Berkeley's EECS Department
+for Computer Science classes.
+

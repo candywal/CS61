@@ -1,0 +1,205 @@
+;;;;
+;;;; T k - m e t a . s t k 		--  Metaclasses definitions
+;;;;
+;;;; Copyright © 1993-1999 Erick Gallesio - I3S-CNRS/ESSI <eg@unice.fr>
+;;;; 
+;;;; Permission to use, copy, modify, distribute,and license this
+;;;; software and its documentation for any purpose is hereby granted,
+;;;; provided that existing copyright notices are retained in all
+;;;; copies and that this notice is included verbatim in any
+;;;; distributions.  No written agreement, license, or royalty fee is
+;;;; required for any of the authorized uses.
+;;;; This software is provided ``AS IS'' without express or implied
+;;;; warranty.
+;;;;
+;;;;           Author: Erick Gallesio [eg@unice.fr]
+;;;;    Creation date: 24-Feb-1994 15:08
+;;;; Last file update:  3-Sep-1999 20:11 (eg)
+;;;;
+;;;;
+;;;; Compatibility:
+;;;; 	- the :pseudo allocation is now replaced by :tk-virtual (Rob DeLine
+;;;;	  proposition). However both name are accepted. Avoid to use :pseudo
+;;;;	  since it will disappear in the future.
+;;;;
+;;;;	- the :special allocation is now replaced by :propagated (Rob DeLine
+;;;;	  proposition). However both name are accepted. Avoid to use :special
+;;;;	  since it will disappear in the future.
+;;;;
+;;;;	- the :propagate option for propagated slots is now replaced by 
+;;;;	  :propagate-to. Avoid to use :propagate since it will disappear in
+;;;;	  the future.
+
+(require "stklos")
+
+;;;;
+;;;; Stuff for declaring the new module STklos+Tk and import it in STk
+;;;; Note that the module Tk, is also defined here. This is useless, except 
+;;;; when making  images (i.e. probably the -no-window option has been used,
+;;;; avoiding the Tk initialization, and hence the Tk module definition)
+
+(define-module Tk)				; See comment above
+(define-module STklos+Tk  (import STklos Tk))	; Define module STklos+Tk
+(with-module STk	  (import STklos+Tk))	; Import STklos+Tk in STk
+(select-module STklos+Tk)			; Rest of this file belongs 
+						; to STklos+Tk module
+
+;;;;
+;;;; Exports
+;;;;
+(export 
+    ;; Metaclases exported by this file 
+    <With-Tk-virtual-slots-metaclass> <Tk-metaclass> <Tk-item-metaclass>
+    <Tk-tag-metaclass> <Tk-text-window-metaclass> <Tk-composite-metaclass>
+    <Tk-composite-item-metaclass>
+    ;; generic functions exported by this file
+    compute-tk-virtual-get-n-set)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;
+;;;; <With-Tk-virtual-slots-metaclass> class
+;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Define Tk slots getters and setters. In fact this metaclass permits 
+;; a direct mapping of STklos slots to the Tk-library widget options.
+;; For instance, a <Label> has a slot called "text". Accessing this slot
+;; will call a Tk (C) library function 
+;;     (xxxx 'cget 'text)		for reading
+;; or
+;;     (xxxx 'configure 'text value)	for writing
+;; where xxxx is an internal name generated during instance creation).
+;;
+;; Furthermore, Tk widgets define a lot of accessors and exporting
+;; them individually can be boring. Consequently, when such a class is
+;; initiaized, we export it and all its direct accessor methods
+
+
+(define-class <With-Tk-virtual-slots-metaclass> (<class>)
+  ())
+
+(define-method initialize ((class <With-Tk-virtual-slots-metaclass>) initargs)
+  (next-method)
+  (let ((module (%get-module (class-environment class))))
+    ;; export the class
+    (export-symbol (class-name class) module)
+    ;; export its accessors
+    (for-each (lambda (method)
+		(if (is-a? method <accessor-method>)
+		    (export-symbol (generic-function-name
+				    (method-generic-function method))
+				   module)))
+	      (class-direct-methods class))))
+
+(define-method compute-get-n-set ((class <With-Tk-virtual-slots-metaclass>) slot)
+  (if (memv (slot-definition-allocation slot) '(:tk-virtual :pseudo))
+      [let ((tk-name (make-keyword (get-keyword :tk-name (cdr slot) (car slot)))))
+	(compute-tk-virtual-get-n-set class tk-name)]
+      [next-method]))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;
+;;;; <Tk-metaclass> metaclass
+;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define-class <Tk-metaclass> (<With-Tk-virtual-slots-metaclass>)
+  ())
+
+(define-method compute-tk-virtual-get-n-set ((class <Tk-metaclass>) tk-name)
+  (list
+   (lambda (o)   ((slot-ref o 'Id) 'cget tk-name))
+   (lambda (o v) ([slot-ref o 'Id] 'configure tk-name v))))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;
+;;;; <Tk-item-metaclass> metaclass
+;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define-class <Tk-item-metaclass> (<With-Tk-virtual-slots-metaclass>)
+  ())
+
+(define-method compute-tk-virtual-get-n-set ((class <Tk-item-metaclass>) tk-name)
+  (list
+   (lambda (o)
+     ((slot-ref o 'Id) 'itemcget (slot-ref o 'Cid) tk-name))
+   (lambda (o v)
+     ((slot-ref o 'Id) 'itemconf (slot-ref o 'Cid) tk-name v))))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;
+;;;; <Tk-tag-metaclass> metaclass
+;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define-class <Tk-tag-metaclass> (<With-Tk-virtual-slots-metaclass>)
+  ())
+
+(define-method compute-tk-virtual-get-n-set ((class <Tk-tag-metaclass>) tk-name)
+  (list
+   (lambda (o)
+     ((slot-ref o 'Id) 'tag 'cget (slot-ref o 'Tid) tk-name))
+   (lambda (o v)
+     ((slot-ref o 'Id) 'tag 'configure (slot-ref o 'Tid) tk-name v))))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;
+;;;; <Tk-text-inset-metaclass> metaclass
+;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define-class <Tk-text-inset-metaclass> (<With-Tk-virtual-slots-metaclass>)
+  ())
+
+(define-method compute-tk-virtual-get-n-set ((class <Tk-text-inset-metaclass>) 
+					     tk-name)
+  (list
+   (lambda (o)
+     (if (slot-bound? o 'Iid)
+	 ((slot-ref o 'Id) (slot-ref o 'kind) 'cget (slot-ref o 'Iid) tk-name)
+	 (make-unbound)))
+   (lambda (o v)
+     (if (slot-bound? o 'Iid)
+	 ((slot-ref o 'Id) (slot-ref o 'kind) 'configure (slot-ref o 'Iid) 
+			   tk-name v)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;
+;;;; <Tk-font-metaclass> metaclass
+;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define-class <Tk-font-metaclass> (<With-Tk-virtual-slots-metaclass>)
+  ())
+
+(define-method compute-tk-virtual-get-n-set ((class <Tk-font-metaclass>) tk-name)
+  (list
+   (lambda (o)   (font 'configure (slot-ref o 'Id) tk-name))
+   (lambda (o v) (font 'configure (slot-ref o 'Id) tk-name v))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;
+;;;; <Tk-composite-metaclass> metaclass
+;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define-class <Tk-composite-metaclass> (<Tk-metaclass> <Composite-metaclass>)
+  ())
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;
+;;;; <Tk-composite-item-metaclass> metaclass
+;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define-class <Tk-composite-item-metaclass> (<Tk-item-metaclass> 
+					     <Composite-metaclass>)
+  ())
+
+
+(provide "Tk-meta")

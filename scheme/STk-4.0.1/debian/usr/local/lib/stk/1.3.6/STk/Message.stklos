@@ -1,0 +1,70 @@
+;;;;
+;;;; M e s s a g e . s t k 	  --  Message class definition
+;;;;
+;;;; Copyright © 1993-1999 Erick Gallesio - I3S-CNRS/ESSI <eg@unice.fr>
+;;;; 
+;;;; Permission to use, copy, modify, distribute,and license this
+;;;; software and its documentation for any purpose is hereby granted,
+;;;; provided that existing copyright notices are retained in all
+;;;; copies and that this notice is included verbatim in any
+;;;; distributions.  No written agreement, license, or royalty fee is
+;;;; required for any of the authorized uses.
+;;;; This software is provided ``AS IS'' without express or implied
+;;;; warranty.
+;;;;
+;;;;           Author: Erick Gallesio [eg@kaolin.unice.fr]
+;;;;    Creation date:  3-Mar-1994 23:10
+;;;; Last file update:  3-Sep-1999 20:11 (eg)
+
+
+(require "Basics")
+
+(select-module STklos+Tk)
+
+;; No exports
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;
+;;;; <Message> class
+;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define-class <Message> (<Tk-simple-widget>)
+  ((anchor	  :accessor     anchor
+		  :init-keyword :anchor
+		  :allocation   :tk-virtual)
+   (aspect	  :accessor 	aspect
+		  :init-keyword :aspect
+		  :allocation 	:tk-virtual)
+   (font	  :accessor     font
+		  :init-keyword :font
+		  :allocation   :tk-virtual)
+   (foreground	  :accessor     foreground
+		  :init-keyword :foreground
+		  :allocation   :tk-virtual)
+   (justify 	  :accessor 	justify 
+		  :init-keyword :justify 
+		  :allocation	:tk-virtual)
+   (pad-x	  :accessor     pad-x
+		  :init-keyword :pad-x
+		  :allocation   :tk-virtual
+		  :tk-name      padx)
+   (pad-y	  :accessor     pad-y
+		  :init-keyword :pad-y
+		  :allocation   :tk-virtual
+		  :tk-name      pady)
+   (text	  :accessor     text-of
+		  :init-keyword :text
+		  :allocation   :tk-virtual)
+   (text-variable :accessor     text-variable
+		  :init-keyword :text-variable
+		  :allocation   :tk-virtual
+		  :tk-name      textvar)
+   (width	  :accessor	width
+		  :init-keyword :width
+		  :allocation	:tk-virtual)))
+
+(define-method tk-constructor ((self <Message>))
+  Tk:message)
+
+(provide "Message")

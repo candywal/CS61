@@ -1,0 +1,169 @@
+;;;;
+;;;; L i s t b o x . s t k 		--  Listbox class definition
+;;;;
+;;;; Copyright © 1993-1999 Erick Gallesio - I3S-CNRS/ESSI <eg@unice.fr>
+;;;; 
+;;;; Permission to use, copy, modify, distribute,and license this
+;;;; software and its documentation for any purpose is hereby granted,
+;;;; provided that existing copyright notices are retained in all
+;;;; copies and that this notice is included verbatim in any
+;;;; distributions.  No written agreement, license, or royalty fee is
+;;;; required for any of the authorized uses.
+;;;; This software is provided ``AS IS'' without express or implied
+;;;; warranty.
+;;;;
+;;;;           Author: Erick Gallesio [eg@unice.fr]
+;;;;    Creation date: 28-Feb-1994 14:38
+;;;; Last file update:  3-Sep-1999 20:10 (eg)
+
+(require "Basics")
+
+(select-module STklos+Tk)
+
+(export listbox-activate bounding-box current-selection delete get
+	listbox-index insert nearest text-mark text-drag-to see-item
+	selection-anchor selection-clear selection-includes selection-set
+	size x-view y-view)
+
+;=============================================================================
+;
+; 				<Listbox> class
+;
+;=============================================================================
+
+(define-class <Listbox> (<Tk-simple-widget> <Tk-selectable> <Tk-sizeable>
+			 <Tk-text-selectable> <Tk-xyscrollable>)
+  ((set-grid		:init-keyword :set-grid
+		   	:accessor     set-grid
+			:tk-name      setgrid
+			:allocation   :tk-virtual)
+   (select-mode		:init-keyword :select-mode
+			:accessor     select-mode
+			:tk-name      selectm
+			:allocation   :tk-virtual)
+   ;; Fictive slot 
+   (value		:accessor     value
+			:init-keyword :value
+			:allocation   :virtual
+			:slot-ref     (lambda (o)
+					((Id o) 'get 0 'end))
+			:slot-set!    (lambda (o v)
+					(let ((w  (Id o)))
+					  (w 'delete 0 'end)
+					  (apply w 'insert 0 v))))))
+
+(define-method tk-constructor ((self <Listbox>))
+  Tk:listbox)
+
+;;;
+;;; Listbox-activate
+;;;
+(define-method  listbox-activate ((self <Listbox>) index)
+  ((slot-ref self 'Id) 'activate index))
+
+;;;
+;;; Bounding-box
+;;;
+(define-method bounding-box ((self <Listbox>) index)
+  ((slot-ref self 'Id) 'bbox index))
+
+;;;
+;;; Current-selection
+;;;
+(define-method current-selection ((self <Listbox>))
+  (let ((res ((slot-ref self 'Id) 'curselection)))
+    (if (null? res) #f res)))
+
+;;;
+;;; Delete
+;;; 
+(define-method delete ((self <Listbox>) start . end)
+  (apply (slot-ref self 'Id) 'delete start end))
+
+;;;
+;;; Get
+;;;
+(define-method get ((self <Listbox>) start . end)
+  (apply (slot-ref self 'Id) 'get start end))
+
+;;;
+;;; Index
+;;;
+(define-method listbox-index ((self <Listbox>) index)
+  ((slot-ref self 'Id) 'index index))
+
+;;;
+;;; Insert
+;;;
+(define-method insert ((self <Listbox>) index . value)
+  (apply (slot-ref self 'Id) 'insert index value))
+
+;;;
+;;; Nearest
+;;; 
+(define-method nearest ((self <Listbox>) index)
+  ((slot-ref self 'Id) 'nearest index))
+
+
+;;;
+;;; Mark 
+;;; 
+(define-method text-mark ((self <Listbox>) x y)
+  ((slot-ref self 'Id) 'scan 'mark x y))
+
+;;;
+;;; Drag-to 
+;;; 
+(define-method text-drag-to ((self <Listbox>) x y)
+  ((slot-ref self 'Id) 'scan 'dragto x y))
+
+;;;
+;;; See-item
+;;;
+(define-method see-item ((self <Listbox>) index)
+  ((slot-ref self 'Id) 'see index))
+
+;;;
+;;; Selection-anchor
+;;; 
+(define-method selection-anchor ((self <Listbox>) index)
+  ((slot-ref self 'Id) 'selection 'anchor index))
+
+;;;
+;;; Selection-clear
+;;; 
+(define-method selection-clear ((self <Listbox>) first . last)
+  (apply (slot-ref self 'Id) 'selection 'clear first last))
+
+;;;
+;;; Selection-includes
+;;; 
+(define-method selection-includes ((self <Listbox>) index)
+  ((slot-ref self 'Id) 'selection 'includes index))
+
+;;;
+;;; Selection-set
+;;; 
+(define-method selection-set ((self <Listbox>) first . last)
+  (apply (slot-ref self 'Id) 'selection 'set first last))
+
+;;;
+;;; Size
+;;; 
+(define-method size ((self <Listbox>))
+  ((slot-ref self 'Id) 'size))
+
+;;;
+;;; X-View
+;;; 
+(define-method x-view ((self <Listbox>) . args)
+  (apply (slot-ref self 'Id) 'xview args))
+
+;;;
+;;; Y-View
+;;; 
+(define-method y-view ((self <Listbox>) . args)
+  (apply (slot-ref self 'Id) 'yview args))
+
+
+(provide "Listbox")

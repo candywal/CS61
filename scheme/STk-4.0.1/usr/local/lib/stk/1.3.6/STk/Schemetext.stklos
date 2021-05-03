@@ -1,0 +1,54 @@
+;;;;
+;;;; S c h e m e - t e x t . s t k l o s	-- A mini font-lock package
+;;;;
+;;;; Copyright © 1997-1999 Erick Gallesio - I3S-CNRS/ESSI <eg@unice.fr>
+;;;; 
+;;;; Permission to use, copy, modify, distribute,and license this
+;;;; software and its documentation for any purpose is hereby granted,
+;;;; provided that existing copyright notices are retained in all
+;;;; copies and that this notice is included verbatim in any
+;;;; distributions.  No written agreement, license, or royalty fee is
+;;;; required for any of the authorized uses.
+;;;; This software is provided ``AS IS'' without express or implied
+;;;; warranty.
+;;;;
+;;;;           Author: Erick Gallesio [eg@unice.fr]
+;;;;    Creation date: 16-Jan-1997 12:10
+;;;; Last file update:  3-Sep-1999 20:14 (eg)
+
+(require "Tk-classes")
+(require "font-lock")
+
+(select-module STklos+Tk)
+
+;;;;
+;;;; Resources
+;;;;
+
+(option 'add "*SchemeText*Text*Background"  "white" "widgetDefault")
+
+;=============================================================================
+;
+; 			< S c h e m e - T e x t >
+;
+;=============================================================================
+(option 'add "*SchemeText*Text*Background"  "white" "widgetDefault")
+
+(define-class <Scheme-Text> (<Scroll-Text>)
+  ((class :init-keyword :class
+	  :init-form    "SchemeText")))
+
+(define-method initialize ((self <Scheme-text>) initargs)
+  (next-method)
+  (make-fontifiable (Id self))
+  (fontify-whole-buffer (Id self)))
+
+#|
+Usage:
+  (define t (make <Scheme-Text> 
+		  :value "(define A (make <B> :key \"aa\")); comment"))
+  (pack t :fill "both" :expand #t)
+
+|#
+
+

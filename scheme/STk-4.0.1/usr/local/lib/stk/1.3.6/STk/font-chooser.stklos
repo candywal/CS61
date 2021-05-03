@@ -1,0 +1,200 @@
+;;;;
+;;;; f o n t - c h o o s e r . s t k l o s	-- A simple font editor widget
+;;;;
+;;;; Copyright © 1999 Erick Gallesio - I3S-CNRS/ESSI <eg@unice.fr>
+;;;; 
+;;;; Permission to use, copy, modify, distribute,and license this
+;;;; software and its documentation for any purpose is hereby granted,
+;;;; provided that existing copyright notices are retained in all
+;;;; copies and that this notice is included verbatim in any
+;;;; distributions.  No written agreement, license, or royalty fee is
+;;;; required for any of the authorized uses.
+;;;; This software is provided ``AS IS'' without express or implied
+;;;; warranty.
+;;;;
+;;;;           Author: Erick Gallesio [eg@unice.fr]
+;;;;    Creation date:  1-Feb-1999 08:55
+;;;; Last file update:  3-Sep-1999 19:51 (eg)
+
+
+(require "Tk-classes")
+
+
+(select-module STklos+Tk)
+(export make-font-chooser)
+
+;=============================================================================
+;
+; Global variables
+;
+;=============================================================================
+
+(define *fc:font*      	 #f)	;;; the prototype font 
+(define *fc:lock*	 #f)	;;; to grab the window while choosing font
+
+;=============================================================================
+;
+; Utilities
+;
+;=============================================================================
+
+(define (font-wait-result chooser)
+  (let ((cur-grab (grab 'current chooser))
+	(old-font (font 'actual *fc:font*))
+	(pretty   (lambda ()
+		    (append 
+		      (list (font 'conf *fc:font* :family)
+			    (font 'conf *fc:font* :size)
+			    (string->symbol (font 'conf *fc:font* :weight))
+			    (string->symbol (font 'conf *fc:font* :slant)))
+		      (if (font 'conf *fc:font* :underline)  '(underline) '())
+		      (if (font 'conf *fc:font* :overstrike) '(overstrike) '())))))
+    (tkwait 'visibility chooser)
+    (grab 'set chooser) 
+    (tkwait 'variable '*fc:lock*) 
+    (and cur-grab (grab 'set cur-grab))
+    
+    ;; Compute result
+    (case *fc:lock*
+      ((ok)      (destroy chooser) 
+       		 ;; return a pretty result
+       		 (pretty))
+      ((cancel)  (destroy chooser) 
+       		 ;; restore the font we have when entering the widget
+       		 (apply font 'configure *fc:font* old-font)
+		 #f))))
+
+
+
+(define (%make-font-chooser fnt)
+  ;;
+  ;; Some utilities
+  ;;
+  (define (toggle-weight)
+    (font 'configure *fc:font* :weight
+	  (if (equal? (font 'conf *fc:font* :weight) "normal") "bold" "normal")))
+
+  (define (toggle-slant)
+    (font 'configure *fc:font* :slant
+	  (if (equal? (font 'conf *fc:font* :slant) "roman") "italic" "roman")))
+
+  (define (toggle-underline)
+    (font 'configure *fc:font* :underline
+	  (not (font 'configure *fc:font* :underline))))
+
+  (define (toggle-overstrike)
+    (font 'configure *fc:font* :overstrike
+	  (not (font 'configure *fc:font* :overstrike))))
+
+  ;;
+  ;; Top frame building
+  ;;
+  (define (make-top-frame parent)
+    (let* ((fonts   (sort (font 'families) string<?))
+	   (f       (make <Frame> :parent parent :relief "groove" :border-width 2))
+	   (family  (make <Label>    :parent f :text "Font Family:"))
+	   (choice1 (make <Combobox> :parent f :values fonts :state "disabled"
+			  	     :value (font 'configure *fc:font* :family)
+				     :command (lambda (v) 
+						(font 'conf *fc:font* :family v))))
+	   (size    (make <Label>    :parent f :text "Font Size:"))
+	   (choice2 (make <Combobox> :parent f :values '(8 10 12 14 20 24 36 48)
+			  	     :width 3 :string-value #f
+				     :value (font 'configure *fc:font* :size)
+				     :command (lambda (v) 
+						(font 'conf *fc:font* :size v))))
+	   (bold    (make <Check-button> :parent f :text "B" :width 3
+			  		 :font (font 'create :weight 'bold)
+					 :indicator-on #f :command toggle-weight))
+	   (italic  (make <Check-button> :parent f :text "i" :width 3
+			  		 :font (font 'create :slant 'italic)
+					 :indicator-on #f :command toggle-slant))
+	   (under   (make <Check-button> :parent f :text "U" :width 3
+			  		 :font (font 'create :underline #t)
+					 :indicator-on #f 
+					 :command toggle-underline))
+	   (over    (make <Check-button> :parent f :text "O" :width 3
+			  		 :font (font 'create :overstrike #t)
+					 :indicator-on #f
+					 :command toggle-overstrike)))
+
+
+      ;; See the  buttons that must be toggled
+      (if (equal? (font 'conf *fc:font* :weight) "bold")   (toggle bold))
+      (if (equal? (font 'conf *fc:font* :slant)  "italic") (toggle italic))
+      (if (font 'conf *fc:font* :underline)		   (toggle under))
+      (if (font 'conf *fc:font* :overstrike) 		   (toggle over))
+
+
+      ;; Change binding of "Font size" box  to allow direct manipulation
+      (bind (entry-of choice2) "<Return>" 
+	    (lambda () (font 'conf *fc:font* :size (value choice2))))
+
+	
+      ;; Pack everybody
+      (pack family choice1 size choice2 :side 'left :padx 2)
+      (pack bold under italic over :fill 'y :side 'left :padx 2 :pady 2)
+      
+      f))
+
+  ;;;
+  ;;; Center part of the widget (the sample)
+  ;;;
+  (define (make-sample parent)
+    (make <Label> :parent parent :font *fc:font*
+	  :text (string-append "ABCDEFGHIJKLMNOPQRSTUVWXYZ\n"
+			       "abcdefghijklmnopqrstuvwxyz\n"
+			       "0123456789~`!@#$%^&*()_-+=\n"
+			       "{}[]:;\"'<>,.?/")))
+
+
+  ;;;
+  ;;; Bottom part of the widget (the closing buttons)
+  ;;;
+  (define (make-buttons parent) 
+    (let* ((f      (make <Frame> :parent parent :relief "groove" :border-width 2))
+	   (sel    (make <Button> :parent f :text "Select"
+			 :command (lambda () (set! *fc:lock* 'ok))))
+	   (cancel (make <Button> :parent f :text "Cancel"
+			 :command (lambda () (set! *fc:lock* 'cancel)))))
+      (wm 'protocol parent "WM_DELETE_WINDOW" (lambda() (set! *fc:lock* 'cancel)))
+      (pack sel cancel :side 'left :padx 2 :pady 2)
+      f))
+  
+
+  ;;; 
+  ;;; Start of %make-font-chooser
+  ;;;
+  (let* ((t   (make <Toplevel> :title "Font chooser ..." :class "FontChooser"
+		    	       :geometry "500x300"))
+
+	 (top (make-top-frame t))
+	 (txt (make-sample t))
+	 (but (make-buttons t)))
+    ; The internal frame
+    (pack top :fill 'x :expand #f)
+    (pack txt :fill 'both :expand #t)
+    (pack but :fill 'x :expand #f :side 'bottom)
+    t))
+
+;=============================================================================
+;
+; make-font-chooser (the only exported procedure)
+;
+;=============================================================================
+(define (make-font-chooser . fnt)
+  (unless *fc:font*
+    ;; If this is the first call to this function. Create the prototype font
+    ;; with a plausible font
+    (let ((tmp (button (gensym ".tmp__font"))))
+      (set! *fc:font* (apply font 'create (font 'actual (tk-get tmp :font))))
+      (destroy tmp)))
+  
+  (unless (null? fnt)
+     (apply font 'configure *fc:font* (font 'actual (car fnt))))
+  
+  ;; Call the chooser box
+  (font-wait-result (%make-font-chooser *fc:font*)))
+
+
+(provide "font-chooser")

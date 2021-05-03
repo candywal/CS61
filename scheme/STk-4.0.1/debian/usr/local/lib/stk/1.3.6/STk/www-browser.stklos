@@ -1,0 +1,211 @@
+;;;;
+;;;; w w w - b r o w s e r . s t k l o s     -- A simple WEB browser 
+;;;;					     -- (and a very simple mail composer)
+;;;;
+;;;; Copyright © 1993-1999 Erick Gallesio - I3S-CNRS/ESSI <eg@unice.fr>
+;;;; 
+;;;; Permission to use, copy, modify, distribute,and license this
+;;;; software and its documentation for any purpose is hereby granted,
+;;;; provided that existing copyright notices are retained in all
+;;;; copies and that this notice is included verbatim in any
+;;;; distributions.  No written agreement, license, or royalty fee is
+;;;; required for any of the authorized uses.
+;;;; This software is provided ``AS IS'' without express or implied
+;;;; warranty.
+;;;;
+;;;;           Author: Erick Gallesio [eg@unice.fr]
+;;;;    Creation date: 21-Oct-1996 14:02
+;;;; Last file update: 16-Sep-1999 17:37 (eg)
+;;;;
+
+(require "Tk-classes")
+(require "www")
+
+(import WWW)
+
+;;;;
+;;;; 				W W W : b r o w s e r
+;;;; 
+
+(define WWW:browser
+  (let ((browser #f)		;; Id of browser (#f if no browser exists)
+	(lentry  #f))		;; The labeled entry of the interface
+    (lambda args
+
+  ;; URL history management
+  ;;
+  (define new-url
+    (let ((history '())
+	  (current -1))
+      (lambda  (txt url)
+	(case url
+	  ((previous) (when (> (length history) 1)
+			(set! current (modulo (- current 1) (length history)))
+			(www:view-url (Id txt) (list-ref history current))))
+	  ((next)     (when (> (length history) 1)
+			(set! current (modulo (+ current 1) (length history)))
+			(www:view-url (Id txt) (list-ref history current))))
+	  ((reload)   (www:view-url (Id txt) (list-ref history current)))
+	  (ELSE	      (if (null? history)
+			  (begin
+			    (set! history (list url))
+			    (set! current 0))
+			  (unless (string=? (list-ref history current) url)
+			    (set! history (append history (list url)))
+			    (set! current (- (length history) 1)))))))))
+  ;;; Make interface
+  ;;;
+  (define (make-buttons parent txt)
+    (let ((s (make-toolbar parent
+	   `(("tb_back.gif"     "Back"    ,(lambda () (new-url (Id txt) 'previous)))
+	     2
+	     ("tb_forward.gif"  "Forward" ,(lambda () (new-url (Id txt) 'next)))
+	     2
+	     ("tb_reload.gif"   "Reload"  ,(lambda () (new-url (Id txt) 'reload)))
+	     2
+	     ("tb_stop.gif"     "Stop Loading" 
+	      			          ,(lambda () (set! www:stop-loading #t)))
+	     10
+	     ("tb_exit.gif"     "Exit"    ,(lambda () (destroy parent)))
+	     0
+	     ("tb_info.gif"     "Help"    ,(lambda () 
+					     (STk:show-help-file "STk-hlp.html"))))
+	   :relief "ridge" :border-width 2
+	   :release-command (default-release-toolbar txt))))
+      s))
+
+  (define (make-location parent txt)
+    (let* ((s  (make-toolbar parent '(0)
+			     :relief "ridge" :border-width 2
+			     :release-command (default-release-toolbar txt)))
+	   (f  (toolbar-item s 0))
+	   (le (make <Labeled-entry> :parent f :title "Location:" 
+		                     :font '(Courier -12))))
+      (pack le :fill 'x :expand #t)
+      (bind (Id le) "<Return>" (lambda () (www:view-url (Id txt) (value le))))
+      ;; Keep a reference on the labeled entry for later bindings
+      (set! lentry le)
+      s))
+
+  (define (make-interface parent)
+    (let* ((txt   (make <Scroll-text> :parent parent :font '(Courier -12)
+			:width 100 :height 45))
+	   (loc   (make-location parent txt))
+	   (f     (make-buttons parent txt))
+	   (f1    (make <Frame> :parent parent))
+	   (lab	  (make <Label> :parent f1 :anchor "w"))
+	   (gauge (make <Gauge> :parent f1 :width 200 :height 10 
+			:background "gray40" :foreground "IndianRed4")))
+      ;;
+      ;; Pack commponents
+      (pack f loc :expand #f :fill "x")
+      (pack txt   :expand #t :fill "both")
+      (pack f1    :expand #f :fill "x")
+      (pack lab   :expand #t :fill "x" :side "left")
+      (pack gauge :expand #f :side "left" :padx 10)
+
+      ;; Redefinition of WWW hooks
+      ;;
+      (set! www:hook-formatting 
+	    (let ((counter  0)
+		  (pos      0))
+	      (lambda ()
+		(when (= counter 20)
+		  (set! pos (modulo (+ pos 5) 105))
+		  (set! counter 0)
+		  (set! (value gauge) pos)
+		  (update))
+		(set! counter (+ counter 1)))))
+
+      (set! www:hook-start-loading
+	    (lambda ()
+	      (slot-set! txt 'cursor "watch")
+	      (slot-set! lab 'text "Loading Document ...")
+	      (update)))
+
+      (set! www:hook-stop-loading 
+	    (lambda ()
+	      (let ((msg "Loading Document ... Done."))
+		(slot-set! gauge 'value 0)
+		(slot-set! lab 'text msg)
+		(slot-set! txt 'cursor "top_left_arrow")
+		(set! www:stop-loading #f)
+		(after 5000 (lambda () 
+			      (catch (if (equal? (slot-ref lab 'text) msg)
+					 (slot-set! lab 'text ""))))))))
+      (set! www:hook-title 
+	    (lambda (value)
+	      (slot-set! parent 'title value)))
+
+      (set! www:hook-location
+	    (lambda (url)
+	      (set! (value lentry) url)
+	      (new-url txt url)))
+
+      ;; Return the txt widget
+      txt))
+
+  ;;;;
+  ;;;; STk:browse starts here 
+  ;;;;
+  (let* ((url    (get-keyword :url args #f))
+	 (parent (get-keyword :parent args #f)))
+
+    (unless browser
+      (set! browser (make-interface 
+		        (or parent 
+			    (make <Toplevel> :title "STk Web browser"))))
+      (bind browser "<Destroy>" (lambda () (set! browser #f))))
+
+    (when url
+      (www:view-url (Id browser) url))
+    browser))))
+
+(define (www:mailto . to)
+  (let* ((top     (make <Toplevel> :title "STk Mail Composer"))
+	 (to      (make <Labeled-entry> :parent top :title "To:" 
+			:title-width 7 :title-anchor 'e
+			:value (if (null? to) "" (car to))))
+	 (cc  	  (make <Labeled-entry> :parent top :title "Cc:"
+			:title-width 7 :title-anchor 'e))
+	 (subject (make <Labeled-entry>  :parent top :title "Subject:"
+			:title-width 7 :title-anchor 'e))
+	 (txt	  (make <Scroll-text> :parent top))
+	 (f       (make <Frame> :parent top :border-width 2 :relief 'ridge))
+	 (send	  (make <Button> :text "Send" :parent f :border-width 1))
+	 (cancel  (make <Button> :text "Cancel" :parent f :border-width 1)))
+    (pack to cc subject :expand #f :fill 'x :padx 5)
+    (pack txt :expand #t :fill 'both :padx 5 :pady 3)
+    (pack send cancel :side 'left)
+    (pack f :expand #f :fill 'x)
+    
+    ;; Set the background of text to white
+    (set! (background (text-of txt)) "white")
+    
+    ;; Set action of Send and Cancel button
+    (set! (command Cancel) 
+	  (lambda() 
+	    (if (eq? 'yes (Tk:message-box :title "Cancel Message"
+					  :icon 'question :type 'yesno
+					  :message "Close and discard message?"))
+		(destroy top))))
+
+    (set! (command send)   
+	  (lambda ()
+	    (unless (string=? (value to) "")
+	      (let ((cmd (string-append "| /bin/mail "
+					"-s '" (value subject) "' "
+					"-c '" (value cc) "' "
+					(value to))))
+		(with-output-to-file cmd (lambda () (display (value txt))))
+		(Tk:message-box :title "Message Information" 
+				:message "Message sent" :icon 'info)
+		(destroy top)))))))
+
+;;;
+;;; Misc.
+;;; 
+(define STk:web-browser WWW:browser) ; for backward compatibility with 3.x versions
+(set! www:hook-mailto www:mailto)
+
+(provide "www-browser")

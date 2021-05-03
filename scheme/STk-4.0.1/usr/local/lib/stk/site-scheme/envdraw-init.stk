@@ -1,0 +1,17 @@
+(when Tk:initialized?
+  (wm 'withdraw '.))
+
+(set! *load-suffixes* (list "stklos" "stk" "scm"))
+
+(let ((pathenv (getenv "ENVDRAW_LIBRARY_PATH")))
+  (when pathenv
+    (autoload "view.stk" view)
+    (autoload "meta.stk" envdraw)
+    (set! *load-path* (cons pathenv *load-path*))))
+
+(define scm? #f)
+
+(require "stklos")
+(require "Tk-classes")
+
+(provide "stk-init")

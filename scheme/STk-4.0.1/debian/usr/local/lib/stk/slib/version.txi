@@ -1,0 +1,2 @@
+@set SLIBVERSION 2d5
+@set SLIBDATE November 2002

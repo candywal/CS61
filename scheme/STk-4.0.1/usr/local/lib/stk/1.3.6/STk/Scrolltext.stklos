@@ -1,0 +1,102 @@
+;;;;
+;;;; S c r o l l t e x t . s t k 	  --  Scroll Text composite widget
+;;;;
+;;;; Copyright © 1993-1999 Erick Gallesio - I3S-CNRS/ESSI <eg@unice.fr>
+;;;; 
+;;;; Permission to use, copy, modify, distribute,and license this
+;;;; software and its documentation for any purpose is hereby granted,
+;;;; provided that existing copyright notices are retained in all
+;;;; copies and that this notice is included verbatim in any
+;;;; distributions.  No written agreement, license, or royalty fee is
+;;;; required for any of the authorized uses.
+;;;; This software is provided ``AS IS'' without express or implied
+;;;; warranty.
+;;;;
+;;;;           Author: Erick Gallesio [eg@kaolin.unice.fr]
+;;;;    Creation date:  4-Apr-1995 11:19
+;;;; Last file update:  3-Sep-1999 20:14 (eg)
+
+(require "Basics")
+
+(select-module STklos+Tk)
+
+;=============================================================================
+;
+; 			< S c r o l l - t e x t >
+;
+;=============================================================================
+
+(define-class <Scroll-text> (<Tk-composite-widget> <Text>)
+  ((class	  :init-keyword :class
+		  :init-form    "ScrollText")
+   (text 	  :accessor     text-of)
+   (h-scrollbar	  :accessor     h-scrollbar-of)
+   (v-scrollbar	  :accessor     v-scrollbar-of)
+   (h-scroll-side :accessor     h-scroll-side
+		  :allocation   :virtual
+		  :init-keyword :h-scroll-side
+		  :slot-ref     (lambda (o) 
+				  (STk:h-scroll-side (slot-ref o 'h-scrollbar)))
+		  :slot-set!    (lambda (o v)
+				  (STk:h-scroll-side-set! 
+				      (slot-ref o 'h-scrollbar) v)))
+   (v-scroll-side :accessor     v-scroll-side
+		  :allocation   :virtual
+		  :init-keyword :v-scroll-side
+		  :slot-ref     (lambda (o)
+				  (STk:v-scroll-side (slot-ref o 'v-scrollbar)))
+		  :slot-set!    (lambda (o v)
+				  (STk:v-scroll-side-set! 
+				      (slot-ref o 'v-scrollbar) v)))
+   ;; Non allocated slots
+   (background   :accessor     background
+		 :init-keyword :background
+		 :allocation   :propagated
+		 :propagate-to (frame text h-scrollbar v-scrollbar))
+   (border-width :accessor     border-width 
+		 :allocation   :propagated
+		 :init-keyword :border-width
+		 :propagate-to (frame))
+   (relief	 :accessor     relief
+		 :init-keyword :relief
+		 :allocation   :propagated
+		 :propagate-to (frame))))
+
+;;;;
+;;;;  <Scroll-text> methods
+;;;;
+
+(define-method initialize-composite-widget ((self <Scroll-text>) initargs parent)
+  (let* ((hs (make <Scrollbar> :parent parent :orientation "horizontal"))
+	 (vs (make <Scrollbar> :parent parent :orientation "vertical"))
+	 (t  (make <Text>      :parent parent)))
+
+    ;; Set internal true slots 
+    (slot-set! self 'Id	          (slot-ref t 'Id))
+    (slot-set! self 'text         t)
+    (slot-set! self 'h-scrollbar  hs)
+    (slot-set! self 'v-scrollbar  vs)
+
+    ;; Place internal widgets
+    (grid hs :row 0 :column 1 :sticky "we")     (grid 'remove hs)
+    (grid t  :row 1 :column 1 :sticky "nswe")
+    (grid vs :row 1 :column 2 :sticky "ns")
+    (grid 'rowconf    parent 1 :weight 1)
+    (grid 'columnconf parent 1 :weight 1)
+
+    ;; Attach command to scrollbar and text
+    (slot-set! t 'x-scroll-command (lambda l (apply (slot-ref hs 'Id) 'set l)))
+    (slot-set! t 'y-scroll-command (lambda l (apply (slot-ref vs 'Id) 'set l)))
+
+    (slot-set! hs 'command (lambda args (apply (slot-ref t 'Id) 'xview args)))
+    (slot-set! vs 'command (lambda args (apply (slot-ref t 'Id) 'yview args)))
+))
+
+(provide "Scrolltext")
+
+#|
+   Example:
+
+	(define x (make <Scroll-Text> :width 40 :height 5 :wrap 'word))	
+	(pack x :expand #t :fill 'both)
+|#

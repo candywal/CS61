@@ -1,0 +1,9 @@
+
+(define (duples-removed sent)
+(define nsent '())
+(define (duples-removed-iter sent)
+  (cond (= (count sent) 0) nsent)
+  (cond (member?(first sent)(bf sent))(duples-removed-iter (bf sent)))
+  (cond (not (member?(first sent)(bf sent)))(define nsent (se (first sent) nsent)))duples-removed-iter (bf sent))
+(duples-removed-iter sent)
+)

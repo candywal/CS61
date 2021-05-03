@@ -1,0 +1,20 @@
+;;;;
+;;;; F r a m e . s t k 	  --  Frame class definition
+;;;;
+;;;; Copyright © 1993-1999 Erick Gallesio - I3S-CNRS/ESSI <eg@unice.fr>
+;;;; 
+;;;; Permission to use, copy, modify, distribute,and license this
+;;;; software and its documentation for any purpose is hereby granted,
+;;;; provided that existing copyright notices are retained in all
+;;;; copies and that this notice is included verbatim in any
+;;;; distributions.  No written agreement, license, or royalty fee is
+;;;; required for any of the authorized uses.
+;;;; This software is provided ``AS IS'' without express or implied
+;;;; warranty.
+;;;;
+;;;;           Author: Erick Gallesio [eg@kaolin.unice.fr]
+;;;;    Creation date: 30-Mar-1993 15:39
+;;;; Last file update:  3-Sep-1999 20:10 (eg)
+
+(require "Toplevel") ; Frame and Toplevel are merged now.
+(provide "Frame")

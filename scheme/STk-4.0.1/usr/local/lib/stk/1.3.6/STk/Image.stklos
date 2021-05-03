@@ -1,0 +1,205 @@
+;;;;
+;;;; I m a g e . s t k l o s 		--  The Tk4.0 image mechanism
+;;;;
+;;;; Copyright © 1993-1999 Erick Gallesio - I3S-CNRS/ESSI <eg@unice.fr>
+;;;; 
+;;;; Permission to use, copy, modify, distribute,and license this
+;;;; software and its documentation for any purpose is hereby granted,
+;;;; provided that existing copyright notices are retained in all
+;;;; copies and that this notice is included verbatim in any
+;;;; distributions.  No written agreement, license, or royalty fee is
+;;;; required for any of the authorized uses.
+;;;; This software is provided ``AS IS'' without express or implied
+;;;; warranty.
+;;;;
+;;;;           Author: Erick Gallesio [eg@unice.fr]
+;;;;    Creation date: 26-Jul-1995 11:23
+;;;; Last file update:  3-Sep-1999 20:10 (eg)
+
+(require "Basics")
+(require "image")	; The one with a lower "i"
+
+(select-module STklos+Tk)
+
+
+;;;; Images can be seen in two ways in STklos, depending of what you
+;;;; want to do with them. If you want just to load an image in a
+;;;; button or a label without modifying its parameters (gamma
+;;;; correction, palette, ..) you can use the class <Image>. This
+;;;; class uses the make-image helper function which knows about the
+;;;; *image-path* variable. To create such an image can be done with
+;;;;      (make <Image> "teapot.ppm") 
+;;;;
+;;;; On the other hand, if you want to deal with images options you
+;;;; have to take the appropriate class depending of the type of image
+;;;; you want to manipulate. The available classes for that are
+;;;; <Bitmap-image>, <Photo-image>, <Pixmap-Image>, ...
+;;;; Here is how the hierarchy is organized
+;;;;    <Tk-image>   		common ancestor
+;;;;       <Image>   		simple to use images (format independant)
+;;;;       <Tk-Basic-image>     Basic class for "complex" image manipulation
+;;;;	       <Bitmap-image>	Bitmaps and all its options
+;;;;	       <Photo-image>	GIF and PPM and all their options
+;;;;	       .....
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;
+;;;; <Tk-image> class definition
+;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define-class <Tk-Image> ()
+  ((Id  	:getter Id)
+   (image-type	:getter		image-type
+		:allocation	:virtual
+		:slot-ref	(lambda(o)   (image 'type (Id o)))
+		:slot-set!	(lambda(o v) (Tk:slot-is-read-only o 'image-type)))
+   (width	:getter		width
+		:allocation	:virtual
+		:slot-ref	(lambda(o)   (image 'width (Id o)))
+		:slot-set!	(lambda(o v) (Tk:slot-is-read-only o 'width)))
+   (height	:getter		height
+		:allocation	:virtual
+		:slot-ref	(lambda(o)   (image 'height (Id o)))
+		:slot-set!	(lambda(o v) (Tk:slot-is-read-only o 'height))))
+  :metaclass <Tk-metaclass>)
+
+;;;
+;;; Write-object
+;;;
+(define-method Tk-write-object((self <Tk-Image>) port)
+  (display (widget-name (slot-ref self 'id)) port))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;
+;;;; <Image> class definition 
+;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define-class <Image> (<Tk-Image>)
+  ((file :initform #f :init-keyword :file)))
+
+(define-method initialize ((self <Image>) initargs)
+  (next-method)
+  (let ((file (slot-ref self 'file)))
+    (unless file
+      (error "<Image> initialization requires a file name"))
+    (let ((Id (make-image file)))
+      (if Id
+	  (slot-set! self 'Id Id)
+	  (error "Cannot create image with file ~S" file)))))
+
+;;;
+;;; Destroy
+;;;
+(define-method destroy ((self <Image>))
+  (delete-image (slot-ref self 'Id)))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;
+;;;; <Tk-Basic-image> class definition
+;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define-class <Tk-Basic-Image> (<Tk-image>)
+  ((file	:accessor	file
+		:init-keyword	:file
+		:allocation	:tk-virtual)
+   (data	:accessor	image-data
+		:init-keyword	:data
+		:allocation	:tk-virtual)))
+
+(define-method initialize ((self <Tk-Basic-Image>) initargs)
+  (let ((tk-options (get-keyword :tk-options initargs '())))
+    (slot-set! self 'id (initialize-image self tk-options))
+    (next-method)))
+
+;;;
+;;; Destroy
+;;;
+(define-method destroy ((self <Tk-image>))
+  (image 'delete self))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;
+;;;; <Bitmap-image> class definition
+;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define-class <Bitmap-image> (<Tk-Basic-Image>)
+  ((background :accessor 	background
+	       :init-keyword	:background
+	       :allocation	:tk-virtual)
+   (foreground :accessor 	foreground
+	       :init-keyword	:foreground
+	       :allocation	:tk-virtual)
+   (mask-data  :accessor 	mask-data
+	       :init-keyword	:mask-data
+	       :tk-name		maskdata
+	       :allocation	:tk-virtual)
+   (mask-file  :accessor 	mask-file
+	       :init-keyword	:mask-file
+	       :tk-name		maskfile
+	       :allocation	:tk-virtual)))
+
+(define-method initialize-image((self <Bitmap-image>) args)
+  (apply image 'create 'bitmap (gensym "Img ") args))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;
+;;;; <Photo-image> class definition
+;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(define-class <Photo-image> (<Tk-Basic-Image>)
+  ((channel	 :accessor	channel
+		 :init-keyword	:channel
+		 :allocation	:tk-virtual)
+   (image-format :accessor	image-format 
+		 :init-keyword	:image-format
+		 :tk-name	format
+		 :allocation	:tk-virtual)
+   (gamma	 :accessor	gamma
+		 :init-keyword	:gamma
+		 :allocation	:tk-virtual)
+   (height	 :accessor	height
+		 :init-keyword	:height
+		 :allocation	:tk-virtual)
+   (palette	 :accessor	palette
+		 :init-keyword	:palette
+		 :allocation	:tk-virtual)
+   (width	 :accessor	width
+		 :init-keyword	:width
+		 :allocation	:tk-virtual)))
+
+(define-method initialize-image((self <Photo-image>) args)
+  (apply image 'create 'photo (gensym "Img ") args))
+
+;;; [FIXME] functions for photo images should be written here. But is is 
+;;; really necessary
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;
+;;;; <Pixmap-image> class definition
+;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(define-class <Pixmap-image> (<Tk-Basic-Image>)
+  ())
+
+;; Pixmap extension need that the :file or :data be passed when the
+;; image is created => we use a new initialize method rather than the
+;; initialize-image scheme used for bitmaps and photos
+
+(define-method initialize ((self <Pixmap-Image>) initargs)
+  (require "pixmap")
+  (let* ((file (get-keyword :file initargs #f))
+	 (data (get-keyword :data initargs #f))
+	 (args (if data
+		   (list :data data)
+		   (list :file file))))
+    (slot-set! self 'id (apply image 'create 'pixmap (gensym "Img ") args))))
+
+
+(provide "Image")

@@ -1,0 +1,16 @@
+#!/bin/sh
+# EnvDraw STk launcher
+
+STKHOME=/usr/local
+
+PATH=$STKHOME/bin:$PATH
+ENVDRAW_LIBRARY_PATH=$STKHOME/lib/stk/site-scheme/envdraw
+
+export ENVDRAW_LIBRARY_PATH
+
+if [ "\$DISPLAY" = "" ] ;then
+  echo You must run STk while running X.
+  exit 1
+else
+  exec stk -name stk -load envdraw-init $*
+fi

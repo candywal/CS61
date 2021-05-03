@@ -1,0 +1,394 @@
+;;;;
+;;;; Initialization file for Tk
+;;;;
+;;;; This script is executed for each STk-based application. It arranges class 
+;;;; bindings for widgets.
+;;;;
+;;;; Copyright © 1993-1999 Erick Gallesio - I3S-CNRS/ESSI <eg@unice.fr>
+;;;; 
+;;;; Permission to use, copy, modify, distribute,and license this
+;;;; software and its documentation for any purpose is hereby granted,
+;;;; provided that existing copyright notices are retained in all
+;;;; copies and that this notice is included verbatim in any
+;;;; distributions.  No written agreement, license, or royalty fee is
+;;;; required for any of the authorized uses.
+;;;; This software is provided ``AS IS'' without express or implied
+;;;; warranty.
+;;;;
+;;;; This software is a derivative work of other copyrighted softwares; the
+;;;; copyright notices of these softwares are placed in the file COPYRIGHTS
+;;;;
+;;;;           Author: Erick Gallesio [eg@unice.fr]
+;;;;    Creation date: 17-May-1993 12:35
+;;;; Last file update: 16-Sep-1999 16:48 (eg)
+;;;;
+
+(unless (equal? *tk-version* "8.0")
+  (error "wrong version of Tk loaded: need 8.0 (this version is ~A)" 
+	 *tk-version*))
+
+(select-module Tk)	  ;; The rest of this file belongs to the Tk module
+(import Scheme)		  ;; Prefer the Scheme bindings rather than the STk ones.
+(export-all-symbols)	  ;; Export all the symbols
+
+;; Special user variables 
+(define-variable *tk-strict-Motif*   #f)   ;; Turn off strict Motif look and feel
+(define-variable *image-path*        #f)   ;; Path for images
+(define-variable *help-path*	     #f)   ;; Path for HTML help pages
+(define-variable *start-withdrawn*   #t)   ;; Start with *root* unmapped
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;
+;;;; Utilities
+;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(define-macro (tk-get w option)
+  `(,w 'cget ,option))
+
+(define-macro (tk-set! w option . value)
+  `(,w 'configure ,option ,@value))
+
+(define (Tk-screen-changed  screen)
+  ;; This function is called when the screen is changed. Since I own only 
+  ;; one screen, I don't know what I must do here.
+  screen)
+
+(define-macro (define-binding class event args . body)
+  (if (null? body)
+      `(bind ,class ,event "")
+      `(bind ,class ,event (lambda ,args ,@body))))
+
+;;
+;; Read and write access to the data associated to widget
+;;
+(define (set-widget-property! widget name value)
+  (let ((data (get-widget-data widget)))
+    (if (or (not data) (null? data))
+	(set-widget-data! widget (list name value))
+	(let ((prop (memv name data)))
+	  (if prop 
+	      (set-cdr! prop (cons value (cddr prop)))
+	      (set-widget-data! widget (append (list name value) data)))))))
+
+
+(define (get-widget-property widget name . default)
+  (let ((data (get-widget-data widget)))
+    (if (or (not data) (null? data))
+	(if (null? default)
+	    (error "get-widget-property: No property ~S in ~S" name widget)
+	    (car default))
+	(apply get-keyword name data default))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Following vars are used everywhere. So define them here
+(define tk::window	   #f)
+(define tk::button-window  '())
+(define tk::relief	   "sunken")
+(define tk::select-mode	   "char")
+(define tk::mouse-moved    #f)
+(define tk::press-x 	   0)
+(define tk::press-y 	   0)
+(define tk::x		   0)
+(define tk::y		   0)
+(define tk::after-id	   "")
+(define tk::active-bg	   "")
+(define tk::active-fg	   "")
+(define tk::dragging	   #f)
+
+
+(define tk::buttons	 0)
+(define tk::focus	 '())
+(define tk::grab	 "")
+(define tk::inMenuButton '())
+(define tk::posted	 #f)
+(define tk::cursor	 "")
+(define tk::kill-buffer  "") ;; One kill buffer shared between all texts. 
+
+
+;; add-binding --
+;; This procedure adds a binding to a widget. It replaces the Tcl "+" mechanism
+;; which is meaningless with closures. Furthermore, this mechanism permits
+;; to add the binding BEFORE the old binding
+;;
+(define (add-binding widget event binding before?)
+  (let ((old (bind widget event)))
+    (if (null? old)
+	(bind widget event binding)
+	;;; We must find the parameters of the old and given bindings
+	;;; The new binding is a new closure with the union of these 
+	;;; parameters.
+	;;; if:
+	;;;   old binding is   (lambda (x y) ....)
+	;;;   given binding is (lambda (x t a) ...)
+	;;; We must construct the binding of the form
+	;;;    (lambda (x y t a)
+	;;;       ((lambda (x y) ....) x y)
+	;;;       ((lambda (x t a) ....) x t a))
+	(let ((body-old (procedure-body (car old)))
+	      (body-new (procedure-body binding)))
+	  (if (and body-old body-new)
+	      (let ((p-old (cadr body-old))
+		    (p-new (cadr body-new)))
+		(bind widget
+		      event 
+		      (if before?
+			  (eval `(lambda ,(set-union p-old p-new)
+				   (,binding ,@(cadr body-new))
+				   ,old))
+			  (eval `(lambda ,(set-union p-old p-new)
+				   ,old
+				   (,binding ,@(cadr body-new)))))))
+	      ;; 
+	      (Error "add-binding: Incorrect binding ~S" binding))))))
+
+;; Tk:cancel-repeat --
+;; This procedure is invoked to cancel an auto-repeat action described
+;; by tk::after-id.  It's used by several widgets to auto-scroll
+;; the widget when the mouse is dragged out of the widget with a
+;; button pressed.
+
+(define (Tk:cancel-repeat)
+  (after 'cancel tk::after-id)
+  (set! tk::after-id ""))
+
+;; Tk:tab-to-window --
+;; This procedure moves the focus to the given widget.  If the widget
+;; is an entry, it selects the entire contents of the widget.
+
+(define (Tk:tab-to-window w)
+  (when (string=? (winfo 'class w) "Entry")
+    (w 'select 'range 0 'end)
+    (w 'icur 'end))
+  (focus w))
+
+
+;;;;
+;;;; A procedure to forbid remote executution via the send Tk command
+;;;;
+(define (inhibit-send)
+  ;; Redefine send sommand
+  (set! send (make-unbound))
+  ;; Issue a GC so that command is effectively deleted from Tk tables NOW
+  (gc))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;
+;;;; Withdraw the root window
+;;;;
+;;;; A lot of people dislike the fact that the root window is mapped
+;;;; on screen when Tk is started, The code below, unmaps the *root*
+;;;; window and make it appearing as soon as the first sub-window is
+;;;; packed or some action is asked to the window manager for
+;;;; *root*. With this code, the the behaviour is identical to the Tk
+;;;; original one except that the empty squared window don't appears
+;;;; on screen. The original behaviour can be recovered by setting
+;;;; *start-withdrawn* to #f
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+(when *start-withdrawn*
+  ;; Start without mapping the root window.
+  (wm 'withdraw ".")
+  
+  (let ((old-pack pack) (old-wm wm))
+    (set! pack 
+	  (lambda l
+	    (let ((res (apply old-pack l)))
+	      (for-each (lambda (x)
+			  (when (and *start-withdrawn*
+				     (eq? (winfo 'toplevel x) *root*)
+				     (winfo 'manager x))
+			    (wm 'deiconify *root*)))
+			(winfo 'children *root*))
+	      res)))
+    
+    (set! wm
+	  (lambda l
+	    (let ((res (apply old-wm l)))
+	      (unless (equal? (old-wm 'state *root*) "withdrawn")
+		;; Previous wm call makes the *root* window no more withdrawn
+		;; Replace the pack and wm command by the original Tk ones
+		(set! pack    		old-pack)
+		(set! Tk:pack 		old-pack)
+		(set! wm      		old-wm)
+		(set! Tk:wm   		old-wm)
+		(set! *start-withdrawn*	#f))
+	      res)))))
+
+;;;;
+;;;; Define widget which require a lot of initialization as a kind of autoload
+;;;; This allows a faster loading for small programs which use only a few widgets
+;;;; and decreases memory usage
+;;;; 
+
+(define-macro (%redefine-Tk-command widget file)
+  (let ((synonym (string->symbol (format #f "tk:~A" widget))))
+    `(set! ,widget
+	   (let ((tk-cmd ,widget))
+	     (lambda l
+	       ;; Load the library file
+	       (load ,(string-append *STk-library* "/STk/" file ".stk"))
+
+	       ;; Test here that old value is a true closure because when
+	       ;; using STklos some Tk commands are already defined as generic.
+	       ;; Reloading the file and setting widget and Tk:widget breaks
+	       ;; the generic function. Weak but it seems to work
+	       (if (closure? ,widget)  (set! ,widget  tk-cmd))
+	       (if (closure? ,synonym) (set! ,synonym tk-cmd))
+	       
+	       ;; Do the job
+	       (apply tk-cmd l))))))
+
+(%redefine-Tk-command button		"button")
+(%redefine-Tk-command checkbutton	"button")
+(%redefine-Tk-command radiobutton	"button")
+(%redefine-Tk-command entry		"entry")
+(%redefine-Tk-command focus		"focus")
+(%redefine-Tk-command listbox		"listbox")
+(%redefine-Tk-command menu		"menu")
+(%redefine-Tk-command menubutton	"menu")
+(%redefine-Tk-command scale		"scale")
+(%redefine-Tk-command scrollbar		"scrollbar")
+(%redefine-Tk-command text		"text")
+
+;;
+;; Make synonyms for all Tk-commands to "protect" them against redefinition.
+;; This is no more necessary now with modules but some user code could rely on it. 
+;;
+(define Tk:button	button)
+(define Tk:checkbutton	checkbutton)
+(define Tk:canvas	canvas)
+(define Tk:entry	entry)
+(define Tk:frame	frame)
+(define Tk:image	image)
+(define Tk:label 	label)
+(define Tk:listbox	listbox)
+(define Tk:menu		menu)
+(define Tk:menubutton	menubutton)
+(define Tk:message	message)
+(define Tk:scale	scale)
+(define Tk:scrollbar	scrollbar)
+(define Tk:radiobutton	radiobutton)
+(define Tk:text		text)
+(define Tk:toplevel	toplevel)
+
+(define Tk:after	after)
+(define Tk:bind		bind)
+(define Tk:bindtags	bindtags)
+(define Tk:bell		bell)
+(define Tk:clipboard	clipboard)
+(define Tk:destroy	destroy)
+(define Tk:focus	focus)
+(define Tk:grab		grab)
+(define Tk:lower	lower)
+(define Tk:option	option)
+(define Tk:pack		pack)
+(define Tk:place	place)
+(define Tk:raise	raise)
+(define Tk:selection	selection)
+(define Tk:tk		tk)
+(define Tk:tkwait	tkwait)
+(define Tk:update	update)
+(define Tk:winfo	winfo)
+(define Tk:wm		wm)
+
+;;;;
+;;;; Default bindings
+;;;; 
+
+;; Keyboard traversal
+(bind "all" "<Tab>" 	   (lambda (|W|) (Tk:tab-to-window (Tk:focus-next |W|))))
+(bind "all" "<Shift-Tab>"  (lambda (|W|) (Tk:tab-to-window (Tk:focus-prev |W|))))
+
+;; Cut/Copy/Paste virtual events
+(case (os-kind)
+  ((Windows) (event 'add "<<Cut>>"   "<Control-Key-x>" "<Shift-Key-Delete>")
+	     (event 'add "<<Copy>>"  "<Control-Key-c>" "<Control-Key-Insert>")
+	     (event 'add "<<Paste>>" "<Control-Key-v>" "<Shift-Key-Insert>")
+	     (event 'add "<<PasteSelection>>" "<ButtonRelease-2>" ))
+  ((Unix)    (event 'add "<<Cut>>"   "<Control-Key-x>" "<Key-F20>") 
+	     (event 'add "<<Copy>>"  "<Control-Key-c>" "<Key-F16>")
+	     (event 'add "<<Paste>>" "<Control-Key-v>" "<Key-F18>")
+	     (event 'add "<<PasteSelection>>" "<ButtonRelease-2>" )
+	     ;; Add a trace to set and unset Motif bindings when the
+	     ;; *tk-strict-Motif* variable is changed
+	     (let ((trace (lambda ()
+			    (let ((op (if *tk-strict-Motif* 'delete 'add)))
+			      (event op "<<Cut>>"   "<Control-Key-w>")
+			      (event op "<<Copy>>"  "<Meta-Key-w>")
+			      (event op "<<Paste>>" "<Control-Key-y>")))))
+	       (trace-var '*tk-strict-Motif* trace)
+	       (trace))))
+  
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;
+;;; Initialisation of *image-path* and *help-path*
+;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(set! *image-path* (append (list "" ".") 
+			   (build-path-from-shell-variable "STK_IMAGE_PATH")
+			   (list (string-append *STk-library* "/Images"))))
+
+(set! *help-path* (append (list "" ".")
+			  (build-path-from-shell-variable "STK_HELP_PATH")
+			  (list (string-append *STk-library* "/Help"))))
+
+;;;;
+;;;; Some autoloads
+;;;; 
+(autoload "dialog"    	 STk:make-dialog STk:center-window)
+(autoload "edit"	 ed)
+(autoload "focus" 	 Tk:focus-next Tk:focus-prev)
+(autoload "listener"  	 listener)
+(autoload "palette"   	 Tk:set-palette! Tk:bisque)
+(autoload "menu"      	 Tk:option-menu)
+(autoload "inspect-main" inspect view detail)
+(autoload "fileevent" 	 Tk:fileevent fileevent) ; for backward compatibility
+(autoload "sterm" 	 sterm)
+(autoload "image"        find-image make-image change-image delete-image)
+;(autoload "error" 	 STk:report-error bgerror)))
+(when (eq? (os-kind) 'Unix)
+  (autoload "tk-unix"	 Tk:choose-color Tk:message-box
+	    		 Tk:get-open-file Tk:get-save-file Tk:get-file))
+
+
+(define (tk-set-error-handler!)
+  (autoload "error" STk:report-error bgerror))
+
+;=============================================================================
+;
+; Module STklos+Tk definition
+;
+; This module serves to define all the STklos classes and methods for
+; working with Tk. It is defined here, even if you don't use STklos
+; (you really must use it :) so that it can be imported before Tk. So,
+; if functions are redefined in STklos for Tk they will be seen before
+; the Tk ones. If STklos is not used (it's a pity!), the module is
+; just passed thru since it contains nothing.
+;
+;=============================================================================
+
+(define-module STklos+Tk
+  (import STklos Tk))
+
+(with-module STk 
+  ;; Make all Tk public symbols available to STk
+  (import STklos+Tk Tk)
+  ;; report-error as a kind of autoload (must be a closure, rather than an 
+  ;; autoload since C error function tests explicitely it is a closure before
+  ;; applying its arguments
+  (define (report-error . args)
+    (apply STk:report-error args))
+  
+  ;; Global help functions which are defined when Tk is loaded
+  (autoload "help"          help STk:show-help-file)
+  (autoload "www-browser"   WWW:browser WWW:mailto)
+  (autoload "class-browser" class-browser))
+
+;;;;
+;;;; Retain now that Tk is now fully initialized
+;;;;
+(set! Tk:initialized? #t)

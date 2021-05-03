@@ -1,0 +1,167 @@
+;;;
+;;;; B u t t o n . s t k 	  --  Label, Button, Check button and Radio button
+;;;;				      class definitions
+;;;;
+;;;; Copyright © 1993-1999 Erick Gallesio - I3S-CNRS/ESSI <eg@unice.fr>
+;;;; 
+;;;; Permission to use, copy, modify, distribute,and license this
+;;;; software and its documentation for any purpose is hereby granted,
+;;;; provided that existing copyright notices are retained in all
+;;;; copies and that this notice is included verbatim in any
+;;;; distributions.  No written agreement, license, or royalty fee is
+;;;; required for any of the authorized uses.
+;;;; This software is provided ``AS IS'' without express or implied
+;;;; warranty.
+;;;;
+;;;;           Author: Erick Gallesio [eg@kaolin.unice.fr]
+;;;;    Creation date: 30-Mar-1993 15:39
+;;;; Last file update:  3-Sep-1999 20:09 (eg)
+
+
+(require "Basics")
+
+(select-module STklos+Tk)
+
+(export flash invoke
+	select deselect 
+	toggle)
+
+;=============================================================================
+;
+;				    <Label>
+;
+;=============================================================================
+(define-class <Label>(<Tk-simple-widget> <Tk-simple-text> <Tk-sizeable> <Tk-bitmap>)
+  ())
+
+(define-method tk-constructor ((self <Label>))
+  Tk:label)
+
+;=============================================================================
+;
+;				<Tk-simple-button>
+;
+;=============================================================================
+(define-class <Tk-simple-button> (<Label> <Tk-reactive>)
+  ())
+
+;;;
+;;; Tk-simple-Buttons methods
+;;;
+(define-method flash ((self <Tk-simple-button>))
+  ((slot-ref self 'Id) 'flash))
+
+(define-method invoke ((self <Tk-simple-button>))
+  ((slot-ref self 'Id) 'invoke))
+
+;=============================================================================
+;
+;				    <Button>
+;
+;=============================================================================
+(define-class <Button> (<Tk-simple-button>)
+  ((default :accessor     default
+            :init-keyword :default
+	    :allocation   :tk-virtual)))
+
+(define-method tk-constructor ((self <Button>))
+  Tk:button)
+
+
+;=============================================================================
+;
+;			    <Tk-complex-button>
+;
+;=============================================================================
+(define-class <Tk-complex-button> (<Tk-simple-button>)
+  ((indicator-on	:accessor     indicator-on
+			:init-keyword :indicator-on
+			:tk-name      indicatoron
+			:allocation   :tk-virtual)
+   (select-color	:accessor     select-color
+			:init-keyword :select-color
+			:tk-name      selectco
+			:allocation   :tk-virtual)
+   (select-image	:accessor     select-image
+			:init-keyword :select-image
+			:tk-name      selectim
+			:allocation   :tk-virtual)
+   (string-value	:accessor     string-value
+			:init-keyword :string-value
+			:tk-name      stringval
+			:allocation   :tk-virtual)
+   (variable 		:accessor     variable 
+			:init-keyword :variable 
+			:allocation   :tk-virtual)))
+
+;;;
+;;; <Tk-complex-button> methods
+;;; 
+(define-method select ((self <Tk-complex-button>))
+  ((slot-ref self 'Id) 'select))
+
+(define-method deselect ((self <Tk-complex-button>))
+  ((slot-ref self 'Id) 'deselect))
+
+;=============================================================================
+;
+;			    <Check-button> 
+;
+;
+; Define a fictive slot ``value''. This slots permits to initialize
+; the check button at creation time -- i.e you can do
+; 	(define c (make <Check-button> :text "Test" :value #t))
+;=============================================================================
+
+
+(define-class <Check-button> (<Tk-complex-button>)
+  ((on-value  :accessor     on-value 
+	      :init-keyword :on-value 
+	      :allocation   :tk-virtual
+	      :tk-name	    onvalue)
+   (off-value :accessor     off-value
+	      :init-keyword :off-value
+	      :allocation   :tk-virtual
+	      :tk-name	    offvalue)
+   ;; fictive slot 
+   (value     :accessor	    value
+	      :init-keyword :value
+	      :allocation   :virtual
+	      :slot-ref     (lambda (o)  
+			      (eval (string->symbol (slot-ref o 'variable))
+				    (slot-ref o 'environment)))
+	      :slot-set!    (lambda (o v)
+			      (eval `(set! ,(string->symbol 
+					     (slot-ref o 'variable)) ,v)
+				    (slot-ref o 'environment))))))
+
+(define-method tk-constructor ((self <Check-button>))
+  Tk:checkbutton)
+
+;;;
+;;; <Check-button> methods
+;;;
+(define-method initialize ((self <Check-button>) args)
+  (next-method)
+  (let ((val (get-keyword :value  args #f)))
+    ;; If a value is specified at init-time init, set it.
+    (when val (slot-set! self 'value val))))
+
+(define-method toggle ((self <Check-button>))
+  ((slot-ref self 'Id) 'toggle))
+
+
+;=============================================================================
+;
+;			 	<Radio-button>
+;
+;=============================================================================
+
+(define-class <Radio-button> (<Tk-complex-button>)
+  ((value   :accessor value :init-keyword :value :allocation :tk-virtual)))
+
+(define-method tk-constructor ((self <Radio-button>))
+  Tk:radiobutton)
+
+
+(provide "Button")

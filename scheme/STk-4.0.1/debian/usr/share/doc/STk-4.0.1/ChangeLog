@@ -1,0 +1,2751 @@
+2007-06-12 06:33  mars
+
+	* ChangeLog.1: A number of changes that occured in STk around 2003
+	  by Professor Hilfinger
+	  have since been applied, but because he used a different source
+	  control system
+	  his comments where never added to our CVS repository.
+	  Here are his comments pulled out of the current ChangeLog so that
+	  we have
+	  the ability to update ChangeLog without losing his original
+	  comments.
+
+2007-06-12 06:28  mars
+
+	* ChangeLog, Contrib/%README, Contrib/README, Demos/%README,
+	  Demos/README, Doc/LaTeX-packages/%README,
+	  Doc/LaTeX-packages/README, Makefile.in, STklos/Makefile,
+	  STklos/Tk/%README, STklos/Tk/README, Tcl/Makefile.in, configure,
+	  configure.in: Some more clean up on build system. Mostly
+	  correcting
+	  some issues with configure and associated Makefiles. I also
+	  finished renaming a couple of README files which started with
+	  a percent sign.
+
+2007-06-12 04:42  mars
+
+	* Extensions/Makefile.in: Updated reference to where the Gmp header
+	  files are located.
+
+2007-06-12 04:25  mars
+
+	* config.guess, config.sub: Updated these two scripts. Should
+	  enable the build scripts
+	  to identify newer hardware configurations.
+
+2007-06-11 18:21  mars
+
+	* brg: Removing brg from STk directory. This functionality has been
+	  moved to the ucb directory
+	  which was just added recently. Please checkout the ucb files in
+	  order to complete the install
+	  of the berkeley changes to STk. --mars
+
+2007-06-07 23:36  mars
+
+	* Mp: Now I am removeing these two tar files. --mars
+
+2007-06-07 23:34  mars
+
+	* Mp, Mp/fgmp-1.0b5.tgz, Mp/gmp-1.3.2.tgz: Re-adding to clear up a
+	  cvs snafu I caused. --mars
+
+2007-05-29 22:39  mars
+
+	* Mp: Removing the Mp directory to complete the total removal of
+	  old cruft. --mars
+
+2007-05-25 18:54  mars
+
+	* configure, configure.in: Fixed a build bug dealing with OSX and
+	  output from uname. --mars
+
+2007-05-25 00:38  mars
+
+	* Src/toplevel.c: Changed how binary sets the default location of
+	  stk related config files.
+	  Use require that the binary be placed under the
+	  lib/stk/(version)/(system)
+	  directory. Now the binary can live under any directory. --mars
+
+2007-05-25 00:35  mars
+
+	* Extensions/Makefile.in: Cleaned up the distclean option. --mars
+
+2007-05-25 00:33  mars
+
+	* Stkdb/Makefile.in: Added config.status to distclean. --mars
+
+2007-05-25 00:30  mars
+
+	* Tk/unix/Makefile.in: Added config.log, config.cache, and
+	  config.status to the distclean option. --mars
+
+2007-05-25 00:29  mars
+
+	* Tcl/Makefile.in: Added config.log, config.status, and
+	  config.cache to the remove option under
+	  distclean. --mars
+
+2007-05-25 00:27  mars
+
+	* Src/Makefile.in: stk binary is now located under the bin
+	  directory, under a more
+	  sane directory structure. --mars
+	  
+	  stk binary is now located under the bin directory, under a more
+	  sane directory structure. --mars
+
+2007-05-25 00:26  mars
+
+	* Makefile.in, configure, configure.in, paths: stk binary is now
+	  located under the bin directory, under a more
+	  sane directory structure. --mars
+
+2007-05-24 19:50  mars
+
+	* VERSION: A switch in versioning has been done in order to reduce
+	  any confusion. The
+	  new version system now consists of a major and minor number. More
+	  in line with
+	  other projects. --mars
+
+2007-05-24 19:46  mars
+
+	* Demos/Makefile: Made changes regarding where files are installed.
+	  --mars
+
+2007-05-24 19:45  mars
+
+	* Help/Makefile: Modified where files get placed at installation.
+	  --mars
+
+2007-05-24 19:44  mars
+
+	* paths: Modified paths for stk installation. Requires modification
+	  of Makefiles as
+	  well. --mars
+
+2007-05-18 19:17  mars
+
+	* Gmp/configure: Built newer version via autoconf --mars
+
+2007-05-17 22:06  mars
+
+	* Doc/%README, STklos/%README: Renamed to README --mars
+
+2007-05-16 21:02  mars
+
+	* configure: A couple of edits to configure required --mars
+
+2007-05-16 20:44  mars
+
+	* configure: Rebuilt configure with autoconf. Hopefuly this one
+	  works on OSX --mars
+
+2007-05-16 20:43  mars
+
+	* Makefile.in: One more reference to snow commented out. --mars
+
+2007-05-16 20:42  mars
+
+	* Makefile.in: Commented out further references to the snow build
+	  --mars
+
+2007-05-15 22:12  mars
+
+	* Src/Makefile.in: Cleaning up build system for stk --mars
+
+2007-05-15 22:01  mars
+
+	* Src/configure: Rebuild configure from configure.in --mars
+
+2007-05-15 21:59  mars
+
+	* Src/configure.in: cleaning up build system for stk --mars
+
+2007-05-15 21:58  mars
+
+	* Extensions/Makefile.in: Cleaning up build system for stk --mars
+
+2007-05-15 21:43  mars
+
+	* configure: rebuilt configure from configure.in. --mars
+
+2007-05-15 20:57  mars
+
+	* Makefile.in: Cleaning up build system for stk --mars
+
+2007-05-15 20:56  mars
+
+	* configure.in: Cleaning up build system for stk. -- mars
+
+2007-05-14 18:56  mars
+
+	* Extensions/%README, Extensions/README: Renamed %README to README
+	  --mars
+
+2007-05-14 18:41  mars
+
+	* Gmp/configure: Re-ran autoconf to rebuild configure script. --
+	  mars
+
+2007-05-11 04:00  mars
+
+	* Doc/README, STklos/README: Renamed %README to README. --mars
+
+2007-05-11 00:03  mars
+
+	* configure.in: Cleaned up the configure.in script. Will do some
+	  more changes with
+	  regard to cygwin builds. --mars
+
+2007-05-08 22:10  mars
+
+	* VERSION: Updating Version to 1.2 so as to relfect the changes
+	  from 1.16. --mars 5/07
+
+2007-05-08 22:04  mars
+
+	* configure, configure.in: stk should now be able to be built under
+	  a cygwin environment. --mars 5/07
+
+2007-05-07 21:58  mars
+
+	* Stkdb/stkdb.scm.in: Fixed a long standing bug. The global
+	  variable PREFIX was not being substitued
+	  and hence stkdb was not loading correctly. I have changed this to
+	  SCMDIR to
+	  reflect where stkdb files are located. -mars 05/07/07
+
+2007-04-26 00:15  stephen
+
+	* brg/turtle-grfx.scm: *** empty log message ***
+
+2007-03-23 23:22  stephen
+
+	* brg/envdraw/README, brg/envdraw/meta.stk: stephenkek 03/23/07
+	  
+	  Fixed the append! display bug in EnvDraw. Added las-pair and
+	  append! functions in meta.stk
+	  Added information to README at the end on how to best add and/or
+	  modify functions in EnvDraw
+
+2006-04-24 20:06  mars
+
+	* Stkdb/ChangeLog, Stkdb/ChangeLog~, Stkdb/Makefile.in,
+	  Stkdb/pexpr.scm.in, Stkdb/pexpr.scm.in~, Stkdb/read.scm.in,
+	  Stkdb/read.scm.in~, Stkdb/stkdb.el.in, Stkdb/stkdb.scm.in~:
+	  Finally added some changes Hilfinger pointed out were out of
+	  date.
+
+2006-01-24 05:37  kevinm
+
+	* brg/obj.scm: chadded spacing to line 30 for Brian Harvey (kevinm)
+
+2005-05-17 23:26  scheme
+
+	* brg/STk.spec: added stk-grfx
+
+2005-05-17 23:05  scheme
+
+	* brg/win-rebuild.txt: added info for clarify
+
+2005-05-17 22:55  scheme
+
+	* brg/win-rebuild.txt: updated instructions to STK_VERSION
+	  "4.0.1-ucb1.16"
+
+2005-05-17 22:31  scheme
+
+	* Win32/addpmstk.c: added stk-grfx
+
+2005-05-17 22:07  scheme
+
+	* brg/setperms, brg/win-bkscminst.sh: Added stk-grfx.
+
+2005-05-17 22:03  scheme
+
+	* brg/bkscminst: Added stk-grfx
+
+2005-03-31 20:51  scheme
+
+	* brg/simply.scm: Added the original definition of atom?
+
+2005-03-31 20:47  scheme
+
+	* brg/explorin.scm: Put back the definition of atom?
+
+2005-03-31 20:47  scheme
+
+	* brg/berkeley.scm: Removed the definition of atom? due to
+	  misunderstanding. atom? should be
+	  in simply.scm instead.
+
+2005-03-30 22:45  scheme
+
+	* brg/explorin.scm: Removed the definition of atom?
+
+2005-03-30 22:43  scheme
+
+	* brg/berkeley.scm: Added original definition of atom?, (define
+	  (atom? x) (not (pair? x))).
+
+2005-02-09 00:55  scheme
+
+	* VERSION, brg/STk.spec: Updated version number
+
+2005-02-09 00:19  scheme
+
+	* VERSION: Updated version number
+
+2005-02-08 23:31  scheme
+
+	* brg/STk.spec: Incremented version number
+
+2005-02-02 21:32  scheme
+
+	* brg/berkeley.scm: Added two lines : '(define (1+ n) (+ n 1))'
+	  '(define (-1+ n) (- n 1))'
+
+2004-11-05 22:10  scheme
+
+	* VERSION: *** empty log message ***
+
+2004-11-03 22:19  scheme
+
+	* VERSION: Update version
+
+2004-11-01 22:08  scheme
+
+	* brg/which-modeler.scm: Fixed the bugs which assigned wrong truth
+	  values to the flags --
+	  "using-berkeley-scm?", "*harvey+wright*", and "*grillmeyer*".
+	  Also,
+	  updating contradicting comments
+
+2004-09-27 19:53  dennk
+
+	* Gmp/configure.in: Commented out AC_PREREQ(2.59)
+
+2004-09-14 01:06  scheme
+
+	* brg/bkscminst, brg/win-bkscminst.sh: *** empty log message ***
+
+2004-09-07 22:04  willchu
+
+	* Win32/addpmstk.c: The addstart menu reflects stk-explorin and
+	  stk-simply packages
+
+2004-09-03 02:51  willchu
+
+	* brg/notes: Modified notes to help future installers. simply.scm
+	  must be declared
+	  before modeler.stk
+
+2004-09-02 23:48  willchu
+
+	* brg/bkscminst, brg/win-bkscminst.sh: Fixed Modeler bug.
+	  simply.scm must be loaded before modeler.stk
+
+2004-08-24 00:28  willchu
+
+	* brg/STk.spec: New spec file for the new rpm
+
+2004-08-13 00:13  mars
+
+	* Gmp/Makefile.in, Gmp/configure, Gmp/configure.in: Made changes to
+	  the configuration files so that libgmp.a is build correctly
+	  under ultrasparc.
+
+2004-08-12 23:20  mars
+
+	* Gmp/Makefile.in: For some reason mpz-cmp.c was ommited from the
+	  Makefile. I have included again.
+
+2004-08-12 22:56  mars
+
+	* Gmp/Makefile.in: Fixed a typo. Incorrectly had inlines.c instead
+	  of inlines.o.
+
+2004-08-12 22:51  mars
+
+	* Gmp/Makefile.in: Made some corrections and added in entries for
+	  inlines.c to be compiled and
+	  linked into libgmp.a.
+
+2004-08-12 21:31  willchu
+
+	* brg/which-modeler.scm: which-modeler.scm now contains the logic
+	  that was once in cs3-modeler.scm and cs3s-modeler.scm.
+
+2004-08-12 21:30  willchu
+
+	* brg/bkscminst, brg/explorin.scm, brg/simply.scm,
+	  brg/win-bkscminst.sh: cs3-modeler and cs3s-modeler are obsolete.
+	  The logic is now in which-modeler.scm
+
+2004-08-12 20:24  mars
+
+	* Gmp/Makefile.am, Gmp/Makefile.in, Gmp/inlines.c: Added inlines.c
+	  to fix the build under the sparc platform. The corresponding
+	  Makefiles needed updating to include infiles.c in the build.
+
+2004-08-11 21:17  scheme
+
+	* brg/bkscminst, brg/explorin.scm, brg/setperms, brg/simply.scm,
+	  brg/win-bkscminst.sh: Modified the install scripts to create
+	  stk-explorin and stk-simply. Added function called
+	  "explorinOrSimply to give user an idea which files' conflictin
+	  definitions take precedence. stk-cs3,stk-cs3s, stk-cs61a are no
+	  longer created.
+
+2004-08-07 00:27  mars
+
+	* Stack/configure, Stack/configure.in: Updated configure to remove
+	  libstack.c and to recognize solaris x86.
+
+2004-08-07 00:22  mars
+
+	* Stack/libstack.c: Removed libstack.c. This file is automagically
+	  created by configure.
+
+2004-08-06 23:40  mars
+
+	* Doc/Makefile: Removed the generation of the postscript
+	  documentation during installation.
+
+2004-08-06 17:45  mars
+
+	* Gmp/Makefile.in: Needed to add mpz-cmp.c into source and object
+	  list.
+
+2004-08-06 17:45  mars
+
+	* Gmp/Makefile.am: Needed to add mpz-cmp.c into the object list.
+
+2004-08-06 01:16  mars
+
+	* depcomp, missing, mkinstalldirs: These files are needed by
+	  autoconf scripts under Gmp.
+
+2004-08-06 00:06  mars
+
+	* Gmp/configure.in: configure.in now conforms to the newest
+	  autoconf and automake tools.
+
+2004-08-06 00:06  mars
+
+	* Gmp/configure: configure now conforms to the newest autoconf and
+	  automake tools.
+
+2004-08-06 00:06  mars
+
+	* Gmp/aclocal.m4: aclocal.m4 now conforms to the newest autoconf
+	  and automake tools.
+
+2004-08-06 00:05  mars
+
+	* Gmp/Makefile.in: Makefile.in now conforms to the newest autoconf
+	  and automake tools.
+
+2004-08-05 21:33  mars
+
+	* ChangeLog: Added new entries pertaining to the last couple of
+	  commits.
+
+2004-08-05 20:42  mars
+
+	* Src/Makefile.in: Updated entries pertaining to the use of the old
+	  Gmp library. This should
+	  now allow stk and snow to be built using newer versions of gcc.
+	  (mars)
+
+2004-08-05 20:40  mars
+
+	* Makefile.in: Updated to reflect the use of the new Gmp library
+	  now under the stk
+	  distribution. (mars)
+
+2004-08-05 20:38  mars
+
+	* configure: Added the ability for the top level configure to
+	  configure and create the
+	  neccessary Makefiles under Gmp. This will allow stk to build
+	  using the new Gmp
+	  library. (mars)
+
+2004-08-05 19:40  mars
+
+	* VERSION: Updated version of stk from 1.15 to 1.16 for impending
+	  changes.
+
+2004-08-05 18:47  mars
+
+	* Gmp, Gmp/AUTHORS, Gmp/COPYING, Gmp/ChangeLog, Gmp/INSTALL,
+	  Gmp/Makefile.am, Gmp/Makefile.in, Gmp/NEWS, Gmp/README,
+	  Gmp/aclocal.m4, Gmp/assert.c, Gmp/config.h.in, Gmp/configure,
+	  Gmp/configure.in, Gmp/errno.c, Gmp/gmp-impl.h, Gmp/gmp-mparam.h,
+	  Gmp/gmp-stklos.h.in, Gmp/gmp.h, Gmp/insert-dbl.c, Gmp/longlong.h,
+	  Gmp/memory.c, Gmp/mp_bpl.c, Gmp/mp_clz_tab.c, Gmp/mp_set_fns.c,
+	  Gmp/mpn-add_n.c, Gmp/mpn-addmul_1.c, Gmp/mpn-bz_divrem_n.c,
+	  Gmp/mpn-cmp.c, Gmp/mpn-diveby3.c, Gmp/mpn-divrem.c,
+	  Gmp/mpn-divrem_1.c, Gmp/mpn-divrem_2.c, Gmp/mpn-get_str.c,
+	  Gmp/mpn-lshift.c, Gmp/mpn-mp_bases.c, Gmp/mpn-mul.c,
+	  Gmp/mpn-mul_1.c, Gmp/mpn-mul_basecase.c, Gmp/mpn-mul_n.c,
+	  Gmp/mpn-rshift.c, Gmp/mpn-sb_divrem_mn.c, Gmp/mpn-set_str.c,
+	  Gmp/mpn-sqr_basecase.c, Gmp/mpn-sqrtrem.c, Gmp/mpn-sub_n.c,
+	  Gmp/mpn-submul_1.c, Gmp/mpn-tdiv_qr.c, Gmp/mpz-add.c,
+	  Gmp/mpz-and.c, Gmp/mpz-clear.c, Gmp/mpz-cmp.c, Gmp/mpz-cmp_si.c,
+	  Gmp/mpz-cmp_ui.c, Gmp/mpz-com.c, Gmp/mpz-fdiv_qr.c,
+	  Gmp/mpz-fdiv_qr_ui.c, Gmp/mpz-get_d.c, Gmp/mpz-get_si.c,
+	  Gmp/mpz-get_str.c, Gmp/mpz-get_ui.c, Gmp/mpz-init.c,
+	  Gmp/mpz-ior.c, Gmp/mpz-iset.c, Gmp/mpz-iset_si.c,
+	  Gmp/mpz-iset_str.c, Gmp/mpz-iset_ui.c, Gmp/mpz-mul.c,
+	  Gmp/mpz-neg.c, Gmp/mpz-realloc.c, Gmp/mpz-set.c,
+	  Gmp/mpz-set_si.c, Gmp/mpz-set_str.c, Gmp/mpz-set_ui.c,
+	  Gmp/mpz-sizeinbase.c, Gmp/mpz-sqrtrem.c, Gmp/mpz-sub.c,
+	  Gmp/mpz-sub_ui.c, Gmp/mpz-tdiv_qr.c, Gmp/mpz-ui_pow_ui.c,
+	  Gmp/mpz-xor.c, Gmp/stamp-h.in: Adding new Gmp library to allow
+	  STk to compile with gcc versions
+	  greater then 3.3. (mars)
+
+2004-05-12 21:53  willchu
+
+	* brg/bkscminst, brg/win-bkscminst.sh: Fixed cs3s bug for
+	  stk-scripts. Accidentally had cs3 instead of cs3s
+
+2004-05-12 21:29  scheme
+
+	* brg/berkeley.scm: Added changes Brian Harvey requested. Modified
+	  the procedure print
+	  in order to correct the output regarding circular structures.
+
+2004-05-10 22:55  willchu
+
+	* brg/bkscminst, brg/setperms, brg/win-bkscminst.sh: Updated the
+	  scripts that start STk
+
+2004-04-15 22:18  scheme
+
+	* VERSION: (mars) Updated the version number from 1.13 to 1.15
+
+2004-04-15 20:02  scheme
+
+	* Src/toplevel.c: (mars) Changed the modifications line to read
+	  Instcrutional Support Group.
+	  I also changed the email address from root to inst.
+
+2004-04-14 22:23  scheme
+
+	* brg/notes: (mars) Updated the listing and descriptions of files
+	  under brg
+
+2004-04-14 21:37  willchu
+
+	* ChangeLog: Updated the Change log
+	  dCVS:
+	  ----------------------------------------------------------------------
+
+2004-04-07 22:40  willchu
+
+	* brg/win-envdinst.sh: Fixed win-envdinst.sh so that it no longer
+	  truncates Program Files so that envdraw can be properly installed
+
+2004-03-21 05:29  willchu
+
+	* brg/win-rebuild.txt: Patched 2004-02-06 Hilfinger's changes to
+	  add stkvers.h dependency
+
+2004-03-21 05:29  willchu
+
+	* Src/argv.c, Src/number.c, Src/slib.c, Src/stk.h, Src/stklos.c,
+	  Src/toplevel.c: Patched 2004-02-06 Hilfinger's changes to add
+	  stkvers.h dependency
+	  
+	  Patch
+
+2004-03-18 22:58  willchu
+
+	* brg/mac-rebuild.txt, brg/notes: Added file mac-rebuild.txt for
+	  notes on how to rebuild for Mac OSx
+
+2004-01-14 21:00  willchu
+
+	* brg/build: Completely got rid of test for links because no
+	  platform-indep solution --njh
+
+2004-01-13 19:48  willchu
+
+	* brg/build: Solaris calls to test from sh cannot have a space
+	  between the -L and the
+	  arguement...go figure.
+
+2004-01-13 03:17  willchu
+
+	* brg/STk.spec: STk is now installed into a different
+	  directory...updated spec -- njh
+
+2004-01-13 02:34  willchu
+
+	* brg/STk.spec, brg/build: build now calls test w/o path, STk.spec
+	  has correct release number -- njh
+
+2004-01-13 02:34  willchu
+
+	* ChangeLog: Updated ChangeLog -- njh
+
+2004-01-08 21:39  willchu
+
+	* VERSION: Forgot to commit after adding VERSION --njh
+
+2003-12-20 02:09  willchu
+
+	* brg/win-bkscminst.sh: Fixed batch file creation slash error --njh
+
+2003-12-19 22:58  willchu
+
+	* .STk.prcs_aux, ChangeLog, Demos/Makefile, Lib/STk.init,
+	  Lib/init.stk, Lib/pp.stk, Lib/trace.stk, Makefile.in, Mp/gmp.h,
+	  STk.prj, Src/Makefile.in, Src/error.c, Src/eval.c, Src/list.c,
+	  Src/port.c, Src/primitives.c, Src/signal.c, Src/slib.c,
+	  Src/stk.h, Stack/libstack.c, Stkdb, Stkdb/COPYING.psd,
+	  Stkdb/ChangeLog, Stkdb/ChangeLog~, Stkdb/Makefile.in,
+	  Stkdb/README, Stkdb/TODO, Stkdb/configure, Stkdb/doc,
+	  Stkdb/doc/fdl.texi, Stkdb/doc/gpl.texi, Stkdb/doc/stkdb.texinfo,
+	  Stkdb/pexpr.scm.in, Stkdb/pexpr.scm.in~, Stkdb/read.scm.in,
+	  Stkdb/read.scm.in~, Stkdb/stkdb.cs61b, Stkdb/stkdb.el.in,
+	  Stkdb/stkdb.scm.in, Stkdb/stkdb.scm.in~, Stkdb/uninst.scm,
+	  brg/README-7-2003, brg/berkeley.msg, brg/berkeley.scm,
+	  brg/bkscminst, brg/build, brg/class-load.stk,
+	  brg/cs3-modeler.stk, brg/cs3s-modeler.stk, brg/envdinst,
+	  brg/envdraw, brg/envdraw-1.3.tar.gz, brg/envdraw-patch,
+	  brg/envdraw/ANNOUNCE, brg/envdraw/BUGS, brg/envdraw/Help,
+	  brg/envdraw/Help/envdraw.html, brg/envdraw/Help/figure1.gif,
+	  brg/envdraw/Help/figure2.gif, brg/envdraw/Help/figure3.gif,
+	  brg/envdraw/Help/figure4.gif, brg/envdraw/Help/figure5.gif,
+	  brg/envdraw/Help/figure6.gif, brg/envdraw/Help/figure7.gif,
+	  brg/envdraw/Help/next_motif.gif,
+	  brg/envdraw/Help/next_motif_gr.gif, brg/envdraw/Help/node1.html,
+	  brg/envdraw/Help/node2.html, brg/envdraw/Help/node3.html,
+	  brg/envdraw/Help/previous_motif.gif,
+	  brg/envdraw/Help/previous_motif_gr.gif,
+	  brg/envdraw/Help/up_motif.gif, brg/envdraw/Help/up_motif_gr.gif,
+	  brg/envdraw/README, brg/envdraw/color.stk, brg/envdraw/diffs,
+	  brg/envdraw/diffs/error.c.diffs, brg/envdraw/doc,
+	  brg/envdraw/doc/Makefile, brg/envdraw/doc/envdraw.sty,
+	  brg/envdraw/doc/envdraw.tex, brg/envdraw/doc/figs,
+	  brg/envdraw/doc/figs/diag1.ps, brg/envdraw/doc/figs/diag2.ps,
+	  brg/envdraw/doc/figs/diag3.ps, brg/envdraw/doc/figs/diag4.ps,
+	  brg/envdraw/doc/figs/diag5.ps, brg/envdraw/doc/figs/diag6.ps,
+	  brg/envdraw/doc/figs/diag7.ps, brg/envdraw/env-classes.stk,
+	  brg/envdraw/env-pointers.stk, brg/envdraw/env-toplev.stk,
+	  brg/envdraw/environments.stk, brg/envdraw/icons,
+	  brg/envdraw/icons/envdraw, brg/envdraw/icons/view,
+	  brg/envdraw/lib, brg/envdraw/lib/envdraw.sh,
+	  brg/envdraw/lib/stk-init.stk, brg/envdraw/math.stk,
+	  brg/envdraw/meta.stk, brg/envdraw/move-composite.stk,
+	  brg/envdraw/old, brg/envdraw/old/adjpointers.stk,
+	  brg/envdraw/old/common-widget.stk, brg/envdraw/placement.stk,
+	  brg/envdraw/simple-pointer.stk, brg/envdraw/stacks.stk,
+	  brg/envdraw/test, brg/envdraw/test/callcctest.stk,
+	  brg/envdraw/test/envtest.stk, brg/envdraw/test/viewtest.stk,
+	  brg/envdraw/view-classes.stk, brg/envdraw/view-debug.stk,
+	  brg/envdraw/view-misc.stk, brg/envdraw/view-pointers.stk,
+	  brg/envdraw/view-profiles.stk, brg/envdraw/view-toplev.stk,
+	  brg/envdraw/view-updates.stk, brg/envdraw/view.stk,
+	  brg/explorin.scm, brg/init.stk.patch, brg/modeler.stk, brg/notes,
+	  brg/obj.scm, brg/patchinit, brg/reinstall, brg/setperms,
+	  brg/simply.scm, brg/slib2c7.zip, brg/slib2d5,
+	  brg/slib2d5/ANNOUNCE, brg/slib2d5/Bev2slib.scm,
+	  brg/slib2d5/COPYING, brg/slib2d5/ChangeLog,
+	  brg/slib2d5/DrScheme.init, brg/slib2d5/FAQ, brg/slib2d5/Makefile,
+	  brg/slib2d5/README, brg/slib2d5/RScheme.init,
+	  brg/slib2d5/STk.init, brg/slib2d5/Template.scm,
+	  brg/slib2d5/alist.scm, brg/slib2d5/alistab.scm,
+	  brg/slib2d5/array.scm, brg/slib2d5/array.txi,
+	  brg/slib2d5/arraymap.scm, brg/slib2d5/batch.scm,
+	  brg/slib2d5/bigloo.init, brg/slib2d5/break.scm,
+	  brg/slib2d5/byte.scm, brg/slib2d5/chap.scm,
+	  brg/slib2d5/charplot.scm, brg/slib2d5/chez.init,
+	  brg/slib2d5/cie1931.xyz, brg/slib2d5/cie1964.xyz,
+	  brg/slib2d5/cltime.scm, brg/slib2d5/coerce.scm,
+	  brg/slib2d5/coerce.txi, brg/slib2d5/collect.scm,
+	  brg/slib2d5/color.scm, brg/slib2d5/color.txi,
+	  brg/slib2d5/colornam.scm, brg/slib2d5/colornam.txi,
+	  brg/slib2d5/colorspc.scm, brg/slib2d5/comlist.scm,
+	  brg/slib2d5/comparse.scm, brg/slib2d5/crc.scm,
+	  brg/slib2d5/cring.scm, brg/slib2d5/cvs.scm, brg/slib2d5/cvs.txi,
+	  brg/slib2d5/daylight.scm, brg/slib2d5/daylight.txi,
+	  brg/slib2d5/db2html.scm, brg/slib2d5/db2html.txi,
+	  brg/slib2d5/dbcom.scm, brg/slib2d5/dbrowse.scm,
+	  brg/slib2d5/dbsyn.scm, brg/slib2d5/dbutil.scm,
+	  brg/slib2d5/dbutil.txi, brg/slib2d5/debug.scm,
+	  brg/slib2d5/defmacex.scm, brg/slib2d5/determ.scm,
+	  brg/slib2d5/determ.txi, brg/slib2d5/differ.scm,
+	  brg/slib2d5/differ.txi, brg/slib2d5/dirs.scm,
+	  brg/slib2d5/dwindtst.scm, brg/slib2d5/dynamic.scm,
+	  brg/slib2d5/dynwind.scm, brg/slib2d5/elk.init,
+	  brg/slib2d5/eval.scm, brg/slib2d5/factor.scm,
+	  brg/slib2d5/factor.txi, brg/slib2d5/fft.scm,
+	  brg/slib2d5/fluidlet.scm, brg/slib2d5/fmtdoc.txi,
+	  brg/slib2d5/format.scm, brg/slib2d5/formatst.scm,
+	  brg/slib2d5/gambit.init, brg/slib2d5/genwrite.scm,
+	  brg/slib2d5/getopt.scm, brg/slib2d5/getparam.scm,
+	  brg/slib2d5/glob.scm, brg/slib2d5/guile.init,
+	  brg/slib2d5/hash.scm, brg/slib2d5/hashtab.scm,
+	  brg/slib2d5/html4each.scm, brg/slib2d5/htmlform.scm,
+	  brg/slib2d5/htmlform.txi, brg/slib2d5/http-cgi.scm,
+	  brg/slib2d5/http-cgi.txi, brg/slib2d5/lineio.scm,
+	  brg/slib2d5/lineio.txi, brg/slib2d5/logical.scm,
+	  brg/slib2d5/macrotst.scm, brg/slib2d5/macscheme.init,
+	  brg/slib2d5/macwork.scm, brg/slib2d5/matfile.scm,
+	  brg/slib2d5/matfile.txi, brg/slib2d5/mbe.scm,
+	  brg/slib2d5/minimize.scm, brg/slib2d5/minimize.txi,
+	  brg/slib2d5/mitscheme.init, brg/slib2d5/mklibcat.scm,
+	  brg/slib2d5/modular.scm, brg/slib2d5/mulapply.scm,
+	  brg/slib2d5/mularg.scm, brg/slib2d5/mwdenote.scm,
+	  brg/slib2d5/mwexpand.scm, brg/slib2d5/mwsynrul.scm,
+	  brg/slib2d5/null.scm, brg/slib2d5/obj2str.scm,
+	  brg/slib2d5/obj2str.txi, brg/slib2d5/objdoc.txi,
+	  brg/slib2d5/object.scm, brg/slib2d5/paramlst.scm,
+	  brg/slib2d5/plottest.scm, brg/slib2d5/pnm.scm,
+	  brg/slib2d5/pp.scm, brg/slib2d5/ppfile.scm, brg/slib2d5/prec.scm,
+	  brg/slib2d5/printf.scm, brg/slib2d5/priorque.scm,
+	  brg/slib2d5/process.scm, brg/slib2d5/promise.scm,
+	  brg/slib2d5/pscheme.init, brg/slib2d5/psxtime.scm,
+	  brg/slib2d5/qp.scm, brg/slib2d5/queue.scm,
+	  brg/slib2d5/r4rsyn.scm, brg/slib2d5/randinex.scm,
+	  brg/slib2d5/randinex.txi, brg/slib2d5/random.scm,
+	  brg/slib2d5/random.txi, brg/slib2d5/ratize.scm,
+	  brg/slib2d5/rdms.scm, brg/slib2d5/recobj.scm,
+	  brg/slib2d5/record.scm, brg/slib2d5/repl.scm,
+	  brg/slib2d5/report.scm, brg/slib2d5/require.scm,
+	  brg/slib2d5/resenecolours.txt, brg/slib2d5/root.scm,
+	  brg/slib2d5/s48-0_57.init, brg/slib2d5/saturate.txt,
+	  brg/slib2d5/sc2.scm, brg/slib2d5/sc4opt.scm,
+	  brg/slib2d5/sc4sc3.scm, brg/slib2d5/scaexpp.scm,
+	  brg/slib2d5/scaglob.scm, brg/slib2d5/scainit.scm,
+	  brg/slib2d5/scamacr.scm, brg/slib2d5/scanf.scm,
+	  brg/slib2d5/scaoutp.scm, brg/slib2d5/scheme2c.init,
+	  brg/slib2d5/scheme48.init, brg/slib2d5/schmooz.scm,
+	  brg/slib2d5/schmooz.texi, brg/slib2d5/scm.init,
+	  brg/slib2d5/scmacro.scm, brg/slib2d5/scsh.init,
+	  brg/slib2d5/selfset.scm, brg/slib2d5/sierpinski.scm,
+	  brg/slib2d5/simetrix.scm, brg/slib2d5/slib.info,
+	  brg/slib2d5/slib.spec, brg/slib2d5/slib.texi,
+	  brg/slib2d5/solid.scm, brg/slib2d5/solid.txi,
+	  brg/slib2d5/sort.scm, brg/slib2d5/soundex.scm,
+	  brg/slib2d5/srfi-1.scm, brg/slib2d5/srfi-1.txi,
+	  brg/slib2d5/srfi.scm, brg/slib2d5/srfi.txi,
+	  brg/slib2d5/stdio.scm, brg/slib2d5/strcase.scm,
+	  brg/slib2d5/strport.scm, brg/slib2d5/strsrch.scm,
+	  brg/slib2d5/structure.scm, brg/slib2d5/subarray.scm,
+	  brg/slib2d5/subarray.txi, brg/slib2d5/syncase.sh,
+	  brg/slib2d5/synchk.scm, brg/slib2d5/synclo.scm,
+	  brg/slib2d5/synrul.scm, brg/slib2d5/t3.init,
+	  brg/slib2d5/timezone.scm, brg/slib2d5/trace.scm,
+	  brg/slib2d5/transact.scm, brg/slib2d5/transact.txi,
+	  brg/slib2d5/tree.scm, brg/slib2d5/trnscrpt.scm,
+	  brg/slib2d5/tsort.scm, brg/slib2d5/tzfile.scm,
+	  brg/slib2d5/umbscheme.init, brg/slib2d5/uri.scm,
+	  brg/slib2d5/uri.txi, brg/slib2d5/values.scm,
+	  brg/slib2d5/version.txi, brg/slib2d5/vscm.init,
+	  brg/slib2d5/withfile.scm, brg/slib2d5/wttest.scm,
+	  brg/slib2d5/wttree.scm, brg/slib2d5/yasyn.scm, brg/slibinst,
+	  brg/stkdbinst, brg/turtle-grfx.scm, brg/userinit.stk,
+	  brg/win-bkscminst.sh, brg/win-envdinst.sh, brg/win-inst.sh,
+	  brg/win-patchinit.sh, brg/win-rebuild.txt, brg/win-slibinst.sh,
+	  brg/win-stkdbinst.sh, configure, configure.in: Hillfinger
+	  updates. Read the Changelog. --njh
+
+2003-11-12 22:23  willchu
+
+	* brg/win-rebuild.txt: Added some comments on additional packages
+	  needed.
+
+2003-11-12 22:01  willchu
+
+	* brg/win-slibinst.sh: Changed zip location from /temp... to
+	  /cygdrive/c/temp... to fix build.
+
+2003-11-12 22:00  willchu
+
+	* Win32/STk.dsp, Win32/STk.mak: Removed an apparently bogus copy of
+	  STk.exe to brg/install/ms-win32 as
+	  a post-build step.
+
+2003-08-05 23:10  scheme
+
+	* brg/README-7-2003, brg/bkscminst: Readme File created
+	  iVS:
+	  ----------------------------------------------------------------------
+
+2003-06-30 21:59  scheme
+
+	* brg/STk.spec: updating release number
+
+2003-05-15 20:31  scheme
+
+	* brg/berkeley.scm: updated berkeley.scm to fix keywords
+
+2003-04-17 20:24  scheme
+
+	* brg/berkeley.scm: updated berkeley.scm by bh's request
+
+2003-03-04 22:18  scheme
+
+	* brg/berkeley.scm: Made updates requested by BH. Updates included
+	  tt graphics functions setbackground and bg-makers
+
+2003-01-31 01:34  scheme
+
+	* brg/STk.spec: fixed small syntax error
+
+2003-01-31 01:10  scheme
+
+	* brg/STk.spec, brg/bkscminst: modified STk.spec to package new
+	  scripts in rpm
+
+2003-01-31 00:44  scheme
+
+	* brg/STk.spec, brg/bkscminst: Added new scripts into the STk.spec
+	  for redhat builds
+
+2003-01-30 03:47  scheme
+
+	* brg/bkscminst, brg/setperms: Script updates provides easier
+	  install across arch. (mac and linux)
+
+2003-01-30 02:04  scheme
+
+	* Win32/addpmstk.c: Adding .bat files to start menu
+
+2003-01-11 02:45  scheme
+
+	* brg/setperms: set permission for cs9d script
+
+2003-01-11 02:19  scheme
+
+	* brg/bkscminst, brg/setperms, brg/win-bkscminst.sh: setup for cs9d
+	  script
+
+2003-01-10 01:36  scheme
+
+	* brg/bkscminst, brg/build, brg/setperms: *** empty log message ***
+
+2003-01-09 21:56  scheme
+
+	* brg/class-load.scm, brg/turtle-grfx.scm, brg/win-bkscminst.sh,
+	  brg/win-slibinst.sh: added turtle-graphics, made changed to
+	  win-bkscminst and win-slibinst to add .bat files for
+	  cs3,3s,and61a.
+
+2002-12-06 22:53  scheme
+
+	* brg/bkscminst: Added turtle-grfx.scm to be loaded in cs3s scripts
+
+2002-12-06 21:52  scheme
+
+	* brg/bkscminst, brg/setperms: Setperms of new scripts (stk-cs3,
+	  stk-cs3s, stk-cs61a)
+
+2002-12-06 02:19  scheme
+
+	* brg/bkscminst, brg/notes: changed script to load binaries based
+	  on class
+
+2002-11-23 00:21  scheme
+
+	* brg/bkscminst: debugged
+
+2002-11-22 23:55  scheme
+
+	* brg/bkscminst: creates class-load file in order to set paths
+	  correctly.
+
+2002-11-22 23:16  scheme
+
+	* brg/bkscminst: does not load berkeley.scm anymore
+
+2002-11-22 22:53  scheme
+
+	* brg/bkscminst: Testing changes to bkschminst
+
+2002-11-22 22:27  scheme
+
+	* brg/bkscminst: changes to bkschminst, loading .scm changed to
+	  .stk in modelers.
+
+2002-11-22 22:00  scheme
+
+	* brg/bkscminst: Corrections to script
+
+2002-11-22 21:21  scheme
+
+	* brg/bkscminst, brg/cs3-modeler.stk, brg/cs3s-modeler.stk,
+	  brg/explorin.scm: Changed install script to load "class-load.scm"
+
+2002-11-22 20:56  scheme
+
+	* brg/STk.spec, brg/bkscminst: Updating release number of STk.spec.
+	  Changed install script to install class-load files
+
+2002-11-22 20:53  scheme
+
+	* brg/class-load.scm: Startup file for loading different classes.
+
+2002-11-22 20:42  scheme
+
+	* brg/berkeley.scm, brg/cs3-modeler.stk, brg/cs3s-modeler.stk,
+	  brg/modeler.stk: Seperated the modelers by class. Either cs3 or
+	  cs3s.
+
+2002-10-11 21:08  scheme
+
+	* brg/build: made the file exec
+
+2002-10-11 20:55  scheme
+
+	* brg/build: -vx option
+
+2002-10-11 20:44  scheme
+
+	* brg/build: ksh to ksh93 - trying to get this script to work
+
+2002-10-11 20:40  scheme
+
+	* brg/build: ksh93 to ksh
+
+2002-10-11 19:20  scheme
+
+	* brg/build: C
+	  ksh to ksh93:
+
+2002-10-10 20:50  scheme
+
+	* brg/build: shell language bash to ksh
+
+2002-10-10 20:09  scheme
+
+	* brg/build: all references from ksh to bash
+
+2002-10-04 20:48  scheme
+
+	* brg/STk.spec: updating release number
+
+2002-10-04 20:00  scheme
+
+	* brg/modeler.stk: This is the cs3 version of the modeler:
+	  updates include newlines between steps, ability to handle
+	  strings,
+	  and paren balancing is fixed.
+
+2002-10-03 23:44  scheme
+
+	* Lib/pp.stk: *** empty log message ***
+
+2002-05-17 23:31  scheme
+
+	* brg/win-rebuild.txt: whee, more unobvious stuff
+
+2002-05-17 22:57  scheme
+
+	* brg/win-rebuild.txt: Add more interesting non-obvious things:
+	  stkvers.h, and c:\temp.
+	  Reformat.
+
+2002-05-15 00:17  scheme
+
+	* brg/STk.spec: 1. update version number.
+	  
+	  2. remove manual requires and provides info -- trying to rebuild
+	  it on RH7
+	  would probably make those a bad idea.
+
+2002-05-06 20:18  brg
+
+	* brg/berkeley.scm: BEFORE? made case-insensitive.
+
+2002-04-26 02:22  brg
+
+	* brg/explorin.scm: Unified changes from all the random versions of
+	  explorin.scm,
+	  explorin.ss, explorin.stk into this version.
+
+2002-04-26 02:20  brg
+
+	* brg/berkeley.stk: No longer used.
+
+2002-04-11 21:43  brg
+
+	* brg/berkeley.scm: Patch from BH to shield ASSOC from redefinition
+	  of PAIR?, etc.
+
+2002-03-22 07:03  brg
+
+	* brg/switchsh.sh: fix perms on edited files
+
+2002-03-20 01:33  brg
+
+	* Src/dynload.c: MACOSX is decidedly not dlfcn.h compatible.
+
+2002-03-20 00:11  brg
+
+	* brg/switchsh.sh: Utility to switch the shell used to run all the
+	  shell scripts.
+
+2002-01-22 02:01  brg
+
+	* brg/mklinkfarm: Make the directory if it doesn't exist; works
+	  around CVS pruning empty dirs.
+
+2002-01-22 01:56  brg
+
+	* brg/debugging-patch, brg/modeler.stk, brg/notes: debugging-patch:
+	  With configure.in updates, this is no longer necessary.
+	  modeler.stk: Remove unquote-expr and the call to it in
+	  evaluator-binding,
+	  fixing a bug that Clancy noticed. (I can't tell why these were
+	  originally
+	  introduced; probably it came from before pp was used.)
+	  notes: Update for current status. Fix 2002 != 2001 typos.
+
+2002-01-22 01:34  brg
+
+	* brg/modeler.stk: modeler.stk: Fix a comment. Make Motion binding
+	  use null-binding.
+
+2002-01-22 00:56  brg
+
+	* brg/modeler.stk: Update about info.
+
+2002-01-22 00:40  brg
+
+	* brg/modeler.stk, brg/notes: modeler.stk: Code cleanup...
+	  Get rid of *the-expression-that-failed*, because it is not used.
+	  Get rid of variable?, because it is identical to symbol?. Use
+	  symbol? instead.
+	  Get rid of *the-console*, because it is no longer needed, with
+	  the demise of
+	  console-output-error.
+	  Get rid of stdin, stdout, and stderr, because they were never
+	  used. Also get
+	  rid of the text widget tags with the same names.
+	  Get rid of bad-port and console-output, because once stdin is
+	  gone,
+	  they are used nowhere.
+	  Add & clarify some comments.
+	  Rearrange the order of some functions so that the code reads a
+	  little more
+	  smoothly.
+	  Put the version number and date in the About box.
+	  Bind ButtonRelease to the same thing as ButtonPress, and ignore
+	  Motion.
+	  This sort of fixes the dragging bugs Clancy complained about.
+	  
+	  notes: Note that we fixed the dragging bugs.
+
+2002-01-21 22:56  brg
+
+	* brg/modeler.stk, brg/notes: Workaround bugs in font chooser by
+	  removing font chooser.
+
+2002-01-21 22:45  brg
+
+	* brg/modeler.stk, brg/notes: modeler.stk: Use a dialog box for
+	  errors; requested by Clancy.
+	  notes: Add current bug list.
+
+2002-01-19 09:49  brg
+
+	* Src/error.c, brg/modeler.stk: Src/error.c: Raise depth of stack
+	  traces to 10 lines.
+	  brg/modeler.stk: Correct stmt about fonts in Help.
+
+2002-01-19 09:03  brg
+
+	* Extensions/Makefile.in, Makefile.in, Src/Makefile.in,
+	  Stack/Makefile.in, Tcl/Makefile.in, Tk/unix/Makefile.in: Split
+	  'clean' targets into 'clean' and 'distclean'.
+
+2002-01-19 08:34  brg
+
+	* config.sub: Add config.sub to the repository, because configure
+	  uses it.
+
+2002-01-19 08:33  brg
+
+	* Src/stkvers.h, Utils/STk.spec, VERSION, config.guess, configure,
+	  configure.in, install-sh: Get rid of LINUX altogether; use
+	  LINUX_ELF instead.
+	  Remove VERSION Src/stkvers.h Utils/STk.spec from repository,
+	  because they are
+	  automatically generated.
+	  Add config.guess install-sh to the repository, because configure
+	  uses them.
+
+2002-01-19 08:16  brg
+
+	* brg/build: brg/build: Remove --disable-elf and --disable-dld
+	  options to configure,
+	  which are no longer needed.
+
+2002-01-19 07:58  brg
+
+	* Src/dynload.c: Mac OS X patch from Andy Begel
+
+2002-01-19 07:51  brg
+
+	* configure, configure.in: configure.in: Reworked to include Andy
+	  Begel's configure patch and
+	  to remove the Linux 1.x pre-ELF dynamic loading stuff which was
+	  rudely
+	  removed from configure but not configure.in.
+	  configure: Regenerated with autoconf 2.13.
+
+2001-10-03 05:27  brg
+
+	* brg/debugging-patch: Configure patch for debugging.
+
+2001-10-03 05:22  brg
+
+	* brg/modeler.traceit: Updated list of trace functions.
+
+2001-10-03 05:21  brg
+
+	* brg/modeler.stk: Remove trace functions from end of file.
+	  Comment out (go) and (go2).
+
+2001-05-25 19:50  brg
+
+	* brg/STk.spec: Update spec file version number and my email.
+
+2001-05-21 23:17  brg
+
+	* brg/win-envdinst.sh: Add wrapper function for view.
+
+2001-05-17 21:50  brg
+
+	* brg/modeler.stk: Make evaluator-binding work with
+	  line-starts-surrounding. This fixed the last
+	  known multi-line-expression bug (select and evaluate last line of
+	  expression
+	  would not copy previous lines.)
+
+2001-05-14 23:19  brg
+
+	* brg/modeler.stk: This one should allow clicking on the char in
+	  brackets:
+	  '[(]) or '([)] but not [']().
+
+2001-05-14 22:21  brg
+
+	* brg/modeler.stk: This version has a better-working down arrow.
+
+2001-05-05 00:43  brg
+
+	* brg/modeler.stk: Added more obvious sections to the file: (moved
+	  all the early
+	  initialization code to the top, etc.)
+	  Added more comments.
+	  Removed dead code and variables: *show-splash-screen*,
+	  *console-font*,
+	  console-insert, print-expr-line-start, console-invoke,
+	  console-prompt,
+	  console-display-prompt, and make-console-display-prompt.
+	  verify-helper must use a let* when calling get-text-span.
+
+2001-05-05 00:18  brg
+
+	* brg/modeler.stk: Added many more comments. Reformatted
+	  expr-enclosing-range and
+	  verify-helper, and changed verify-helper to only call
+	  get-text-span once
+	  per range.
+
+2001-05-04 23:44  brg
+
+	* brg/modeler.stk: (The up arrow should be working in this
+	  revision.)
+
+2001-05-04 23:44  brg
+
+	* brg/modeler.stk: New version of line-starts-surrounding, which
+	  works.
+	  line-start-before and line-start-after are gone, (and don't trace
+	  them).
+	  Added go2 which starts modeler with a 2-line expression (for
+	  testing).
+	  
+	  BUGS: You still cannot successfully click on '() or ().
+	  Many functions need descriptions.
+	  Lots of dead code.
+	  Down arrow (select-first-enclosed-expr) doesn't work.
+
+2001-05-04 23:21  brg
+
+	* brg/modeler.stk: modeler.stk:
+	  1. The line-starts stuff is pretty broken.
+	  2. The find-paren functions now return real indices. This fixes a
+	  bug
+	  when you got answers from them that were based on inputs of
+	  "sel.first"
+	  and then you removed the selection and the answer suddenly meant
+	  nothing.
+	  3. This version should have good working left and right arrow
+	  keys.
+	  4. You cannot successfully click on '().
+
+2001-05-03 00:46  brg
+
+	* brg/modeler.stk: Updated about box
+
+2001-05-03 00:31  brg
+
+	* brg/modeler.stk: Left arrow works better now.
+
+2001-05-02 23:37  brg
+
+	* brg/modeler.stk: modeler.stk: Removed some commented-out code.
+	  Added descriptions to many functions.
+
+2001-04-20 23:52  brg
+
+	* brg/modeler.stk: modeler.stk: Fix bug in select-enclosing-expr,
+	  and turn off traces.
+	  The only known bug with this version is that the arrow keys don't
+	  work.
+
+2001-04-20 00:21  brg
+
+	* brg/modeler.stk: fix mouseclick selections again.
+
+2001-04-19 23:22  brg
+
+	* brg/modeler.stk: Fix bugs in any-more-line-starts (may go away
+	  anyway), first- and
+	  second-expr-line-start, and string-count-rparens.
+
+2001-04-19 22:29  brg
+
+	* brg/modeler.stk: modeler.stk: Add the rest of the expr-line-start
+	  stuff.
+	  Refactor string-count-parens into string-count-lparens,
+	  string-count-rparens.
+	  Trash the old verify-parens code.
+	  Safen the {for,back}wards-find-[lr]paren functions.
+	  Rewrite expr-enclosing-point and select-enclosing-expr in terms
+	  of
+	  new expr-enclosing-range function.
+	  Rewrite arrow key bindings.
+
+2001-04-12 00:18  brg
+
+	* brg/modeler.stk: Moved some functions out of eval-cond, and now
+	  they sort
+	  of work better...who knows? Also, evaluator-binding now tries to
+	  select
+	  from last-expr-line-start to the end when nothing is selected.
+
+2001-04-11 01:38  brg
+
+	* brg/modeler.stk: modeler.stk: Use "exprlinestarts" mechanism for
+	  finding the beginning of
+	  expressions to evaluate/delete. Use "console-append-expr" to
+	  append
+	  expressions, "console-append" to append other random things.
+	  Comment out some debugging printfs.
+
+2001-04-06 23:05  brg
+
+	* brg/modeler.stk: (set! *debug* #t) is required to keep STk's eval
+	  from replacing variable
+	  names with pointers into environment structures.
+
+2001-03-21 00:48  brg
+
+	* brg/berkeley.scm: added nasty warning messages
+
+2001-03-21 00:31  brg
+
+	* brg/berkeley.scm: Dummy down the repl-display-result procedure.
+
+2001-03-20 22:49  brg
+
+	* brg/berkeley.scm: Removed old, commented-out show-turtle.
+
+2001-03-13 01:06  brg
+
+	* brg/modeler.traceit: Load this to trace all modeler calls.
+
+2001-03-12 23:50  brg
+
+	* brg/berkeley.scm: Keep assoc from breaking pp.
+
+2001-02-13 01:09  brg
+
+	* Src/syntax.c: DEFINE returns name of object defined.
+
+2000-12-13 22:42  brg
+
+	* brg/explorin.scm: fixed up comments
+
+2000-12-13 22:41  brg
+
+	* brg/explorin.scm: version hacked to work with stk
+
+2000-12-13 22:41  brg
+
+	* brg/explorin.scm: Startup file for Grillmeyer
+
+2000-12-13 19:53  scheme
+
+	* brg/win-rebuild.txt, brg/win-slibinst.sh: win-rebuild.txt: Only
+	  need to copy envdraw + slib if they're not there
+	  already, which they should be by default now.
+	  
+	  win-slibinst.sh: Use cmd.exe to get dos-style path, and use that
+	  to
+	  locate slib zip file.
+
+2000-12-09 00:31  brg
+
+	* brg/STk.spec: Increment package revision number.
+
+2000-12-08 23:16  brg
+
+	* brg/notes: Mention setperms.
+
+2000-12-08 23:15  brg
+
+	* brg/build, brg/setperms: Script to set permissions on installed
+	  stk program files (for Unix package
+	  building.)
+
+2000-12-08 22:51  brg
+
+	* brg/modeler.stk: modeler.stk:
+	  Add & update version number.
+	  
+	  Remove deep-dequasiquote versions of evaluator entry points
+	  (which were
+	  commented out and not used anyway.)
+	  
+	  Errors are now appended to the console specially (in red), using
+	  the new
+	  console-append-error procedure.
+	  
+	  Select-first-enclosed-expr has been fixed to descend into quoted
+	  lists as well
+	  as unquoted ones.
+	  
+	  Setup-console-fonts has been completely rearranged for clarity:
+	  
+	  The Font, Size, and Style menus have been deleted, and pick-fonts
+	  and
+	  find-fixed-fonts have been deleted. The new View menu, which
+	  replaces
+	  them, has an option to call up a font-chooser dialog. Not making
+	  these menus drastically improves startup time.
+	  
+	  make-named-font! has been replaced with a version that
+	  automatically
+	  generates the named-font name (it's irrelevant, anyway, what the
+	  names are.)
+	  
+	  The Edit menu now also has a Select All command.
+	  
+	  The font-chooser and pp packages are loaded at the time
+	  modeler.stk is loaded,
+	  to improve the startup time of the modeler.
+
+2000-12-07 00:30  brg
+
+	* brg/berkeley.scm: fix keywords, again.
+
+2000-12-07 00:28  brg
+
+	* brg/berkeley.scm: fix rcs keywords
+
+2000-12-06 23:43  brg
+
+	* brg/berkeley.scm: Add BH's new version of ASSOC, too, so that it
+	  will use the redefined EQUAL?.
+
+2000-12-06 22:11  brg
+
+	* brg/berkeley.scm: Add Brian Harvey's patches for case insensitive
+	  EQUAL?.
+
+2000-12-04 23:50  brg
+
+	* brg/notes: Added bugs recently fixed.
+
+2000-12-04 23:47  brg
+
+	* brg/berkeley.scm: Redefinition of EQ?. This makes (string->symbol
+	  ":") eq? to ': which
+	  wouldn't ordinarily be true in STk (because :foo is a CLOS-style
+	  keyword,
+	  not a symbol.)
+
+2000-12-02 01:31  brg
+
+	* brg/modeler.stk: modeler.stk:
+	  maybe-include-newline-in-range was trying to add one to the wrong
+	  end
+	  of the range; fixed.
+	  
+	  BackSpace binding now tries to call
+	  maybe-include-newline-in-range when
+	  deleting the last expr in the window, so that lots of random
+	  newlines are
+	  not left in the end of the buffer.
+
+2000-12-02 01:25  brg
+
+	* brg/modeler.stk: modeler.stk:
+	  select-expr-enclosing-point renamed as
+	  select-expr-enclosing-point!,
+	  for slightly more consistency.
+	  
+	  select-first-enclosed-expr now tries to use
+	  maybe-exclude-quote-from-range
+	  to descend into quoted lists. This doesn't work quite right yet.
+	  
+	  char-before-range and friends now return chars instead of
+	  one-character
+	  strings. I used safe-string-ref to do this. This results in
+	  range-preceded-by-quote? and friends now being able to deal with
+	  other
+	  things than just quotes. These are pretty messy, though, and I am
+	  thinking
+	  of using (catch (string-ref...)) instead of safe-string-ref, and
+	  folding
+	  char-*-range into range-*?, if it appears that this would be
+	  useful.
+	  
+	  select-expr-enclosing-point! has been refactored into a wrapper
+	  that
+	  calls select-range! on the result of expr-enclosing-point.
+
+2000-12-02 00:40  brg
+
+	* brg/modeler.stk: modeler.stk:
+	  Try to avoid turning an empty string into EOF and evaluating it,
+	  by making
+	  most of the evaluator binding contingent on *last-clicked-expr*
+	  being unequal
+	  to the result of the new make-eof function.
+	  
+	  Fix range-preceded-by-quote? to actually return the right answer.
+	  It is now
+	  implemented in terms of a new char-before-range function.
+	  
+	  Fix the ignoring of bindings for random keypresses based on a new
+	  null-binding
+	  definition inside of init-modeler-bindings.
+
+2000-11-30 01:09  brg
+
+	* brg/modeler.stk: modeler.stk:
+	  Use pp to print stuff. This isn't perfect yet, but it does quotes
+	  and
+	  multi-line printing right.
+	  
+	  New procedures range-preceded-by-quote? and
+	  maybe-include-quote-in-range
+	  are used to attempt to select quotes correctly -- doesn't work
+	  right yet.
+	  
+	  Added about box and help box, and a Help menu to hold them.
+	  
+	  Added save as menu option to copy window to a file. Perhaps a
+	  load from file
+	  option would be a good future improvement.
+	  
+	  Options menu is now File menu and Edit menu. Edit menu now has
+	  Copy selection,
+	  which has been renamed to Copy.
+
+2000-11-30 01:08  brg
+
+	* brg/berkeley.scm: berkeley.scm:
+	  Change name of while to repeat-while because while conflicts with
+	  a bunch of
+	  the STklos stuff... sigh!
+
+2000-11-29 22:23  brg
+
+	* brg/modeler.stk: modeler.stk:
+	  
+	  Fix left and right arrows so that they won't change the selection
+	  if it
+	  would require wrapping around.
+	  
+	  Comment on the purpose of Escape, which is to deselect.
+	  
+	  Remove debugging messages from BackSpace and arrow keys.
+
+2000-11-29 21:03  brg
+
+	* brg/modeler.stk: modeler.stk:
+	  Remove comments about gravity.
+	  
+	  Add string-count-parens procedure, and use it to make
+	  select-first-enclosed-expr know when to quit. (It quits if the
+	  string
+	  contains 2 parens.)
+	  
+	  Add get-selected-text procedure, and use it to get the selection
+	  in
+	  many places.
+	  
+	  Switch the action of the Up and Down keys, which was reversed
+	  inadvertently.
+	  
+	  Use pp to display the initial expression being modeled -
+	  eventually
+	  we'll move to using pp for everything.
+
+2000-11-22 22:27  brg
+
+	* brg/modeler.stk: Remove extra trace statement.
+
+2000-11-22 22:25  brg
+
+	* brg/modeler.stk: modeler.stk:
+	  
+	  The -find-paren functions have become -find-lparen and
+	  -find-rparen
+	  functions.
+	  
+	  Prettied up the evaluator-binding function.
+	  
+	  Turned the mouse-click binding into a call to
+	  select-expr-enclosing-point.
+	  
+	  Added select-{previous,next,enclosing,first-enclosed}-expr
+	  functions,
+	  and bound them to left, right, up, down respectively. They don't
+	  work
+	  right yet, though.
+	  
+	  Added select-last-expr, and bind Backspace to a thunk that calls
+	  it and
+	  removes the last expression.
+	  
+	  Remove keypress bindings we don't use (deleting, moving).
+
+2000-11-08 21:18  brg
+
+	* brg/notes: notes: Added descriptions of files, unix installation
+	  instructions, and
+	  scheme setup modification instructions. Updated bug list.
+
+2000-11-08 20:24  brg
+
+	* brg/berkeley.scm: Modify FORCE to accept only promises.
+
+2000-09-29 23:47  brg
+
+	* brg/STk.spec: these other fixes are from the UCB2 version.
+
+2000-09-29 23:45  brg
+
+	* brg/STk.spec: an attempt to clean up the packaging bugs
+
+2000-08-21 19:12  cs61a
+
+	* Src/toplevel.c: Don't abort without display.
+
+2000-08-21 18:29  brg
+
+	* brg/STk.spec, brg/envdinst, brg/envdraw-1.3.tar.gz,
+	  brg/slib2c7.zip, brg/slibinst: envdinst: Look in brg directory
+	  only, for envdraw-1.3.tar.gz.
+	  slibinst: Look in brg directory only, for slib2c7.zip.
+	  STk.spec: RPM package spec for Linux build.
+	  envdraw-1.3.tar.gz slib2c7.zip: let's see if these survive better
+	  in the CVS
+	  repository...
+
+2000-08-15 00:33  brg
+
+	* brg/bkscminst, brg/win-bkscminst.sh: brg/bkscminst: Turn off
+	  report-error and define bgerror.
+	  brg/win-bkscminst.sh: Likewise.
+
+2000-08-15 00:32  brg
+
+	* Tk/win/tkWinScrlbr.c: Tk/win/tkWinScrlbr.c: Try to pass things to
+	  Tcl_GlobalEval which will make
+	  sense to scheme (specifically, by quoting the barewords.) This
+	  should
+	  address the wheelie-mouse bug.
+
+2000-08-15 00:30  brg
+
+	* Src/wstk.c: Src/wstk.c: Try to set HOME if it is not set.
+
+2000-08-07 20:04  brg
+
+	* Win32/STk.dsw: Add addpmstk as a dependency for STk, so it is
+	  automatically rebuilt.
+
+2000-08-04 23:51  cs61a
+
+	* Src/error.c, Src/slib.c: slib.c: Bonehead mistake (fallthrough to
+	  quote case) fixed, and max
+	  recursion level increased.
+	  error.c: Never mind about the disabling of uncode...
+
+2000-08-04 21:31  cs61a
+
+	* Src/error.c: Turning off uncode in show_eval_stack seems to help
+	  the quality of
+	  error messages...
+
+2000-08-04 21:05  brg
+
+	* brg/berkeley.scm: Fix (equal? ': (first ':xyzzy)) bug.
+
+2000-08-03 23:26  brg
+
+	* brg/berkeley.scm: Updated to fix (first ':xyzzy) bug.
+
+2000-08-02 00:37  brg
+
+	* Src/eval.c: eval.c: Fix (apply + ...) bug.
+
+2000-07-28 23:15  brg
+
+	* brg/modeler.stk: Added copy selection to Options menu. With
+	  Exceed, however, you
+	  must use Exceed->Edit->Copy X Selection->To Clipboard before the
+	  selection can be pasted in Windows apps.
+
+2000-07-27 20:33  brg
+
+	* brg/notes: fixed envdraw bug
+
+2000-07-27 20:31  brg
+
+	* brg/envdraw-patch: Work around the (procedure? generic-function)
+	  => #f bug.
+
+2000-07-27 19:41  brg
+
+	* brg/berkeley.scm: berkeley.scm: Use promise? instead of
+	  procedure? in stream implementation.
+
+2000-07-26 22:16  brg
+
+	* brg/berkeley.scm: Flipped vertical coordinate.
+
+2000-07-26 20:48  brg
+
+	* brg/notes: added open bug list
+
+2000-07-25 00:19  brg
+
+	* Src/error.c, Src/io.c, Src/slib.c: error.c: Guard against
+	  infinite error messages by using write* instead of
+	  print.
+	  io.c: Use TCL_EVENT_FLAG = 0 on Win32 (as suggested on the STk
+	  mailing list)
+	  to keep Win32 STk from using 100% CPU.
+	  slib.c: uncode now uses a recursion_level static variable to keep
+	  from
+	  segfaulting when it is fed a circular structure. sigh.
+
+2000-07-21 23:19  brg
+
+	* brg/modeler.stk: Reimplement bound? in terms of catch and eval.
+	  This gets rid of a bunch
+	  of annoying errors! Also use a dummy bgerror procedure to catch
+	  calls to
+	  that. select-range! now uses set-cursor to put the insertion
+	  point at the
+	  beginning of the range. Get rid of silly comment in
+	  evaluator-binding;
+	  this whole program is similarly offensive. :-) past-end-of-line?
+	  uses
+	  (console 'dlineinfo ...) to determine whether the pointer is past
+	  the
+	  (horizontal) end of the line, and we deselect if it returns true.
+
+2000-07-21 20:47  brg
+
+	* brg/modeler.stk: Added pick-fonts to setup-console-fonts, to
+	  reduce the number of fonts we
+	  search through. Make all the menus :tearoff 0. Add Options menu
+	  with a
+	  Quit command. Fix the style menu (weird...)
+
+2000-07-21 00:24  brg
+
+	* brg/modeler.stk: Add selection-empty? and make remove-selection
+	  check it first.
+	  select-range renamed as select-range!. evaluator-binding
+	  reindented.
+	  Automatic last line now selected as default.
+	  
+	  BUGS: Tried to figure out how to make it deselect by clicking
+	  outside the
+	  line, but it doesn't work yet. (I tried (if (console 'compare
+	  point ">"
+	  (& point " lineend")) ...)
+
+2000-07-20 23:43  brg
+
+	* brg/modeler.stk: Define evaluator-binding procedure so that we
+	  can use part-eval or
+	  full-eval, depending on whether we pressed Return or KP_Enter.
+	  Fix
+	  bindings accordingly. As an added bonus, no more stupid eval
+	  tricks
+	  when calling part-eval/full-eval.
+	  
+	  BUGS: Still can't deselect by clicking outside, and we want the
+	  "default
+	  selection" to be the entirety of the last line -- so we should
+	  check to
+	  see whether anything is selected, and if not, then select the
+	  last line
+	  before evaluating it.
+
+2000-07-20 23:14  brg
+
+	* brg/modeler.stk: Make the error messages end up in the modeler
+	  window. (Fix eval-error).
+	  Make quoted-expr? work on things that aren't pairs. Get rid of
+	  the
+	  preceding paren bug.
+
+2000-07-20 22:54  brg
+
+	* brg/modeler.stk: typo fixed; this quashes the (quote ...) bug.
+
+2000-07-20 22:30  brg
+
+	* brg/modeler.stk: Add font stuff -- but it's extremely slow?!
+	  sigh.
+
+2000-07-19 00:31  brg
+
+	* brg/modeler.stk: modeler.stk: Don't return the console module
+	  name when using model;
+	  it will confuse the kiddies!
+
+2000-07-19 00:25  brg
+
+	* brg/modeler.stk: modeler.stk: Rewrote eval-error (initial
+	  version). First try at using
+	  a better font. (perhaps we need a font menu?) Remove selection
+	  when we
+	  do an eval. Create model macro.
+	  
+	  BUGS: Sometimes an extra paren is inserted at the beginning of
+	  the line.
+	  You can't deselect by clicking outside the expression.
+	  Something like (quote (4 5)) ends up as the last thing on the
+	  screen, and you can't eval it. We really want (4 5) to appear,
+	  I think.
+
+2000-07-18 23:28  brg
+
+	* brg/modeler.stk, brg/repmod.stk: modeler.stk: Replacement Modeler
+	  backend appended to beginning of file.
+	  repmod.stk: The above change obsoletes repmod.stk.
+
+2000-07-18 22:57  brg
+
+	* brg/modeler.stk: modeler.stk: Don't print the "you clicked on"
+	  stuff. Instead of just setting
+	  *last-clicked-expr*, part-eval it and print out the value. This
+	  makes
+	  it pretty close to being a replacement modeler.
+
+2000-07-18 21:20  brg
+
+	* brg/modeler.stk: modeler.stk: Add remove-selection and
+	  select-range. Bind escape to
+	  de-selecting. Bind return to grabbing the expression and reading
+	  it
+	  into *last-clicked-expr*. Reindent.
+
+2000-07-18 18:57  brg
+
+	* brg/modeler.stk: modeler.stk: Add console-append, for writing
+	  stuff at the end of the text.
+	  Make verify-parens, forwards-find-paren, backwards-find-paren,
+	  search-forwards, search-backwards, and get-text-span use a
+	  console and
+	  range, as opposed to a static string and globals. Get rid of
+	  global
+	  lparen/rparen and the-console. Make search-forwards and
+	  search-backwards
+	  into internal closures.
+
+2000-07-18 17:09  brg
+
+	* brg/modeler.stk, brg/repmod.stk: Replacement Modeler code.
+
+2000-07-18 00:00  scheme
+
+	* brg/win-envdinst.sh: Add pp autoload hack.
+
+2000-07-17 18:28  brg
+
+	* brg/win-inst.sh, brg/win-rebuild.txt: brg/win-rebuild.txt:
+	  Instructions on rebuilding Win32 STk.
+	  brg/win-inst.sh: Install addpmstk as AddStart.exe.
+
+2000-07-17 18:25  brg
+
+	* Win32/STk.dsw, Win32/addpmstk.c, Win32/addpmstk.dsp:
+	  Win32/addpmstk.c: Program to install STk in the Start Menu.
+	  Win32/addpmstk.dsp: Project for addpmstk.
+	  Win32/STk.dsw: Add addpmstk project.
+
+2000-07-15 02:06  brg
+
+	* brg/win-bkscminst.sh, brg/win-envdinst.sh, brg/win-inst.sh,
+	  brg/win-patchinit.sh, brg/win-slibinst.sh: Proper quoting is
+	  essential for dealing with "C:\Program Files\STk" ...
+
+2000-07-14 23:49  brg
+
+	* brg/win-bkscminst.sh, brg/win-envdinst.sh, brg/win-inst.sh,
+	  brg/win-patchinit.sh, brg/win-slibinst.sh: Windows installation
+	  tools. Run these under Cygwin bash
+
+2000-07-08 00:44  brg
+
+	* brg/init.stk.patch: Fix some typos, and make it so that results
+	  are displayed even for undefined
+	  values.
+
+2000-07-07 21:12  brg
+
+	* Tcl/tclWinNotify.c: Backing out changes to the Win32 front end.
+
+2000-07-07 20:20  brg
+
+	* Src/argv.c, Src/io.c, Src/toplevel.c, Src/wstk.c, Win32/STk.dsp:
+	  Backing out the changes to the Win32 front end.
+
+2000-07-07 05:57  brg
+
+	* Src/toplevel.c, Tcl/tclWinNotify.c: Src/toplevel.c: Input grabber
+	  thread replaces event grabber thread.
+	  Tcl/tclWinNotify.c: No need for a phantom window to attach timers
+	  to.
+
+2000-07-04 00:39  brg
+
+	* Win32/STk.dsp: Win32/STk.dsp: Copy built file to install
+	  directory.
+
+2000-07-04 00:38  brg
+
+	* Src/io.c, Src/toplevel.c, Src/wstk.c: Src/io.c: Only do StdinProc
+	  when we are not using -console.
+	  Src/toplevel.c: Start a separate thread to grab events. This
+	  doesn't work right yet either.
+	  Src/wstk.c: Fix up comments.
+
+2000-07-01 00:29  brg
+
+	* Win32/STk.dsp: Win32/STk.dsp: Use /subsystem:console instead of
+	  /subsystem:windows.
+
+2000-07-01 00:29  brg
+
+	* Src/argv.c, Src/io.c, Src/wstk.c: Src/argv.c: Always default to
+	  no console, even on Win32.
+	  Src/io.c: Process events, and read from stdin, too. (The event
+	  processing doesn't work yet.)
+	  Src/wstk.c: Use main() instead of WinMain().
+
+2000-06-28 00:20  brg
+
+	* Src/stk.h: Use POSIX under Win32.
+
+2000-06-28 00:17  brg
+
+	* Extensions/posix.c: Modified to work (at least somewhat) under
+	  Win32's posix subsystem.
+
+2000-06-28 00:13  brg
+
+	* Win32/STk.dsp: Added posix.c to the list of source files.
+
+2000-06-24 00:33  brg
+
+	* Src/signal.c: Src/signal.c: Add timer code & callback to
+	  implement ALARM on Win32.
+
+2000-06-24 00:32  brg
+
+	* brg/alarmwin.scm: brg/alarmwin.scm: Like alarm.scm, but pops up a
+	  dialog box.
+
+2000-06-24 00:31  brg
+
+	* Win32/STk.dsp, Win32/STk.dsw, Win32/libgmp/libgmp.dsp,
+	  Win32/libtcl/libtcl.dsp, Win32/libtk/libtk.dsp: Converted to VC++
+	  6 format.
+
+2000-06-23 01:14  brg
+
+	* Src/port.c: port.c: Only flush and close if port exists.
+
+2000-06-23 00:58  brg
+
+	* Src/io.c, Src/port.c, Src/slib.c, Src/stk.h: io.c: Use
+	  transcript_std{out,err} instead of std{out,err}.
+	  Transcript ovports as well as oports.
+	  port.c: Likewise.
+	  stk.h: Likewise.
+	  slib.c: transcript_off on the way to exit().
+
+2000-06-22 23:08  brg
+
+	* brg/reinstall, brg/tsc-test: reinstall: gotta overwrite the
+	  symlink...sigh
+	  tsc-test: forgot the newlines
+
+2000-06-22 23:03  brg
+
+	* brg/reinstall, brg/tsc-test: reinstall: reinstall stk during
+	  run-debug-edit cycle
+	  tsc-test: test transcript from console using expect
+
+2000-06-22 22:31  brg
+
+	* Src/io.c, Src/port.c, Src/primitives.c, Src/stk.h,
+	  Src/toplevel.c: Several changes to implement transcript-on and
+	  transcript-off.
+	  These haven't been tested in -console mode, though.
+
+2000-06-22 22:21  brg
+
+	* brg/envdinst, brg/patchinit: Prefer /usr/sww/bin/patch (avoid
+	  /usr/bin/patch, that is, on Solaris, which is
+	  broken.)
+
+2000-06-20 22:04  atdp5
+
+	* brg/init.stk.patch: Added patch to tk-init to avoid setting
+	  report-error.
+
+2000-06-20 21:35  cs61a
+
+	* brg/build, brg/init.stk.patch, brg/patchinit: To patch out the
+	  graphical error dialog...
+
+2000-06-08 20:24  brg
+
+	* Src/toplevel.c, brg/build, brg/envdinst, brg/slibinst:
+	  Src/toplevel.c: Modify startup message.
+	  brg/build: No rm -rf! Bad! Bad!
+	  brg/envdinst: Look for tar file under ~cs61a.
+	  brg/slibinst: Likewise.
+
+2000-05-26 20:54  brg
+
+	* brg/notes: Updated.
+
+2000-05-26 00:04  brg
+
+	* brg/envdraw-patch: In stk 4.0.1, the directory is called Images,
+	  not images.
+
+2000-05-25 23:42  brg
+
+	* brg/envdinst: patch needs -p1 option.
+
+2000-05-25 23:12  brg
+
+	* brg/envdinst, brg/envdraw-patch: envdinst: apply envdraw-patch,
+	  if found
+	  envdraw-patch: to get rid of @undefined variable
+
+2000-05-25 21:39  brg
+
+	* brg/bkscminst, brg/slibinst: Escape quotes around environment
+	  variable name.
+
+2000-05-25 21:26  brg
+
+	* brg/build, brg/envdinst, brg/mkenvdwrap: envdinst: destroyed
+	  mkenvdwrap, reincarnated as envdinst. much better now.
+	  build: call envdinst.
+
+2000-05-25 00:01  brg
+
+	* brg/mkenvdwrap: envdraw wrapper maker
+
+2000-05-24 23:55  brg
+
+	* brg/bkscminst, brg/slibinst: bkscminst: Check
+	  ENVDRAW_LIBRARY_PATH in userinit.stk before loading
+	  berkeley.scm.
+	  slibinst: Likewise.
+
+2000-05-24 23:10  brg
+
+	* STklos/Tk/Canvas.stklos: Correct typo in y-scroll-increment.
+
+2000-05-19 01:15  brg
+
+	* brg/notes: Updated to-do, notes, and bugs.
+
+2000-05-18 23:46  brg
+
+	* brg/berkeley.scm, brg/collect.scm, brg/obj.scm: berkeley.scm:
+	  Bogus unquote in END-OF-LINE-CHAR? squashed.
+	  collect.scm: Get rid of PROCEDURE->MACRO call and SCM? test.
+	  obj.scm: Likewise, and update version number.
+
+2000-05-18 22:54  brg
+
+	* brg/collect.scm, brg/obj.scm: need to be edited-- original
+	  version from ~cs61a/lib
+
+2000-05-18 00:48  brg
+
+	* brg/berkeley.scm: Added new version header.
+
+2000-05-18 00:24  brg
+
+	* brg/build: build: Let user specify INSTALLROOT. Provide more
+	  status messages.
+
+2000-05-18 00:14  brg
+
+	* brg/traceit: For debugging turtlegraphics bugs.
+
+2000-05-18 00:09  brg
+
+	* brg/berkeley.scm: berkeley.scm: pen-color and bg-color
+	  definitions were switched. Set
+	  "turtle" tag on canvas items which represent the turtle, so that
+	  we can
+	  "canvas delete turtle" later. Fixed coordinate system. Rewrote
+	  show-turtle to use canvas-erase-turtle! instead of drawing
+	  bg-color
+	  over the old turtle.
+
+2000-05-16 23:23  brg
+
+	* brg/berkeley.scm: Getting rid of with-module stuff; some other
+	  bugfixes. Still not drawing yet.
+
+2000-05-16 22:20  brg
+
+	* Src/toplevel.c: toplevel.c: Attempt to load userinit.stk after
+	  trying .stkrc. People who have
+	  a .stkrc will lose, "but that's... O.K."
+
+2000-05-16 22:18  brg
+
+	* brg/berkeley.scm, brg/bkscminst, brg/notes, brg/slibinst:
+	  berkeley.scm: Initial implementation of turtlegraphics (doesn't
+	  work yet).
+	  bkscminst: Modify userinit.stk instead of init.stk.
+	  notes: Likewise.
+	  slibinst: Likewise.
+
+2000-05-16 04:14  brg
+
+	* brg/build: build: Try to get rid of stupid dynamic loading bugs
+	  under linux by
+	  throwing lots of broken options at configure.
+
+2000-05-16 04:14  brg
+
+	* configure: configure: Really broken dynamic loading logic
+	  excised.
+
+2000-05-16 03:49  brg
+
+	* brg/mklinkfarm, brg/slibinst: mklinkfarm: Use magically invoked
+	  perl.
+	  slibinst: Look for zip file.
+
+2000-05-16 02:21  brg
+
+	* brg/build, brg/notes: build: Use argument to build instead of
+	  -j12 (which doesn't really work like
+	  I thought it would.)
+	  notes: Updated to-do list.
+
+2000-05-16 01:25  brg
+
+	* brg/berkeley.scm, brg/bkscminst: berkeley.scm: Emulate SCM
+	  "error" in STk.
+	  bkscminst: Read VERSION, like slibinst does.
+
+2000-05-15 23:42  brg
+
+	* brg/berkeley.scm: Added stuff for alarm interrupts.
+
+2000-05-15 23:37  brg
+
+	* brg/berkeley.msg, brg/bkscminst, brg/build, brg/capture:
+	  bkscminst: A new program to install berkeley.scm.
+	  capture: Produces scheme code to print text files.
+	  berkeley.msg: The "Welcome to cs61a" message.
+	  build: Run bkscminst.
+
+2000-05-15 22:39  brg
+
+	* brg/berkeley.scm: berkeley.scm: Removed USING-PROCEDURE->MACRO?.
+	  Most of the FIXME's replaced
+	  by "4.0:". Removed the reimplementation of promises as
+	  procedures.
+
+2000-05-15 22:38  brg
+
+	* Src/print.c: print.c: Print "okay" instead of "#[undefined]".
+
+2000-05-15 22:31  brg
+
+	* brg/berkeley.scm: LOAD-NOISILY is a debugging aid; we still need
+	  it. The "potentially
+	  confusing redefinitions of standard Scheme procedures" aren't.
+	  CLOSE-ALL-PORTS supports CS 3. (If you have to ask you don't
+	  know.)
+	  Removed the (if (scm?) ...) around TRACE:UNTRACEF, EDIT, READ,
+	  and
+	  END-OF-LINE-CHAR?. Removed redefinition of DEFINE (YAY!!!)
+	  Removed
+	  PROCEDURE->MACRO version of REPEAT.
+
+2000-05-14 08:48  brg
+
+	* Makefile.in: Makefile.in: Rearranged dependencies to account for
+	  config.make and to allow
+	  for parallel builds.
+
+2000-05-14 08:42  brg
+
+	* brg/berkeley.scm, brg/build, brg/notes: berkeley.scm: Added
+	  comments about first class environments. Nuked
+	  re-loading of berkeley.scm error message. Nuked check for scm?.
+	  Nuked
+	  error squelching code. Nuked (time (foo...)). Nuked (load FILE)
+	  with
+	  globbing. Simplified process/concurrency stuff by removing tests
+	  for
+	  scm?. Nuked procedure->macro calls where define-macro equivalents
+	  were
+	  available. Nuked 1+ and -1+. Nuked prepended-+ removal code.
+	  Nuked
+	  random code. Added stuff to initialize random seed under stk.
+	  build: Use 12 concurrent jobs when building.
+	  notes: updated.
+
+2000-05-14 06:57  brg
+
+	* Src/gc.c: Added gc code for arbiters.
+
+2000-05-12 04:46  brg
+
+	* brg/alarm.scm, brg/berkeley.scm, brg/notes: alarm.scm: Import
+	  sample alarm-interrupt code.
+	  berkeley.scm: SOFTWARE-TYPE is defined by SLIB; don't need to
+	  define it here.
+	  notes: Done with arbiters; now we tackle macros.
+
+2000-05-12 01:02  brg
+
+	* brg/slibinst: workaround to get version number.
+
+2000-05-12 00:18  brg
+
+	* Src/primitives.c, Src/print.c, Src/signal.c, Src/stk.h:
+	  primitives.c: Add try-arbiter, make-arbiter, and release-arbiter
+	  to the
+	  primitives list.
+	  print.c: Add tc_arbiter to the list of printable things.
+	  signal.c: Add STk_try_arbiter, STk_make_arbiter, and
+	  STk_release_arbiter,
+	  based on the SCM implementation of arbiters.
+	  stk.h: Add tc_arbiter type, ARBITERP, ARBLOCKEDP predicates,
+	  LOCKARB and
+	  UNLOCKARB mutators, and forward declarations for STk_try_arbiter,
+	  STk_make_arbiter, and STk_release_arbiter.
+
+2000-05-11 02:33  brg
+
+	* brg/notes: Added to-do section with make-arbiter stuff.
+
+2000-05-11 02:31  brg
+
+	* brg/berkeley.scm: changing scm? to (scm?) and
+	  (using-procedure->macro?)
+	  removed bragging
+	  hardwired some tests
+
+2000-05-11 02:16  brg
+
+	* brg/slibinst: Read VERSION from file and use it. Use absolute
+	  pathname to slib zipfile.
+	  Modify init.stk file to load slib/STK.init file.
+
+2000-05-11 01:55  brg
+
+	* brg/slibinst: Modify implementation-vicinity and library-vicinity
+	  in newly-installed slib.
+
+2000-05-11 01:55  brg
+
+	* brg/build: Parametrize INSTALLROOT. Call slibinst.
+
+2000-05-11 01:38  brg
+
+	* brg/slibinst: script to install SLIB
+
+2000-05-11 01:19  brg
+
+	* brg/notes: Notes i'm taking on the STk install.
+
+2000-05-11 00:50  brg
+
+	* brg/berkeley.scm, brg/berkeley.stk: original May 10, 2000
+	  versions of berkeley.scm, berkeley.stk
+
+2000-05-11 00:48  brg
+
+	* brg/build: now rebuilds links when necessary
+	  to do: add a changeable installation prefix
+
+2000-05-10 23:46  brg
+
+	* Lib/Makefile: Fixed install with presence of CVS directory
+
+2000-05-10 23:14  brg
+
+	* brg/build: build script
+
+2000-05-10 23:12  brg
+
+	* brg, brg/linkfarm, brg/mklinkfarm, brg/svlinkfarm: to deal with
+	  cvs's broken behavior on symlinks
+
+2000-05-09 23:31  brg
+
+	* Src/primitives.c, Src/signal.c, Src/stk.h: Added alarm primitive.
+
+2000-05-09 22:54  brg
+
+	* ., .STk.prcs_aux, BINARY_DISTRIB, CHANGES, COMPILING-HINTS,
+	  COPYRIGHTS, ChangeLog, Contrib, Contrib/%README, Contrib/Inspect,
+	  Contrib/Inspect/README, Contrib/Process,
+	  Contrib/Process/process.c, Contrib/Process/process.h,
+	  Contrib/Python, Contrib/Python/jredford-mail.txt,
+	  Contrib/STk-wtour, Contrib/STk-wtour/CHANGES,
+	  Contrib/STk-wtour/README, Contrib/STk-wtour/lessons,
+	  Contrib/STk-wtour/lessons/bind1.stk,
+	  Contrib/STk-wtour/lessons/bind2.stk,
+	  Contrib/STk-wtour/lessons/bind3.stk,
+	  Contrib/STk-wtour/lessons/button1.stk,
+	  Contrib/STk-wtour/lessons/button2.stk,
+	  Contrib/STk-wtour/lessons/canvas-animate.stk,
+	  Contrib/STk-wtour/lessons/canvas-drag.stk,
+	  Contrib/STk-wtour/lessons/canvas-draw.stk,
+	  Contrib/STk-wtour/lessons/canvas-funky.stk,
+	  Contrib/STk-wtour/lessons/canvas-rubber.stk,
+	  Contrib/STk-wtour/lessons/canvas1.stk,
+	  Contrib/STk-wtour/lessons/canvas2.stk,
+	  Contrib/STk-wtour/lessons/canvas3.stk,
+	  Contrib/STk-wtour/lessons/canvas4.stk,
+	  Contrib/STk-wtour/lessons/canvas5.stk,
+	  Contrib/STk-wtour/lessons/canvas6.stk,
+	  Contrib/STk-wtour/lessons/canvas7.stk,
+	  Contrib/STk-wtour/lessons/checkbutton.stk,
+	  Contrib/STk-wtour/lessons/dialogbox.stk,
+	  Contrib/STk-wtour/lessons/entry1.stk,
+	  Contrib/STk-wtour/lessons/entry2.stk,
+	  Contrib/STk-wtour/lessons/frame1.stk,
+	  Contrib/STk-wtour/lessons/frame2.stk,
+	  Contrib/STk-wtour/lessons/frame3.stk,
+	  Contrib/STk-wtour/lessons/grouping.stk,
+	  Contrib/STk-wtour/lessons/index,
+	  Contrib/STk-wtour/lessons/label1.stk,
+	  Contrib/STk-wtour/lessons/label2.stk,
+	  Contrib/STk-wtour/lessons/label3.stk,
+	  Contrib/STk-wtour/lessons/listbox1.stk,
+	  Contrib/STk-wtour/lessons/listbox2.stk,
+	  Contrib/STk-wtour/lessons/menu1.stk,
+	  Contrib/STk-wtour/lessons/menu2.stk,
+	  Contrib/STk-wtour/lessons/message.stk,
+	  Contrib/STk-wtour/lessons/misc.stk,
+	  Contrib/STk-wtour/lessons/options.stk,
+	  Contrib/STk-wtour/lessons/pack1.stk,
+	  Contrib/STk-wtour/lessons/pack2.stk,
+	  Contrib/STk-wtour/lessons/pack3.stk,
+	  Contrib/STk-wtour/lessons/radiobutton.stk,
+	  Contrib/STk-wtour/lessons/scale1.stk,
+	  Contrib/STk-wtour/lessons/scale2.stk,
+	  Contrib/STk-wtour/lessons/selection.stk,
+	  Contrib/STk-wtour/lessons/text1.stk,
+	  Contrib/STk-wtour/lessons/text2.stk,
+	  Contrib/STk-wtour/lessons/text3.stk,
+	  Contrib/STk-wtour/lessons/text4.stk,
+	  Contrib/STk-wtour/lessons/text5.stk,
+	  Contrib/STk-wtour/lessons/tkwait.stk, Contrib/STk-wtour/lib,
+	  Contrib/STk-wtour/lib/iu.ridge.xbm,
+	  Contrib/STk-wtour/lib/iu.seal.small.xbm,
+	  Contrib/STk-wtour/lib/wtour.stk, Contrib/STk-wtour/stk-wtour,
+	  Contrib/Socket, Contrib/Socket/socket.c, Contrib/Stetris,
+	  Contrib/Stetris/stetris.stk, Demos, Demos/%README,
+	  Demos/Html-Demos, Demos/Html-Demos/Images,
+	  Demos/Html-Demos/Images/README,
+	  Demos/Html-Demos/Images/STk-tiny.gif,
+	  Demos/Html-Demos/Images/amib-tiny.gif,
+	  Demos/Html-Demos/Images/amib.gif,
+	  Demos/Html-Demos/Images/backward.gif,
+	  Demos/Html-Demos/Images/compo-all.gif,
+	  Demos/Html-Demos/Images/en.gif,
+	  Demos/Html-Demos/Images/entry.gif,
+	  Demos/Html-Demos/Images/envdraw.gif,
+	  Demos/Html-Demos/Images/fr.gif,
+	  Demos/Html-Demos/Images/frame.gif,
+	  Demos/Html-Demos/Images/label.gif,
+	  Demos/Html-Demos/Images/mosaic_01.gif,
+	  Demos/Html-Demos/Images/mosaic_02.gif,
+	  Demos/Html-Demos/Images/mosaic_03.gif,
+	  Demos/Html-Demos/Images/mosaic_04.gif,
+	  Demos/Html-Demos/Images/mosaic_05.gif,
+	  Demos/Html-Demos/Images/mosaic_06.gif,
+	  Demos/Html-Demos/Images/mosaic_07.gif,
+	  Demos/Html-Demos/Images/mosaic_08.gif,
+	  Demos/Html-Demos/Images/mosaic_09.gif,
+	  Demos/Html-Demos/Images/mosaic_10.gif,
+	  Demos/Html-Demos/Images/mosaic_11.gif,
+	  Demos/Html-Demos/Images/mosaic_12.gif,
+	  Demos/Html-Demos/Images/mosaic_13.gif,
+	  Demos/Html-Demos/Images/mosaic_14.gif,
+	  Demos/Html-Demos/Images/mosaic_15.gif,
+	  Demos/Html-Demos/Images/mosaic_16.gif,
+	  Demos/Html-Demos/Images/mosaic_17.gif,
+	  Demos/Html-Demos/Images/mosaic_18.gif,
+	  Demos/Html-Demos/Images/mosaic_19.gif,
+	  Demos/Html-Demos/Images/mosaic_20.gif,
+	  Demos/Html-Demos/Images/mosaic_21.gif,
+	  Demos/Html-Demos/Images/mosaic_22.gif,
+	  Demos/Html-Demos/Images/mosaic_23.gif,
+	  Demos/Html-Demos/Images/mosaic_24.gif,
+	  Demos/Html-Demos/Images/mosaic_25.gif,
+	  Demos/Html-Demos/Lentry.stklos, Demos/Html-Demos/S-scape-en.html,
+	  Demos/Html-Demos/S-scape-fr.html, Demos/Html-Demos/amib-en.html,
+	  Demos/Html-Demos/amib-fr.html, Demos/Html-Demos/animate.stk,
+	  Demos/Html-Demos/applet-en.html, Demos/Html-Demos/applet-fr.html,
+	  Demos/Html-Demos/compo-en.html, Demos/Html-Demos/compo-fr.html,
+	  Demos/Html-Demos/envdraw-en.html,
+	  Demos/Html-Demos/envdraw-fr.html, Demos/Html-Demos/interface.stk,
+	  Demos/Html-Demos/intro-en.html, Demos/Html-Demos/intro-fr.html,
+	  Demos/Html-Demos/main-en.html, Demos/Html-Demos/main-fr.html,
+	  Demos/Html-Demos/main.html, Demos/Html-Demos/puzzle.stk,
+	  Demos/Html-Demos/simple-en.html, Demos/Html-Demos/simple-fr.html,
+	  Demos/Makefile, Demos/README.html, Demos/S-scape.stklos,
+	  Demos/Widget, Demos/Widget/Warrow.stklos,
+	  Demos/Widget/Wbind.stklos, Demos/Widget/Wbitmap.stklos,
+	  Demos/Widget/Wbutton.stklos, Demos/Widget/Wcheck.stklos,
+	  Demos/Widget/Wcolors.stklos, Demos/Widget/Wcscroll.stklos,
+	  Demos/Widget/Wctext.stklos, Demos/Widget/Wdialog1.stklos,
+	  Demos/Widget/Wdialog2.stklos, Demos/Widget/Wentry1.stklos,
+	  Demos/Widget/Wentry2.stklos, Demos/Widget/Wfloor.stklos,
+	  Demos/Widget/Wform.stklos, Demos/Widget/Whscale.stklos,
+	  Demos/Widget/Wicon.stklos, Demos/Widget/Wimage1.stklos,
+	  Demos/Widget/Wimage2.stklos, Demos/Widget/Witems.stklos,
+	  Demos/Widget/Wlabel.stklos, Demos/Widget/Wmenu.stklos,
+	  Demos/Widget/Wplot.stk, Demos/Widget/Wpuzzle.stklos,
+	  Demos/Widget/Wradio.stklos, Demos/Widget/Wruler.stklos,
+	  Demos/Widget/Wsayings.stklos, Demos/Widget/Wsearch.stklos,
+	  Demos/Widget/Wstates.stklos, Demos/Widget/Wstyles.stklos,
+	  Demos/Widget/Wtext.stklos, Demos/Widget/Wvscale.stklos,
+	  Demos/Widget/Wwind.stklos, Demos/amib.stklos, Demos/browse.stk,
+	  Demos/browse.stklos, Demos/calc.stklos, Demos/classbrowse.stklos,
+	  Demos/colormap.stk, Demos/console-demo.stk, Demos/filebox.stklos,
+	  Demos/hanoi.stk, Demos/hello.stk, Demos/hello.stklos,
+	  Demos/inspector.stk, Demos/mc-server.stk, Demos/queens.stk,
+	  Demos/server.stk, Demos/showvars.stk, Demos/small-ed.stk,
+	  Demos/stkfontsel.stk, Demos/stklos-demo.stklos,
+	  Demos/stklos-demo2.stklos, Demos/stklos-widgets.stklos,
+	  Demos/term.stk, Demos/tkcolor.stklos, Demos/ttt.stk,
+	  Demos/turtle.stk, Demos/widget.stk, Doc, Doc/%README,
+	  Doc/Extension, Doc/Extension/Extending.dvi,
+	  Doc/Extension/Extending.ps, Doc/Extension/Extending.tex,
+	  Doc/Extension/Makefile, Doc/FAQ, Doc/FAQ/FAQ-1.html,
+	  Doc/FAQ/FAQ-2.html, Doc/FAQ/FAQ-3.html, Doc/FAQ/FAQ-4.html,
+	  Doc/FAQ/FAQ-5.html, Doc/FAQ/FAQ-6.html, Doc/FAQ/FAQ.dvi,
+	  Doc/FAQ/FAQ.html, Doc/FAQ/FAQ.ps, Doc/FAQ/FAQ.txt, Doc/Isotas96,
+	  Doc/Isotas96/Isotas96.dvi, Doc/Isotas96/Isotas96.ps,
+	  Doc/Isotas96/Isotas96.tex, Doc/Isotas96/Makefile,
+	  Doc/Isotas96/eg-commands.sty, Doc/Isotas96/hierarchy.eps,
+	  Doc/Isotas96/hierarchy.fig, Doc/Isotas96/llncs.sty,
+	  Doc/Isotas96/mop.stk, Doc/Isotas96/mop.tex, Doc/LaTeX-packages,
+	  Doc/LaTeX-packages/%README, Doc/LaTeX-packages/a4.sty,
+	  Doc/LaTeX-packages/a4wide.sty, Doc/LaTeX-packages/moreverb.sty,
+	  Doc/Makefile, Doc/Manual, Doc/Manual/Makefile,
+	  Doc/Manual/STk-man.macros, Doc/Manual/after.n, Doc/Manual/bell.n,
+	  Doc/Manual/bind.n, Doc/Manual/bindtags.n, Doc/Manual/bitmap.n,
+	  Doc/Manual/button.n, Doc/Manual/canvas.n,
+	  Doc/Manual/checkbutton.n, Doc/Manual/choose-color.n,
+	  Doc/Manual/clipboard.n, Doc/Manual/destroy.n, Doc/Manual/ed.n,
+	  Doc/Manual/entry.n, Doc/Manual/event.n, Doc/Manual/focus-next.n,
+	  Doc/Manual/focus.n, Doc/Manual/font.n, Doc/Manual/frame.n,
+	  Doc/Manual/ftp.n, Doc/Manual/grab.n, Doc/Manual/grid.n,
+	  Doc/Manual/image.n, Doc/Manual/jpeg.n, Doc/Manual/label.n,
+	  Doc/Manual/listbox.n, Doc/Manual/listener.n, Doc/Manual/lower.n,
+	  Doc/Manual/make-console.n, Doc/Manual/make-dialog.n,
+	  Doc/Manual/make-image.n, Doc/Manual/menu.n,
+	  Doc/Manual/menubutton.n, Doc/Manual/message-box.n,
+	  Doc/Manual/message.n, Doc/Manual/option-menu.n,
+	  Doc/Manual/option.n, Doc/Manual/options.n, Doc/Manual/pack.n,
+	  Doc/Manual/palette.n, Doc/Manual/photo.n, Doc/Manual/pixmap.n,
+	  Doc/Manual/place.n, Doc/Manual/popup.n, Doc/Manual/posix.n,
+	  Doc/Manual/radiobutton.n, Doc/Manual/raise.n,
+	  Doc/Manual/repl-display-prompt.n, Doc/Manual/report-error.n,
+	  Doc/Manual/scale.n, Doc/Manual/scrollbar.n,
+	  Doc/Manual/selection.n, Doc/Manual/send.n, Doc/Manual/stk.1,
+	  Doc/Manual/stk.ps, Doc/Manual/stk.txt, Doc/Manual/text.n,
+	  Doc/Manual/tk.n, Doc/Manual/tkvars.n, Doc/Manual/tkwait.n,
+	  Doc/Manual/toplevel.n, Doc/Manual/update.n, Doc/Manual/winfo.n,
+	  Doc/Manual/wm.n, Doc/Reference, Doc/Reference/Appendix-A.tex,
+	  Doc/Reference/Appendix-B.tex, Doc/Reference/Appendix-C.tex,
+	  Doc/Reference/Appendix-D.tex, Doc/Reference/Appendix-E.tex,
+	  Doc/Reference/Appendix-F.tex, Doc/Reference/Detail.ps,
+	  Doc/Reference/Inspector.ps, Doc/Reference/Makefile,
+	  Doc/Reference/Reference1.tex, Doc/Reference/Reference2.tex,
+	  Doc/Reference/Reference3.tex, Doc/Reference/View.ps,
+	  Doc/Reference/commands.tex, Doc/Reference/eg-commands.sty,
+	  Doc/Reference/hierarchy.eps, Doc/Reference/hierarchy.fig,
+	  Doc/Reference/index.stk, Doc/Reference/manual.dvi,
+	  Doc/Reference/manual.ps, Doc/Reference/manual.tex, Doc/STklos+Tk,
+	  Doc/STklos+Tk/Basic-Fig-1.ps, Doc/STklos+Tk/Chap1.tex,
+	  Doc/STklos+Tk/Chap2.tex, Doc/STklos+Tk/Fig1-1.idraw,
+	  Doc/STklos+Tk/Fig1-2.idraw, Doc/STklos+Tk/Fig2-2.eps,
+	  Doc/STklos+Tk/Makefile, Doc/STklos+Tk/Packing-demo.ps,
+	  Doc/STklos+Tk/STklos+Tk.dvi, Doc/STklos+Tk/STklos+Tk.ps,
+	  Doc/STklos+Tk/STklos+Tk.tex, Doc/STklos+Tk/browser.stklos,
+	  Doc/Tcl93, Doc/Tcl93/README, Doc/Tcl93/Tcl93.ps,
+	  Doc/Tcl93/Tcl93.tex, Doc/Tcl93/hierarchy.eps,
+	  Doc/Tcl93/hierarchy.fig, Doc/Tcl93/tcl.sty, Doc/Xhibition94,
+	  Doc/Xhibition94/Xhibition94.ps, Doc/bibliography.bib, Extensions,
+	  Extensions/%README, Extensions/Makefile.in, Extensions/base64.c,
+	  Extensions/configure, Extensions/configure.in, Extensions/hash.c,
+	  Extensions/html.c, Extensions/jpeg.c, Extensions/locale.c,
+	  Extensions/pixmap.c, Extensions/posix.c, Extensions/process.c,
+	  Extensions/socket.c, Extensions/sregexp.c, Extensions/stack.c,
+	  Extensions/stk-genmake.in, Extensions/time.c, Extensions/when.c,
+	  Help, Help/BlueIndex.html, Help/GreenIndex.html, Help/Img,
+	  Help/Img/BlueBall.gif, Help/Img/GreenBall.gif,
+	  Help/Img/ManPageBlue.gif, Help/Img/ManPageGreen.gif,
+	  Help/Img/ManPageWhite.gif, Help/Img/ManPageYellow.gif,
+	  Help/Img/RefBookBlue.gif, Help/Img/RefBookGreen.gif,
+	  Help/Img/RefBookWhite.gif, Help/Img/RefBookYellow.gif,
+	  Help/Img/STk-small.gif, Help/Img/WhiteBall.gif,
+	  Help/Img/YellowBall.gif, Help/Img/back.gif,
+	  Help/Img/classeur.gif, Help/Img/colorline.gif, Help/Img/home.gif,
+	  Help/Img/line-red.gif, Help/Img/note.gif, Help/Img/smile.sad.gif,
+	  Help/Makefile, Help/STk-hlp.html, Help/YellowIndex.html,
+	  Help/after.n.html, Help/amib-abt.html, Help/amib-hlp.html,
+	  Help/bell.n.html, Help/bind.n.html, Help/bindtags.n.html,
+	  Help/bitmap.n.html, Help/button.n.html, Help/canvas.n.html,
+	  Help/change-image.n.html, Help/checkbutton.n.html,
+	  Help/choose-color.n.html, Help/clipboard.n.html,
+	  Help/destroy.n.html, Help/ed.n.html, Help/entry.n.html,
+	  Help/error-hlp.html, Help/event.n.html, Help/fbox-hlp.html,
+	  Help/find-image.n.html, Help/focus-next.n.html,
+	  Help/focus.n.html, Help/font.n.html, Help/frame.n.html,
+	  Help/free-image.n.html, Help/ftp.n.html, Help/grab.n.html,
+	  Help/grid.n.html, Help/image.n.html, Help/inspect-abt.html,
+	  Help/inspect-hlp.html, Help/jpeg.n.html, Help/label.n.html,
+	  Help/listbox.n.html, Help/listener.n.html, Help/lower.n.html,
+	  Help/make-console.n.html, Help/make-dialog.n.html,
+	  Help/make-image.n.html, Help/menu.n.html, Help/menubutton.n.html,
+	  Help/message-box.n.html, Help/message.n.html,
+	  Help/option-menu.n.html, Help/option.n.html, Help/options.n.html,
+	  Help/pack.n.html, Help/palette.n.html, Help/photo.n.html,
+	  Help/pixmap.n.html, Help/place.n.html, Help/popup.n.html,
+	  Help/posix.n.html, Help/radiobutton.n.html, Help/raise.n.html,
+	  Help/repl-display-prompt.n.html, Help/repl-display-result.n.html,
+	  Help/report-error.n.html, Help/scale.n.html,
+	  Help/scrollbar.n.html, Help/selection.n.html, Help/send.n.html,
+	  Help/stk.1.html, Help/text.n.html, Help/tk.n.html,
+	  Help/tkvars.n.html, Help/tkwait.n.html, Help/toplevel.n.html,
+	  Help/update.n.html, Help/winfo.n.html, Help/wm.n.html, INSTALL,
+	  INSTALL.win32, Lib, Lib/Images, Lib/Images/Cancel.gif,
+	  Lib/Images/Help.gif, Lib/Images/LineLeft.gif,
+	  Lib/Images/LineRight.gif, Lib/Images/Ok.gif,
+	  Lib/Images/STk-big-logo.gif, Lib/Images/STk-large.gif,
+	  Lib/Images/STk-logo.gif, Lib/Images/STk-normal.gif,
+	  Lib/Images/STk-small-logo.gif, Lib/Images/STk-tiny-logo.gif,
+	  Lib/Images/STk-tiny.gif, Lib/Images/box-minus.gif,
+	  Lib/Images/box-plus.gif, Lib/Images/boxes,
+	  Lib/Images/colorline.gif, Lib/Images/colors.gif,
+	  Lib/Images/cross_weave, Lib/Images/dimple1, Lib/Images/dimple3,
+	  Lib/Images/dir.gif, Lib/Images/dir.jpg, Lib/Images/diropen.gif,
+	  Lib/Images/down_arrow_8.bm, Lib/Images/earth.gif,
+	  Lib/Images/earthris.gif, Lib/Images/error, Lib/Images/error.gif,
+	  Lib/Images/face, Lib/Images/file.gif, Lib/Images/flagdown,
+	  Lib/Images/flagup, Lib/Images/font.gif, Lib/Images/full,
+	  Lib/Images/gray1, Lib/Images/gray3, Lib/Images/grey.25,
+	  Lib/Images/grey.5, Lib/Images/grid4, Lib/Images/grid8,
+	  Lib/Images/hlines2, Lib/Images/hlines3, Lib/Images/hourglass.gif,
+	  Lib/Images/info, Lib/Images/info.gif, Lib/Images/letters,
+	  Lib/Images/light_gray, Lib/Images/menu.bm, Lib/Images/mickey.gif,
+	  Lib/Images/noletters, Lib/Images/parentdir.gif,
+	  Lib/Images/pattern, Lib/Images/queen, Lib/Images/question,
+	  Lib/Images/question.gif, Lib/Images/root_weave,
+	  Lib/Images/stipple, Lib/Images/tb_back.gif,
+	  Lib/Images/tb_console.gif, Lib/Images/tb_copy.gif,
+	  Lib/Images/tb_customize.gif, Lib/Images/tb_cut.gif,
+	  Lib/Images/tb_edit.gif, Lib/Images/tb_evalbuf.gif,
+	  Lib/Images/tb_evalreg.gif, Lib/Images/tb_exit.gif,
+	  Lib/Images/tb_fileopen.gif, Lib/Images/tb_floppy.gif,
+	  Lib/Images/tb_forward.gif, Lib/Images/tb_hborder.gif,
+	  Lib/Images/tb_info.gif, Lib/Images/tb_paste.gif,
+	  Lib/Images/tb_reload.gif, Lib/Images/tb_stop.gif,
+	  Lib/Images/tb_vborder.gif, Lib/Images/teapot.ppm,
+	  Lib/Images/up_arrow_8.bm, Lib/Images/vlines2, Lib/Images/vlines3,
+	  Lib/Images/warning, Lib/Images/warning.gif, Lib/Makefile,
+	  Lib/Match, Lib/Match/compiler.scm, Lib/Match/descr.scm,
+	  Lib/Match/mexpand.scm, Lib/Match/normalize.scm,
+	  Lib/Match/s2cfun.scm, Lib/STk.init, Lib/balloon.stk,
+	  Lib/base64.stk, Lib/bigloo.stk, Lib/butbar.stk, Lib/button.stk,
+	  Lib/class-browser.stklos, Lib/compatibility.stk,
+	  Lib/console-customize.stk, Lib/console.stk, Lib/defsyntax.stk,
+	  Lib/dialog.stk, Lib/edit.stk, Lib/editor.stk, Lib/entry.stk,
+	  Lib/error.stk, Lib/extset.stk, Lib/ffi.stk, Lib/fileevent.stk,
+	  Lib/focus.stk, Lib/font-chooser.stklos, Lib/font-lock.stk,
+	  Lib/fs.stk, Lib/ftp.stklos, Lib/hash.stk, Lib/help.stk,
+	  Lib/html.stk, Lib/image.stk, Lib/init.stk,
+	  Lib/inspect-detail.stk, Lib/inspect-help.stk,
+	  Lib/inspect-main.stk, Lib/inspect-misc.stk, Lib/inspect-view.stk,
+	  Lib/jpeg.stk, Lib/listbox.stk, Lib/listener.stk, Lib/locale.stk,
+	  Lib/match.stk, Lib/menu.stk, Lib/method-editor.stklos,
+	  Lib/palette.stk, Lib/pixmap.stk, Lib/posix.stk, Lib/pp.stk,
+	  Lib/process.stk, Lib/regexp.stk, Lib/scale.stk,
+	  Lib/scrollbar.stk, Lib/security.stk, Lib/slib.stk,
+	  Lib/socket.stk, Lib/srfi-0.stk, Lib/srfi-2.stk, Lib/srfi-7.stk,
+	  Lib/srfi-9.stk, Lib/sterm.stk, Lib/text.stk, Lib/tk-init.stk,
+	  Lib/tk-unix.stk, Lib/trace.stk, Lib/unix.stk, Lib/win32.stk,
+	  Lib/winsocket.stklos, Lib/www-browser.stklos, Lib/www-file.stk,
+	  Lib/www-html.stk, Lib/www-http.stk, Lib/www-img.stk,
+	  Lib/www-snd.stk, Lib/www-txt.stk, Lib/www-url.stk, Lib/www.stk,
+	  Makefile.in, Mp, Mp/Makefile, Mp/README, README, STk.prj, STklos,
+	  STklos/%README, STklos/Examples, STklos/Examples/E0.stklos,
+	  STklos/Examples/E1.stklos, STklos/Examples/E2.stklos,
+	  STklos/Examples/E3.stklos, STklos/Examples/complex.stklos,
+	  STklos/Makefile, STklos/README.html, STklos/Tk,
+	  STklos/Tk/%README, STklos/Tk/Basics.stklos,
+	  STklos/Tk/Button.stklos, STklos/Tk/Canvas.stklos,
+	  STklos/Tk/Canvitem.stklos, STklos/Tk/Composite,
+	  STklos/Tk/Composite/Balloon.stklos,
+	  STklos/Tk/Composite/Choicebox.stklos,
+	  STklos/Tk/Composite/Colorbox.stklos,
+	  STklos/Tk/Composite/Combobox.stklos,
+	  STklos/Tk/Composite/Defbutton.stklos,
+	  STklos/Tk/Composite/Filebox.stklos,
+	  STklos/Tk/Composite/Gauge.stklos,
+	  STklos/Tk/Composite/Hierarchy.stklos,
+	  STklos/Tk/Composite/Lentry.stklos,
+	  STklos/Tk/Composite/Lframe.stklos,
+	  STklos/Tk/Composite/Msgbox.stklos,
+	  STklos/Tk/Composite/Multipaned.stklos,
+	  STklos/Tk/Composite/Multiwin.stklos,
+	  STklos/Tk/Composite/Notepad.stklos,
+	  STklos/Tk/Composite/Paned.stklos,
+	  STklos/Tk/Composite/Schemetext.stklos,
+	  STklos/Tk/Composite/Scrollbox.stklos,
+	  STklos/Tk/Composite/Scrollcanvas.stklos,
+	  STklos/Tk/Composite/Scrollframe.stklos,
+	  STklos/Tk/Composite/Scrolltext.stklos,
+	  STklos/Tk/Composite/Toolbar.stklos, STklos/Tk/Entry.stklos,
+	  STklos/Tk/Font.stklos, STklos/Tk/Frame.stklos,
+	  STklos/Tk/Image.stklos, STklos/Tk/Listbox.stklos,
+	  STklos/Tk/Menu.stklos, STklos/Tk/Message.stklos,
+	  STklos/Tk/STF.stklos, STklos/Tk/Scale.stklos,
+	  STklos/Tk/Scrollbar.stklos, STklos/Tk/Text.stklos,
+	  STklos/Tk/Tk-active.stklos, STklos/Tk/Tk-classes.stklos,
+	  STklos/Tk/Tk-meta.stklos, STklos/Tk/Toplevel.stklos,
+	  STklos/active-slot.stklos, STklos/composite-slot.stklos,
+	  STklos/describe.stklos, STklos/stklos.stk,
+	  STklos/trace-gf.stklos, Snow, Snow/run-snow.in, Snow/test-snow,
+	  Src, Src/Makefile.in, Src/address.c, Src/argv.c, Src/boolean.c,
+	  Src/char.c, Src/configure, Src/configure.in, Src/console.c,
+	  Src/cont.c, Src/dummy.c, Src/dump.c, Src/dynload.c, Src/env.c,
+	  Src/error.c, Src/eval.c, Src/extend.c, Src/extend.h, Src/gc.c,
+	  Src/gc.h, Src/io.c, Src/keyword.c, Src/list.c, Src/macros.c,
+	  Src/module.c, Src/module.h, Src/number.c, Src/port.c,
+	  Src/primitives.c, Src/print.c, Src/proc.c, Src/promise.c,
+	  Src/read.c, Src/run-stk.in, Src/signal.c, Src/slib.c,
+	  Src/sport.c, Src/sport.h, Src/stk.c, Src/stk.h, Src/stklos.c,
+	  Src/stklos.h, Src/stkvers.h, Src/str.c, Src/symbol.c,
+	  Src/syntax.c, Src/tcl-glue.c, Src/tcl-glue.h, Src/tcl-lib.c,
+	  Src/tcl-obj.c, Src/tcl-util.c, Src/test-stk, Src/tk-glue.c,
+	  Src/tk-glue.h, Src/tk-main.c, Src/tk-util.c, Src/toplevel.c,
+	  Src/trace.c, Src/unix.c, Src/userinit.c, Src/vector.c,
+	  Src/vport.c, Src/vport.h, Src/wstk.c, Stack, Stack/Makefile.in,
+	  Stack/README, Stack/configure, Stack/configure.in,
+	  Stack/libstack-ALPHA.c, Stack/libstack-HP.c,
+	  Stack/libstack-I386.c, Stack/libstack-MIPS32.c,
+	  Stack/libstack-SUN.c, Stack/libstack-UNKNOWN_ARCH.c,
+	  Stack/libstack.h.in, Stack/lowstack-ALPHA.c,
+	  Stack/lowstack-ALPHA.s, Stack/lowstack-MIPS32.c,
+	  Stack/lowstack-MIPS32.s, Stack/test.c, Tcl, Tcl/Makefile.in,
+	  Tcl/README, Tcl/compat, Tcl/compat/README, Tcl/compat/dirent.h,
+	  Tcl/compat/dirent2.h, Tcl/compat/fixstrtod.c, Tcl/compat/float.h,
+	  Tcl/compat/getcwd.c, Tcl/compat/gettod.c,
+	  Tcl/compat/license.terms, Tcl/compat/limits.h,
+	  Tcl/compat/opendir.c, Tcl/compat/stdlib.h, Tcl/compat/strerror.c,
+	  Tcl/compat/string.h, Tcl/compat/strncasecmp.c,
+	  Tcl/compat/strstr.c, Tcl/compat/strtod.c, Tcl/compat/strtol.c,
+	  Tcl/compat/strtoul.c, Tcl/compat/tmpnam.c, Tcl/compat/unistd.h,
+	  Tcl/compat/waitpid.c, Tcl/configure, Tcl/configure.in,
+	  Tcl/license.terms, Tcl/panic.c, Tcl/regexp.c, Tcl/tcl.h,
+	  Tcl/tclAsync.c, Tcl/tclConfig.sh.in, Tcl/tclEvent.c,
+	  Tcl/tclGet.c, Tcl/tclHash.c, Tcl/tclInt.h, Tcl/tclMtherr.c,
+	  Tcl/tclNotify.c, Tcl/tclPort.h, Tcl/tclPreserve.c,
+	  Tcl/tclRegexp.h, Tcl/tclTimer.c, Tcl/tclUnixEvent.c,
+	  Tcl/tclUnixNotfy.c, Tcl/tclUnixPort.h, Tcl/tclUnixTime.c,
+	  Tcl/tclUtil.c, Tcl/tclWinNotify.c, Tcl/tclWinPort.h,
+	  Tcl/tclWinTime.c, Tk, Tk/Makefile, Tk/README, Tk/bitmaps,
+	  Tk/bitmaps/error.bmp, Tk/bitmaps/gray12.bmp,
+	  Tk/bitmaps/gray25.bmp, Tk/bitmaps/gray50.bmp,
+	  Tk/bitmaps/gray75.bmp, Tk/bitmaps/hourglass.bmp,
+	  Tk/bitmaps/info.bmp, Tk/bitmaps/questhead.bmp,
+	  Tk/bitmaps/question.bmp, Tk/bitmaps/warning.bmp, Tk/changes,
+	  Tk/compat, Tk/compat/license.terms, Tk/compat/limits.h,
+	  Tk/compat/stdlib.h, Tk/compat/unistd.h, Tk/configure, Tk/doc,
+	  Tk/doc/README, Tk/generic, Tk/generic/README,
+	  Tk/generic/default.h, Tk/generic/ks_names.h, Tk/generic/tk.h,
+	  Tk/generic/tk3d.c, Tk/generic/tk3d.h, Tk/generic/tkArgv.c,
+	  Tk/generic/tkAtom.c, Tk/generic/tkBind.c, Tk/generic/tkBitmap.c,
+	  Tk/generic/tkButton.c, Tk/generic/tkButton.h,
+	  Tk/generic/tkCanvArc.c, Tk/generic/tkCanvBmap.c,
+	  Tk/generic/tkCanvImg.c, Tk/generic/tkCanvLine.c,
+	  Tk/generic/tkCanvPoly.c, Tk/generic/tkCanvPs.c,
+	  Tk/generic/tkCanvText.c, Tk/generic/tkCanvUtil.c,
+	  Tk/generic/tkCanvWind.c, Tk/generic/tkCanvas.c,
+	  Tk/generic/tkCanvas.h, Tk/generic/tkClipboard.c,
+	  Tk/generic/tkCmds.c, Tk/generic/tkColor.c, Tk/generic/tkColor.h,
+	  Tk/generic/tkConfig.c, Tk/generic/tkConsole.c,
+	  Tk/generic/tkCursor.c, Tk/generic/tkEntry.c,
+	  Tk/generic/tkError.c, Tk/generic/tkEvent.c,
+	  Tk/generic/tkFileFilter.c, Tk/generic/tkFileFilter.h,
+	  Tk/generic/tkFocus.c, Tk/generic/tkFont.c, Tk/generic/tkFont.h,
+	  Tk/generic/tkFrame.c, Tk/generic/tkGC.c, Tk/generic/tkGeometry.c,
+	  Tk/generic/tkGet.c, Tk/generic/tkGrab.c, Tk/generic/tkGrid.c,
+	  Tk/generic/tkImage.c, Tk/generic/tkImgBmap.c,
+	  Tk/generic/tkImgGIF.c, Tk/generic/tkImgPPM.c,
+	  Tk/generic/tkImgPhoto.c, Tk/generic/tkImgUtil.c,
+	  Tk/generic/tkInitScript.h, Tk/generic/tkInt.h,
+	  Tk/generic/tkListbox.c, Tk/generic/tkMacWinMenu.c,
+	  Tk/generic/tkMenu.c, Tk/generic/tkMenu.h,
+	  Tk/generic/tkMenuDraw.c, Tk/generic/tkMenubutton.c,
+	  Tk/generic/tkMenubutton.h, Tk/generic/tkMessage.c,
+	  Tk/generic/tkOption.c, Tk/generic/tkPack.c, Tk/generic/tkPlace.c,
+	  Tk/generic/tkPointer.c, Tk/generic/tkPort.h,
+	  Tk/generic/tkRectOval.c, Tk/generic/tkScale.c,
+	  Tk/generic/tkScale.h, Tk/generic/tkScrollbar.c,
+	  Tk/generic/tkScrollbar.h, Tk/generic/tkSelect.c,
+	  Tk/generic/tkSelect.h, Tk/generic/tkSquare.c,
+	  Tk/generic/tkText.c, Tk/generic/tkText.h,
+	  Tk/generic/tkTextBTree.c, Tk/generic/tkTextDisp.c,
+	  Tk/generic/tkTextImage.c, Tk/generic/tkTextIndex.c,
+	  Tk/generic/tkTextMark.c, Tk/generic/tkTextTag.c,
+	  Tk/generic/tkTextWind.c, Tk/generic/tkTrig.c,
+	  Tk/generic/tkUtil.c, Tk/generic/tkVisual.c,
+	  Tk/generic/tkWindow.c, Tk/license.terms, Tk/unix,
+	  Tk/unix/Makefile.in, Tk/unix/README, Tk/unix/configure,
+	  Tk/unix/configure.in, Tk/unix/install-sh, Tk/unix/license.terms,
+	  Tk/unix/mkLinks, Tk/unix/porting.notes, Tk/unix/tkAppInit.c,
+	  Tk/unix/tkConfig.sh, Tk/unix/tkConfig.sh.in, Tk/unix/tkUnix.c,
+	  Tk/unix/tkUnix3d.c, Tk/unix/tkUnixButton.c,
+	  Tk/unix/tkUnixColor.c, Tk/unix/tkUnixCursor.c,
+	  Tk/unix/tkUnixDefault.h, Tk/unix/tkUnixDialog.c,
+	  Tk/unix/tkUnixDraw.c, Tk/unix/tkUnixEmbed.c,
+	  Tk/unix/tkUnixEvent.c, Tk/unix/tkUnixFocus.c,
+	  Tk/unix/tkUnixFont.c, Tk/unix/tkUnixInit.c, Tk/unix/tkUnixInt.h,
+	  Tk/unix/tkUnixMenu.c, Tk/unix/tkUnixMenubu.c,
+	  Tk/unix/tkUnixPort.h, Tk/unix/tkUnixScale.c,
+	  Tk/unix/tkUnixScrlbr.c, Tk/unix/tkUnixSelect.c,
+	  Tk/unix/tkUnixSend.c, Tk/unix/tkUnixWm.c, Tk/unix/tkUnixXId.c,
+	  Tk/win, Tk/win/README, Tk/win/license.terms, Tk/win/mkd.bat,
+	  Tk/win/rc, Tk/win/rc/STk.ico, Tk/win/rc/buttons.bmp,
+	  Tk/win/rc/cursor00.cur, Tk/win/rc/cursor02.cur,
+	  Tk/win/rc/cursor04.cur, Tk/win/rc/cursor06.cur,
+	  Tk/win/rc/cursor08.cur, Tk/win/rc/cursor0a.cur,
+	  Tk/win/rc/cursor0c.cur, Tk/win/rc/cursor0e.cur,
+	  Tk/win/rc/cursor10.cur, Tk/win/rc/cursor12.cur,
+	  Tk/win/rc/cursor14.cur, Tk/win/rc/cursor16.cur,
+	  Tk/win/rc/cursor18.cur, Tk/win/rc/cursor1a.cur,
+	  Tk/win/rc/cursor1c.cur, Tk/win/rc/cursor1e.cur,
+	  Tk/win/rc/cursor20.cur, Tk/win/rc/cursor22.cur,
+	  Tk/win/rc/cursor24.cur, Tk/win/rc/cursor26.cur,
+	  Tk/win/rc/cursor28.cur, Tk/win/rc/cursor2a.cur,
+	  Tk/win/rc/cursor2c.cur, Tk/win/rc/cursor2e.cur,
+	  Tk/win/rc/cursor30.cur, Tk/win/rc/cursor32.cur,
+	  Tk/win/rc/cursor34.cur, Tk/win/rc/cursor36.cur,
+	  Tk/win/rc/cursor38.cur, Tk/win/rc/cursor3a.cur,
+	  Tk/win/rc/cursor3c.cur, Tk/win/rc/cursor3e.cur,
+	  Tk/win/rc/cursor40.cur, Tk/win/rc/cursor42.cur,
+	  Tk/win/rc/cursor44.cur, Tk/win/rc/cursor46.cur,
+	  Tk/win/rc/cursor48.cur, Tk/win/rc/cursor4a.cur,
+	  Tk/win/rc/cursor4c.cur, Tk/win/rc/cursor4e.cur,
+	  Tk/win/rc/cursor50.cur, Tk/win/rc/cursor52.cur,
+	  Tk/win/rc/cursor54.cur, Tk/win/rc/cursor56.cur,
+	  Tk/win/rc/cursor58.cur, Tk/win/rc/cursor5a.cur,
+	  Tk/win/rc/cursor5c.cur, Tk/win/rc/cursor5e.cur,
+	  Tk/win/rc/cursor60.cur, Tk/win/rc/cursor62.cur,
+	  Tk/win/rc/cursor64.cur, Tk/win/rc/cursor66.cur,
+	  Tk/win/rc/cursor68.cur, Tk/win/rc/cursor6a.cur,
+	  Tk/win/rc/cursor6c.cur, Tk/win/rc/cursor6e.cur,
+	  Tk/win/rc/cursor70.cur, Tk/win/rc/cursor72.cur,
+	  Tk/win/rc/cursor74.cur, Tk/win/rc/cursor76.cur,
+	  Tk/win/rc/cursor78.cur, Tk/win/rc/cursor7a.cur,
+	  Tk/win/rc/cursor7c.cur, Tk/win/rc/cursor7e.cur,
+	  Tk/win/rc/cursor80.cur, Tk/win/rc/cursor82.cur,
+	  Tk/win/rc/cursor84.cur, Tk/win/rc/cursor86.cur,
+	  Tk/win/rc/cursor88.cur, Tk/win/rc/cursor8a.cur,
+	  Tk/win/rc/cursor8c.cur, Tk/win/rc/cursor8e.cur,
+	  Tk/win/rc/cursor90.cur, Tk/win/rc/cursor92.cur,
+	  Tk/win/rc/cursor94.cur, Tk/win/rc/cursor96.cur,
+	  Tk/win/rc/cursor98.cur, Tk/win/rc/stk.rc, Tk/win/rc/tk.ico,
+	  Tk/win/rc/tk.rc, Tk/win/rc/wish.ico, Tk/win/rc/wish.rc,
+	  Tk/win/rmd.bat, Tk/win/stubs.c, Tk/win/tkWin.h,
+	  Tk/win/tkWin32Dll.c, Tk/win/tkWin3d.c, Tk/win/tkWinButton.c,
+	  Tk/win/tkWinClipboard.c, Tk/win/tkWinColor.c,
+	  Tk/win/tkWinCursor.c, Tk/win/tkWinDefault.h,
+	  Tk/win/tkWinDialog.c, Tk/win/tkWinDraw.c, Tk/win/tkWinEmbed.c,
+	  Tk/win/tkWinFont.c, Tk/win/tkWinImage.c, Tk/win/tkWinInit.c,
+	  Tk/win/tkWinInt.h, Tk/win/tkWinKey.c, Tk/win/tkWinMenu.c,
+	  Tk/win/tkWinPixmap.c, Tk/win/tkWinPointer.c, Tk/win/tkWinPort.h,
+	  Tk/win/tkWinRegion.c, Tk/win/tkWinScrlbr.c, Tk/win/tkWinSend.c,
+	  Tk/win/tkWinWindow.c, Tk/win/tkWinWm.c, Tk/win/tkWinX.c,
+	  Tk/win/winMain.c, Tk/xlib, Tk/xlib/X11, Tk/xlib/X11/X.h,
+	  Tk/xlib/X11/Xatom.h, Tk/xlib/X11/Xfuncproto.h,
+	  Tk/xlib/X11/Xlib.h, Tk/xlib/X11/Xutil.h,
+	  Tk/xlib/X11/cursorfont.h, Tk/xlib/X11/keysym.h,
+	  Tk/xlib/X11/keysymdef.h, Tk/xlib/X11/license.terms,
+	  Tk/xlib/license.terms, Tk/xlib/xbytes.h, Tk/xlib/xcolors.c,
+	  Tk/xlib/xdraw.c, Tk/xlib/xgc.c, Tk/xlib/ximage.c,
+	  Tk/xlib/xutil.c, Utils, Utils/STk.spec, Utils/STk.spec.in,
+	  Utils/install-sh, VERSION, Win32, Win32/Doc,
+	  Win32/Doc/install.doc, Win32/STk.dsp, Win32/STk.dsw,
+	  Win32/STk.mak, Win32/libgmp, Win32/libgmp/libgmp.dsp,
+	  Win32/libgmp/libgmp.mak, Win32/libtcl, Win32/libtcl/libtcl.dsp,
+	  Win32/libtcl/libtcl.mak, Win32/libtk, Win32/libtk/libtk.dsp,
+	  Win32/libtk/libtk.mak, configure, configure.in, install.bat,
+	  paths: Initial revision
+

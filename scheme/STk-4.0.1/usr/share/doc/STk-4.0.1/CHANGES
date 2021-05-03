@@ -1,0 +1,472 @@
+09/27/99 Release 4.0.1
+----------------------
+Mains changes/modifications since 4.0.0 are:
+
+      * Small bug fixes
+      
+      * Integration of SRFI-9 (records)
+
+      * Accepts mailto: links in the browser
+
+
+09/03/99 Release 4.0.0
+----------------------
+Mains changes/modifications since 3.99.4 are:
+
+      * Lot of Win32 fixes 
+
+      * <Scroll-Frame>, <Toolbar> STklos classes.
+      
+      * Integration of some finals SRFI (0, 2, 6, 8)
+      
+      * define-syntax (but not let-syntax and let-syntax*)
+      
+      * Lot of bug fixes.
+      
+      * New License Policy (request for commercial apps no more needed).
+
+02/02/99 Release 3.99.4
+-----------------------
+Mains changes/modifications since 3.99.3 are:
+
+	* Works on Windows too (need some more testing, since this is
+	far from perfect)
+
+	* A console mode (which is used by default on Windows, but can
+	  be used with the -console option on Unix)
+
+	* A new editor with Scheme fontification and indentation 
+	
+	* New kind of ports: virtual ports 
+	
+	* All the code dealing with files has been rewritten. 
+	
+	* As usual, some bug corrections
+
+
+09/30/98 Release 3.99.3
+-----------------------
+Mains changes/modifications since 3.99.2 are:
+
+	* Tk level is 8.0.3 (the latest stable Tk release)
+
+	* New STklos Classes:	
+		+ <Hierarchy-tree> and <Hierarchy-item> to draw
+		  hierarchy such as files/directories, class/metaclasses ...
+		+ <Notepad> to define ... notepads
+		+ <Scheme-text> which extends <Text> to "font-lockify" 
+		Scheme buffers
+
+	* Method and generic function editor
+
+	* A class browser (type "(class-browser)" to access it)
+
+	* some new manual pages
+
+	* Base64 Encoding/Decoding extension
+
+	* Locale extension to treat strings and character using locale information
+
+	* Better installation scripts (+ some corrections)
+
+	* Bug corrections
+
+06/09/98 Release 3.99.2
+-----------------------
+
+This is mainly a bug correcting release
+Otherwise:
+	* Can be compiled on AIX
+
+	* a new script file "stk-genmake" file can be used to build a 
+	Makefile for extensions. It constructs a Makefile which uses 
+	exactly the same options and compiler that was used to
+ 	build the interpreter.
+
+	* New function: write* to write cirular structures (rad has been 
+	updated for reading such structures -- and format for writing them 
+	too)
+
+	* Better HTML support
+
+	* New STklos slot allocation scheme: :EACH-CLASS
+
+
+04/27/98 Release 3.99.1
+-----------------------
+
+Mainly minor correction to 3.99.0 (installation problems principally)
+
+Otherwise:
+    * Inclusion of the Metaclass init-keywords patch from J-M Kubek 
+      <kubek@insa-tlse.fr>, which allows to initialize some slots of 
+      a class when declaring it.
+
+    * Tk widgets can be initailized at creation time, even if they 
+      are disabled (idea from Walter C. Pelissero
+      <wcp@luppolo.lpds.sublink.org>
+
+
+04/10/98 Release 3.99.0
+-----------------------
+
+This is the pre-4.0 release. Why is is not called 4.0? Good question. 
+This version would have been numbered 4.0 if there was not a so long
+time between this release and the previous one. Since I take so long 
+to release, I had time to add a lot of things to my "TODO list". 
+And this version misses some things that I consider important (even if 
+not visible form outside) to be called 4.0. Furthermore, ther is a big 
+absent since last release which is the port on Windows. The real 4.0 
+will have support for Windows.
+
+Here are the main visible changes from previous release:
+
+   About Scheme
+
+   * A module system has been added
+   * Integration of the Bigloo MATCH-CASE and MATCH-LAMBDA
+     primitives. Furthermore, the file bigloo.stk provides
+     some compatibility between STk and bigloo modules.
+   * A simple FFI has been added. It allows to access C
+     functions without writing C code (works only on a
+     limited set of architectures for now).
+   * integrates the R5RS VALUES and CALL-WITH-VALUES
+   * multi-line comments have been added.
+   * The "-file" interpreter option is no more necessary
+   * Display of the prompt and of the eval result in the
+     REPL are now user definable.
+   * report-error mechanism has been enhanced a lot (work
+     is not completely achieved).
+   * new-primitives: append!, last-pair, C-string->string,
+     remove-file, rename-file, temporary-file-name, ...
+   * Numerous bug corrections
+   * ...
+
+   About Tk
+
+   * Integration of the Tk8.0 toolkit
+   * The old inspector has been adapted to work with
+     current release (not completely, but sufficiently
+     while the new version is terminated)
+   * Buttons, Checkbuttons and Radiobuttons can use a
+     :variable and :textvariable in a given environment.
+     This environment is given with the new :environment
+     option.
+   * New metaclass: <Tk-composite-toplevel>. This is
+     identical to the class <Tk-composite-widget>, except
+     that the widhet lives in its own toplevel window.
+   * make-image simplifies the usage of Tk images and uses
+     a cache, to speed-up access to already used images.
+   * The little square window, which used to appear as soon
+     as STk was launched, appears now only when the first
+     widget is mapped on screen.
+   * ...
+
+   About STklos
+
+   * The MOP of STklos is now very similar to the CLOS one.
+     Here are some of the new features:
+	o when a slot does not exists, the gf slot-missing
+	  is called
+	o when a unbound slot is read, the gf slot-unbound
+	  is called
+	o new generic functions slot-ref-using-class,
+	  slot-set-using-class, slot-bound-using-class?,
+	  slot-exists-using-class?, slot-definition-name,
+	  slot-definition-options,
+	  slot-definition-allocation,
+	  slot-definition-getter, slot-definition-setter,
+	  slot-definition-accessor, generic-function-name,
+	  generic-function-methods,
+	  method-generic-function, method-specializers
+	  method-procedure, remove-method
+	  change-object-class
+
+  * When a class is redefined, the instances and methods which uses it
+    are redefined accordingly, as in CLOS (i.e. if you add a slot in a
+    class, all its -- direct or indirect -- instances will have the new
+    slot added dynamically. 
+
+   * New kind of slot allocation: "active". An active slot
+     is a slot for which you can put a daemon before or
+     after its reading/writing
+   * Standard behavior of class slots is now identical to
+     CLOS: when a class-slot is inherited, it is shared
+     with instances of the superclass. If it is redefined,
+     a new slot is created
+   * slot initializers are evaluated in the lexical
+     environment of the class definition.
+   * (Tk-)virtual slots can now have an :initform option.
+   * Generic functions can be now traced with the standard
+     TRACE function.
+   * Composite widgets have now a class slots which
+     contains the class of the object. This slot is
+     initialized by default to "Composite", but it can be
+     overloaded for a particular class. For instance
+     labeled entries use the value "LabeledEntry" by
+     default. This feature can be used for initializing the
+     X11 resource database. for instance you can have
+     STk*LabeledEntry*Entry*Background: white in your
+     .Xdefaults file to set the default value of background
+     of the entry of a <Labeled-entry> widget.
+   * New composites widgets: Gauge, Valued-Gauge,
+     Balloon-help
+   * The HTML-browser has been enhanced to access now the
+     web (i.e. you can grab distant texts or images). The
+     Web browser admit now applets written in Scheme.
+   * New kind of slot allocation: "active". An active slot
+     is a slot for which you can put a daemon before or
+     after its reading/writing
+   * extended types (defined in C) are now automatically
+     integrated in the STklos hierarchy.
+   * Several new classes for displaying messages boxes
+   * New class <Color-box> for choosing colors.
+   * New <Tk-Text-inset>. This class is the now the parent
+     class of <Text-window> and of (the new) class
+     <Text-image>.
+   * ...
+
+
+09/26/96 Release 3.1.1
+----------------------
+
+This release is a bug correction release. It corrects a lot bugs.
+A lot of theses bugs prevent to install it on some architectures.
+Apart bugs:
+
+	- Version of Tk is now at Tk4.1p1 level (last stable version)
+	
+	- a MS VC makefile is now provided for Win 32 thanks to 
+	Caleb Deupree <cdeupree@erinet.com> (I have changed some things 
+	from the Caleb file but cannot test them, I hope this is correct)
+	
+	- Support for sockets on Win32 was done by  Caleb Deupree on MS 
+	VC. This should also work on BC++ but I'm not able to test it.
+	
+
+07/24/96 Release 3.1
+--------------------
+
+	- Version of Tk is now at Tk4.1 level. 
+
+	- STk run now on Win32!!! 
+	Some details need a little more work (some oddities on file names
+	due to difference conventions between Unix and DOS, and things like 
+	that). No socket support and no dynamic loading on Win32
+
+	- A complete documentation of STk widgets pages (both in nroff 
+	and HTML format). The help command really allow you to browse
+	man pages now. Man pages are prefixed by "stk_" now to avoid confusion 
+	with original Tk manual pages. 
+
+	- STklos is now integrated to STk (it was dynamically loaded before).
+	  This simplify its implementation and speed up generic functions:
+		o gf are now 2-4 time faster
+		o gf are now tail recursive
+		o the MOP for gf is now "public" (i.e. you can change the way 
+		  gf are called in Scheme -- it was not possible with previous 
+		  versions without using C).
+
+	- Port implementation is different: A port contains now its
+	input and output handler. New primitives to access the handler:
+	when-port-readable and when-port-writable.
+	BTW, The Tk function fileevent function is no more useful
+	(it is written in Scheme now for compatibility, but its usage 
+	is deprecated). It may not be supported in a future release.
+
+	- New composite widgets: <Multiple-window> and <Inner-window>
+	which allow to have embedded windows. A multiple window 
+	has a task bar below and allow to iconify inner-windows. 
+	Some people think it looks like Win95 desktop ;-)	
+
+	- pixmap extension doesn't require anymore the Xpm library. Code
+	is stolen from the Tix Library.
+
+	- New socket code which allow multiple concurrent connection
+
+	- Extended types can now have a compare function which	is called
+	 when eqv? or equal? is called. This modification should be 
+	 compatible with the previous extensions (I hope so)
+	
+	- STklos: Two new methods: object-eqv? and object-equal? which are 
+	called when applying eqv? or equal? to instances.
+
+	- A rewriting of bind-for-dragging canvas method. You can now specify 
+	a :before-motion, which if it returns #f, forbid to move the selected 
+	canvas item.
+
+	- New primitives:setenv!, posix-host-name, posix-domain-name, 
+	posix-uname	  
+	
+	- Option separator "--" allows to pass reserved keyword (sush as -help) 
+	to a script. Option and parameter cannot be mixed anymore
+	(i.e. calling stk xyz -help ==> *argv* = ("xyz" "-help")
+
+	- HTML browser enhancement (support of the <FONT> tag with SIZE 
+	  and COLOR sub-tags. This must be compatible with the HTML spec. 
+
+	- and of course many many bug corrections.
+
+
+01/22/96 Release 3.0 (also called 3.0b2 by error)
+~~~~~~~~~~~~~~~~~~~~
+	- Version of Tk is now at Tk4.0p2 level
+
+	- Support Pixmap images
+
+	- Strings can now contain null charters (printing of strings is more 
+	friendly now in write mode
+
+	- Executable is now position independant(i.e. no path coded in hard in 
+	the interpreter). STK_LIBRARY shell variable is no more necessary. We
+	can now make binary distributions.
+
+	- Signal can now be redirected to Scheme closures. The end of a GC 
+	is seen as a signal.
+
+	- Trace on variable are changed (and re-work now): the associated trace
+	must be a thunk now.
+
+	- New option for buttons, checkbuttons, radiobuttons and entries: 
+	:stringvalue.
+	This options tells if the value must be stringified or not. 
+	For instance, with
+	    (radiobutton '.c :text "Try" :variable 'x :stringvalue #f :value 100)
+	will set the "x" var to "100" whereas with
+	    (radiobutton '.c :text "Try" :variable 'x :stringvalue #t :value 100)
+	value is set to the integer value 100
+	Default value for :stringvalue is #t for entries and #f for check and
+	radio buttons.
+
+	- stk-wtour demo is updated for STk 3.0
+
+	- In STklos, if a method M is defined and if it is already bound to 
+	a procedure, the old procedure is called when no method is applicable.
+	Example:
+	    (define-method car ((x <integer>)) (- x 1))
+	    (car 10)           ==> 9
+	    (car (cons 'a 'b)) ==> a
+	As a consequence, this kind of method cannot call no-applicable-method
+	if parameters are not valid:
+	     (car (vector 1 2))  ==> error car: wrong type of argument: #(1 2)
+
+	- Small change in the STklos hierarchy. <widget> is now a subclass of
+	<procedure> and its meta class is <procedure-metaclass>.
+	
+	
+10/07/95 Release 3.0b1
+~~~~~~~~~~~~~~~~~~~~~~
+A lot of modifications. Briefly,
+	- Support of Tk4.0 
+	- Closures are fully supported by Tk. That means that a callback can be 
+	  now a  Scheme closure with its environment. GC problems with closures
+	  and usage of the dirty "address-of" are definitively gone.
+	- HTML support (a browser is provided, should be extended to support
+	  all HTML2.0)
+	- Documentation is now in HTML for the Tk commands (only a few commands
+	  are ready for now, but they will be all defined in a near future).
+	- ....
+
+
+07/15/95 Release 2.2
+~~~~~~~~~~~~~~~~~~~~	
+
+This is the last release with Tk 3.6. Next release will integrate Tk 4.0
+
+	- Bug corrections 
+	- Changing Makefiles and configure files for better dynamic loading
+	  integration. 
+	- Adding support for BLT-1.7. This library can be loaded dynamically
+	  on system which support it
+	- New option which permit to change the initial amount of cells
+	- Uses really LESS memory.
+	- New GC. Now  we have a set of heaps and a new heap is allocated as
+	  soon as the global space is "nearly" filled.
+	- SLIB support (just type (require "slib") and after that process as
+	  indicated in SLIB documentation
+	- Integration of the Suresh Srinivas STk-wtour demo.
+	- Adding support for Text in STklos: Definition of the <Text> class
+	  (and companion <Text-tag> class).
+	- call/cc is now tail recursive. (Alas, methods and dynamic-wind are
+	  not yet tail recursive).
+	- Better support for autoloading files
+	- Adding support for an exec function a` la Tcl (i.e. execute of a 
+	  unix process and keep its output in a Scheme string)
+	- General run-process for running Unix process were std{in,out,err} 
+	  can be redirected in files or in pipes.
+	- Some code has been rewritten to ease STk porting
+	- Adding support for regular expression pattern matching and
+	  replacement 
+	- There is now a light interpreter, called snow (for Scheme
+	  NO Window); this is in fact the STk interpreter without Tk support. 
+	  This interpreter is an independant executable. It can be called 
+	  with the `snow' shell-script or by unsetting the DISPLAY variable.
+	- New organisation of intalled file to permit co-existence of
+	  several version of STk or multi-architecture file sharing
+	- Dynamic loading support for NetBSD-1.0 
+	- Dynamic loading support for HP
+	- Dynamic loading and dump support for FreeBsd.
+	- Dynamic loading for Linux (using ELF format or the DLD package)
+	- A mini interface builder (very simplistic, but usable)
+	- New contributions: A true Tetris game, a 8 queens simulation and 
+	  a demo of composite widgets.
+	- Every exported identifier now starts with the string "STk_" to
+	  avoid name clashes when embedding the interpreter in an application.
+	- BSD sockets support 	
+	- Better integration with Emacs
+	- AMIB (A Mini Interface Builder) 
+	- A lot of improvement in STklos
+	- .....
+
+See the ChangeLog file for more information
+ 	
+==============================================================================
+??/??/?? Release 2.1
+~~~~~~~~~~~~~~~~~~~~	
+
+This is a major release version. 
+    
+	- STklos (the object layer) is now written in C. It is more than 150
+	  times faster than before and it uses less memory (~ 1/100)!!!!
+	- Improvement of STklos 
+	- STklos classes have been written for all the Tk library widgets
+	- Composites widgets can be easily defined in STklos. Access to those
+	  widgets is identical to C written one.
+	- bindings can be now true lambda expression with their own
+	  environment (rather than list which are evaluated in the global 
+	  environment).
+	- Hash tables have been added.	
+	- Small constants are coded on a pointer rather than a cell
+    	- Support for dynamic loading on SunOs (4 and 5). Dynamic loading
+      	  uses shared objects (it should work also on OSF1)
+	- Dump creates now smaller images.
+	- Modification of configure and Makefiles to correct of a lot 
+	  of installation problems.
+	- Runs on Solaris 2.3
+	- Bugs corrections 
+	- Some modification to the error notifier
+	- Support of dynamic loading of shared objects on Solaris 1 & 2 (it
+	  should work also on OSF1).
+	- ...
+
+94/01/03 Release 2.0
+~~~~~~~~~~~~~~~~~~~~
+
+    STk 2.0 contains a completly rewritten Scheme interpreter. This new
+    interpreter is
+            - R4RS
+            - faster than previous release (~ 3 or 4 times)
+            - less bugged (I hope :-) )
+            - implements integers (32 bits and bignum) and floats
+            - cleaner with macros 
+    
+    This version contains also a prototype of a graphical inspector which
+    permits to see/modify a variable value. For widgets variables it permits
+    to modify interactively their behaviour. However, it doesn't yet contain
+    a C rewritting of the object layer as it was planned. This will be done
+    in a (probably the) next release.
+
+93/09/02 Release 1.00 (first public release)
+~~~~~~~~~~~~~~~~~~~~~
+
+    Forget it :)

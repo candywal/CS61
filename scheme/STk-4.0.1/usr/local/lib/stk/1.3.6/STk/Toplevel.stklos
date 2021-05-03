@@ -1,0 +1,235 @@
+;;;;
+;;;; T o p l e v e l . s t k	  --  Frame and Toplevel class definitions
+;;;;
+;;;; Copyright © 1993-1999 Erick Gallesio - I3S-CNRS/ESSI <eg@unice.fr>
+;;;; 
+;;;; Permission to use, copy, modify, distribute,and license this
+;;;; software and its documentation for any purpose is hereby granted,
+;;;; provided that existing copyright notices are retained in all
+;;;; copies and that this notice is included verbatim in any
+;;;; distributions.  No written agreement, license, or royalty fee is
+;;;; required for any of the authorized uses.
+;;;; This software is provided ``AS IS'' without express or implied
+;;;; warranty.
+;;;;
+;;;;	       Author: Erick Gallesio [eg@kaolin.unice.fr]
+;;;;	Creation date:	5-Mar-1994 17:19
+;;;; Last file update:  3-Sep-1999 20:12 (eg)
+
+(require "Basics")
+
+(select-module STklos+Tk)
+
+(export *top-root* children
+	deiconify iconify toplevel-frame toplevel-state withdraw
+	make-transient place-toplevel)
+
+;=============================================================================
+;
+;			 	<Frame> 
+;
+;=============================================================================
+
+(define-class <Frame> (<Tk-simple-widget> <Tk-sizeable>)
+  ((class	:getter   	class
+		:init-keyword   :class
+		:allocation	:tk-virtual)
+   (colormap	:allocation    	:tk-virtual
+		:init-keyword	:colormap
+		:allocation	:tk-virtual)
+   (container	:accessor	container 
+		:init-keyword	:container
+		:allocation	:tk-virtual)
+   (visual	:accessor	visual
+		:init-keyword	:visual
+		:allocation	:tk-virtual)))
+
+(define-method tk-constructor ((self <Frame>))
+  Tk:frame)
+
+  ;; We have a special initialization because some slots values must be
+(define-method initialize ((self <Frame>) initargs)
+  ;; passed at widget initialization. So we have to isolate these slots 
+  ;; since they cannot be initialized in a standard way
+  (let ((specials (special-Tk-slots self)))
+    (let Loop ((l initargs) (normal '()) (special '()))
+      (cond
+       ((null? l) 
+	     (if (null? special)
+		 (next-method self normal)
+		 (next-method self `(:tk-options ,special ,@normal))))
+       ((memv (car l) specials)
+	     (Loop (cddr l) normal (list* (car l) (cadr l) special)))
+       (else (Loop (cddr l) (list* (car l) (cadr l) normal) special))))))
+
+(define-method special-Tk-slots ((self <Frame>))
+  (list :class :colormap :container :visual))
+
+
+
+(define-method children ((self <Frame>))
+  (let ((l    (winfo 'children (slot-ref self 'Id)))
+	(trad (lambda (x) (let ((x (Id->instance x))) (if x (list x) '())))))
+    (apply append (map trad l))))
+    
+;=============================================================================
+;
+;				 <Toplevel>
+;
+;=============================================================================
+
+(define-class <Toplevel> (<Frame>)
+  ((menu	:accessor     	menu-of 
+		:init-keyword   :menu
+		:allocation   	:tk-virtual)
+   (screen	:getter		screen
+		:init-keyword	:screen
+		:allocation	:tk-virtual)
+   (use		:getter		use
+		:init-keyword	:use
+		:allocation	:tk-virtual)
+
+   ;;;;
+   ;;;; Following slots embody the Tk:wm command options
+   ;;;; Note: "Uncommon" slots have not been given an accessor
+   ;;;;
+   (aspect	:allocation	:virtual
+		:init-keyword	:aspect
+		:slot-ref	(lambda (o) (Tk:wm 'aspect (slot-ref o 'Eid)))
+		:slot-set!	(lambda (o v) 
+				  (apply Tk:wm 'aspect (slot-ref o 'Eid) v)))
+
+   (client	:allocation	:virtual
+		:init-keyword	:client
+		:slot-ref	(lambda (o) (Tk:wm 'client (slot-ref o 'Eid)))
+		:slot-set!	(lambda (o v) 
+				  (Tk:wm 'client (slot-ref o 'Eid) v)))
+   (command	:allocation	:virtual
+		:init-keyword	:command
+		:slot-ref	(lambda (o) (Tk:wm 'command (slot-ref o 'Eid)))
+		:slot-set!	(lambda (o v) 
+				  (Tk:wm 'command (slot-ref o 'Eid) v)))
+   (focus-model	:allocation	:virtual
+		:init-keyword	:focus-model
+		:slot-ref	(lambda (o) (Tk:wm 'focus (slot-ref o 'Eid)))
+		:slot-set!	(lambda (o v)
+				  (Tk:wm 'focus (slot-ref o 'Eid) v)))
+   (geometry	:accessor	geometry
+		:init-keyword 	:geometry
+		:allocation	:virtual
+		:slot-ref	(lambda (o) (Tk:wm 'geometry (slot-ref o 'Eid)))
+		:slot-set!	(lambda (o v)
+				  (Tk:wm 'geometry (slot-ref o 'Eid) v)))
+   (wm-group	:allocation	:virtual
+		:init-keyword	:wm-group
+		:slot-ref	(lambda (o) (Tk:wm 'group (slot-ref o 'Eid)))
+		:slot-set!	(lambda (o v) 
+				  (Tk:wm 'group (slot-ref o 'Eid) v)))
+   (icon-bitmap	:accessor	icon-bitmap
+		:init-keyword	:icon-bitmap
+		:allocation	:virtual
+		:slot-ref	(lambda (o)   (Tk:wm 'iconbit (slot-ref o 'Eid)))
+		:slot-set!	(lambda (o v) (Tk:wm 'iconbit (slot-ref o 'Eid) v)))
+   (icon-mask	:init-keyword	:icon-mask
+		:allocation	:virtual
+		:slot-ref	(lambda (o)   (Tk:wm 'iconma (slot-ref o 'Eid)))
+		:slot-set!	(lambda (o v) (Tk:wm 'iconma (slot-ref o 'Eid) v)))
+   (icon-name	:accessor	icon-name
+		:init-keyword	:icon-name
+		:allocation	:virtual
+		:slot-ref	(lambda (o)   (Tk:wm 'iconnam (slot-ref o 'Eid)))
+		:slot-set!	(lambda (o v) (Tk:wm 'iconnam (slot-ref o 'Eid) v)))
+   (icon-window	:init-keyword	:icon-window
+		:allocation	:virtual
+		:slot-ref	(lambda (o)   (Tk:wm 'iconwin (slot-ref o 'Eid)))
+		:slot-set!	(lambda (o v) (Tk:wm 'iconwin (slot-ref o 'Eid) v)))
+   (max-size	:accessor	maximum-size
+		:init-keyword	:maximum-size
+		:allocation	:virtual
+		:slot-ref	(lambda (o) (Tk:wm 'max (slot-ref o 'Eid)))
+		:slot-set!	(lambda (o v)
+				  (apply Tk:wm 'max (slot-ref o 'Eid) v)))
+   (min-size	:accessor	minimum-size
+		:init-keyword	:minimum-size
+		:allocation	:virtual
+		:slot-ref	(lambda (o) (Tk:wm 'min (slot-ref o 'Eid)))
+		:slot-set!	(lambda (o v)
+				  (apply Tk:wm 'min (slot-ref o 'Eid) v)))
+   (override 	:init-keyword	:override-redirect
+		:allocation	:virtual
+		:slot-ref	(lambda (o)   (Tk:wm 'over (slot-ref o 'Eid)))
+		:slot-set!	(lambda (o v) (Tk:wm 'over (slot-ref o 'Eid) v)))
+   (pos-from	:init-keyword	:position-from
+		:allocation	:virtual
+		:slot-ref	(lambda (o)   (Tk:wm 'pos (slot-ref o 'Eid)))
+		:slot-set!	(lambda (o v) (Tk:wm 'pos (slot-ref o 'Eid) v)))
+   (protocol	:init-keyword	:protocol
+		:allocation	:virtual
+		:slot-ref	(lambda (o)   (Tk:wm 'proto (slot-ref o 'Eid)))
+		:slot-set!	(lambda (o v) (Tk:wm 'proto (slot-ref o 'Eid) v)))
+   (size-from	:init-keyword	:size-from
+		:allocation	:virtual
+		:slot-ref	(lambda (o)   (Tk:wm 'size (slot-ref o 'Eid)))
+		:slot-set!	(lambda (o v) (Tk:wm 'size (slot-ref o 'Eid) v)))
+   (title	:accessor	title
+		:init-keyword	:title
+		:allocation	:virtual
+		:slot-ref	(lambda (o)   (Tk:wm 'title (slot-ref o 'Eid)))
+		:slot-set!	(lambda (o v) (Tk:wm 'title (slot-ref o 'Eid) v)))
+   (transient	:accessor	transient
+		:init-keyword	:transient
+		:allocation	:virtual
+		:slot-ref       (lambda (o)   (Tk:wm 'trans (slot-ref o 'Eid)))
+		:slot-set!      (lambda (o v) (Tk:wm 'trans (slot-ref o 'Eid) v)))))
+
+
+(define-method tk-constructor ((self <Toplevel>))
+  Tk:toplevel)
+
+(define-method special-Tk-slots ((self <Frame>))
+  (list :class :colormap :container :visual :screen :use))
+
+;=============================================================================
+;
+; Some <Toplevel> methods 
+;
+;=============================================================================
+
+(define-method deiconify ((self <Toplevel>))
+  (Tk:wm 'deiconify (slot-ref self 'Eid)))
+
+(define-method iconify ((self <Toplevel>))
+  (Tk:wm 'iconify (slot-ref self 'Eid)))
+
+(define-method toplevel-frame ((self <Toplevel>))
+  (Tk:wm 'frame (slot-ref self 'Eid)))
+
+(define-method toplevel-state ((self <Toplevel>))
+  (Tk:wm 'state (slot-ref self 'Eid)))
+
+(define-method withdraw ((self <Toplevel>))
+  (Tk:wm 'withdraw (slot-ref self 'Eid)))
+
+(define-method place-toplevel ((self <Toplevel>) x y)
+  (set! (geometry self) (format #f "+~A+~A"x y)))
+
+(define-method make-transient ((self <Toplevel>))
+  (withdraw self)
+  (slot-set! self 'override #t))
+
+;=============================================================================
+;
+; Redefine *top-root* to a <Toplevel> accessing the root window (before
+; loading this file *top-root* is set to #f)
+;
+;=============================================================================
+(define  *top-root* (if Tk:initialized?
+		     (let ((top (allocate-instance <Toplevel> '())))
+			 (slot-set! top 'Id     *root*)
+			 (slot-set! top 'Eid    *root*)
+			 (slot-set! top 'parent *root*)
+			 (set-widget-data! *root* `(:instance ,top))
+			 top)
+		       #f))
+
+(provide "Toplevel")

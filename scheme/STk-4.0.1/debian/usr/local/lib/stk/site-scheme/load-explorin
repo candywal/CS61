@@ -1,0 +1,9 @@
+;;explorin.scm must be loaded after simply.scm
+;;simply.scm must be loaded before modeler.stk
+(load "/usr/local/lib/stk/site-scheme/berkeley.scm")
+(load "/usr/local/lib/stk/site-scheme/simply.scm")
+(load "/usr/local/lib/stk/site-scheme/explorin.scm")
+(load "/usr/local/lib/stk/site-scheme/modeler.stk")
+(load "/usr/local/lib/stk/site-scheme/obj.scm")
+(load "/usr/local/lib/stk/site-scheme/turtle-grfx.scm")
+(load "/usr/local/lib/stk/site-scheme/which-modeler.scm")
